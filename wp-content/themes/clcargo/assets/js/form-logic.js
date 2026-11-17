@@ -26,6 +26,80 @@
 		});
 	}
 
+	function initPhoneInput() {
+		var form = document.querySelector('.forminator-custom-form');
+		if (!form) return;
+
+		var inputs = form.querySelectorAll('input[type="tel"], input[name^="phone-"]');
+		inputs.forEach(function (input) {
+			if (input.dataset.clPhoneBound) return;
+			input.dataset.clPhoneBound = 'true';
+
+			// Only digits after the leading "+"
+			function normalize(val) {
+				if (!val) return '';
+				var digits = val.replace(/\D+/g, '');
+				return digits ? '+' + digits : '';
+			}
+
+			// Normalise any prefilled value
+			if (input.value) input.value = normalize(input.value);
+
+			input.addEventListener('focus', function () {
+				if (!input.value) input.value = '+';
+				// put caret at the end
+				try {
+					var len = input.value.length;
+					input.setSelectionRange(len, len);
+				} catch (_) {}
+			});
+
+			input.addEventListener('input', function () {
+				var oldVal = input.value;
+				var oldStart = input.selectionStart;
+				var newVal = normalize(oldVal);
+				if (oldVal === newVal) return;
+				input.value = newVal;
+				// Keep caret from drifting into the "+" sign
+				try {
+					var pos = Math.min(newVal.length, Math.max(1, oldStart));
+					input.setSelectionRange(pos, pos);
+				} catch (_) {}
+			});
+
+			input.addEventListener('keydown', function (e) {
+				// Protect the leading "+"
+				if ((e.key === 'Backspace' || e.key === 'Delete') &&
+					input.selectionStart <= 1 && input.selectionEnd <= 1 && input.value.charAt(0) === '+') {
+					if (input.value.length <= 1) {
+						e.preventDefault();
+						input.value = '';
+					} else if (e.key === 'Backspace' && input.selectionStart === 1) {
+						e.preventDefault();
+					}
+				}
+			});
+
+			input.addEventListener('paste', function (e) {
+				e.preventDefault();
+				var text = (e.clipboardData || window.clipboardData).getData('text') || '';
+				var start = input.selectionStart || 0;
+				var end = input.selectionEnd || 0;
+				var combined = input.value.slice(0, start) + text + input.value.slice(end);
+				input.value = normalize(combined);
+				try {
+					var len = input.value.length;
+					input.setSelectionRange(len, len);
+				} catch (_) {}
+			});
+
+			input.addEventListener('blur', function () {
+				// Clear lone "+" so required-validation fires correctly
+				if (input.value === '+') input.value = '';
+			});
+		});
+	}
+
 	function initFormLogic() {
 		// Forminator renders asynchronously; find our form after it loads
 		var form = document.querySelector('.forminator-custom-form');
@@ -33,6 +107,9 @@
 
 		// Localise select2 placeholders for country + goods selects.
 		initSelectPlaceholders();
+
+		// Enforce phone format: leading "+" and digits only.
+		initPhoneInput();
 
 		var checkbox   = form.querySelector('input[value="yes"][type="checkbox"]');
 		if (!checkbox) return;

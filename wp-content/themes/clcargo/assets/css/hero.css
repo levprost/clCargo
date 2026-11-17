@@ -51,6 +51,12 @@
   }
 }
 
+@media (max-width: 448px) {
+  .clcargo-hero .wp-block-cover__inner-container > .wp-block-group {
+    border-radius: 0 !important;
+  }
+}
+
 /* Yellow accent line */
 .clcargo-hero__accent-line {
   width: 52px !important;
