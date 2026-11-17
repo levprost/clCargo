@@ -106,21 +106,30 @@
 /* ---- 3. Phone ---- */
 .clcargo-header__phone {
   white-space: nowrap;
-}
-
-.clcargo-header__phone a {
-  color: var(--cl-white) !important;
-  font-size: 0.9rem;
-  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  color: var(--cl-white);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.clcargo-header__phone a,
+.clcargo-header__phone .clcargo-phone-link {
+  color: var(--cl-white) !important;
+  font-weight: 600;
   opacity: 0.9;
   transition: opacity var(--cl-transition);
   text-decoration: none;
 }
 
-.clcargo-header__phone a:hover { opacity: 1; }
+.clcargo-header__phone a:hover,
+.clcargo-header__phone .clcargo-phone-link:hover { opacity: 1; }
+
+/* Shared: keep the phone number on a single line everywhere it appears. */
+.clcargo-phone-link {
+  white-space: nowrap;
+}
 
 /* ---- 4. Language switcher ---- */
 .clcargo-header__lang,
@@ -263,7 +272,8 @@
     left: 0.55rem;
     right: 0.55rem;
   }
-  .clcargo-header__phone a   { font-size: 0.85rem; }
+  .clcargo-header__phone,
+  .clcargo-header__phone a   { font-size: 0.82rem; }
   .clcargo-header__lang a    { padding: 0.3rem 0.45rem !important; font-size: 0.72rem !important; }
   .clcargo-header__cta .wp-block-button__link {
     padding: 0.55rem 0.9rem !important;
@@ -349,10 +359,13 @@
   }
 
   /* Phone larger inside menu */
-  .clcargo-header__phone a {
-    font-size: 1.05rem;
+  .clcargo-header__phone {
     justify-content: center;
     width: 100%;
+    font-size: 1.05rem;
+  }
+  .clcargo-header__phone a {
+    font-size: 1.05rem;
   }
 
   /* CTA fills the dropdown */
