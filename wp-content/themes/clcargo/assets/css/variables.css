@@ -1,0 +1,40 @@
+/* =============================================
+   CL CARGO — CSS Custom Properties
+   ============================================= */
+
+:root {
+  /* Brand colours */
+  --cl-blue:        #204B73;
+  --cl-blue-dark:   #163452;
+  --cl-blue-light:  #EBF2F9;
+  --cl-yellow:      #E5BC59;
+  --cl-yellow-dark: #C9A33E;
+  --cl-bg:          #F8FAFC;
+  --cl-text:        #182A3B;
+  --cl-text-muted:  #5A7490;
+  --cl-white:       #FFFFFF;
+  --cl-border:      #D6E4F0;
+
+  /* Typography */
+  --cl-font:        'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Layout */
+  --cl-container:   1200px;
+  --cl-narrow:      760px;
+  --cl-header-h:    72px;
+
+  /* Spacing */
+  --cl-space-xs:    0.5rem;
+  --cl-space-s:     1rem;
+  --cl-space-m:     1.5rem;
+  --cl-space-l:     2.5rem;
+  --cl-space-xl:    4rem;
+  --cl-space-xxl:   6rem;
+
+  /* Effects */
+  --cl-radius:      8px;
+  --cl-radius-sm:   6px;
+  --cl-shadow:      0 4px 16px rgba(24, 42, 59, 0.10);
+  --cl-shadow-hover:0 8px 28px rgba(24, 42, 59, 0.16);
+  --cl-transition:  0.2s ease;
+}

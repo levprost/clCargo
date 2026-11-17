@@ -1,0 +1,25 @@
+# --- WordPress: чувствительные и локальные данные ---
+wp-config.php
+wp-content/database/
+wp-content/uploads/
+wp-content/debug.log
+wp-content/upgrade/
+wp-content/cache/
+
+# WordPress Studio: локальные артефакты с машинным путём
+wp-content/mu-plugins/99-studio-loader.php
+
+# --- Инструменты разработки ---
+.claude/
+node_modules/
+.tmp-playwright/node_modules/
+.tmp-playwright/shots/
+.tmp-playwright/page-*.html
+
+# --- Логи ---
+*.log
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini

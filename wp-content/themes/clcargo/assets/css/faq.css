@@ -1,0 +1,66 @@
+/* =============================================
+   CL CARGO — FAQ Accordion
+   ============================================= */
+
+.clcargo-faq-item.wp-block-details {
+  background: var(--cl-white) !important;
+  border: 1px solid var(--cl-border) !important;
+  border-radius: var(--cl-radius) !important;
+  padding: 0 1.25rem !important;
+  margin-top: 0.75rem !important;
+  overflow: hidden;
+  transition: border-color var(--cl-transition), box-shadow var(--cl-transition);
+  box-sizing: border-box;
+}
+
+.clcargo-faq-item.wp-block-details:hover {
+  border-color: var(--cl-blue);
+}
+
+.clcargo-faq-item[open] {
+  border-color: var(--cl-blue) !important;
+  box-shadow: 0 2px 10px rgba(32,75,115,0.08) !important;
+}
+
+.clcargo-faq-item summary {
+  padding: 1.1rem 0 !important;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--cl-text);
+  list-style: none !important;
+  -webkit-appearance: none;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  user-select: none;
+}
+
+/* Remove default marker */
+.clcargo-faq-item summary::-webkit-details-marker { display: none; }
+.clcargo-faq-item summary::marker { display: none; }
+
+/* Plus/minus icon */
+.clcargo-faq-item summary::after {
+  content: '+';
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--cl-blue);
+  flex-shrink: 0;
+  line-height: 1;
+  transition: transform var(--cl-transition);
+}
+
+.clcargo-faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+/* Answer text */
+.clcargo-faq-item p {
+  padding: 0 0 1.1rem !important;
+  color: var(--cl-text-muted) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.65 !important;
+  margin: 0 !important;
+}

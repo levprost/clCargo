@@ -1,0 +1,214 @@
+/* =============================================
+   CL CARGO — Cards
+   ============================================= */
+
+/* ---- Direction cards ---- */
+/* theme.json contentSize=720px would otherwise squash the 4-column row,
+   so let the columns strip span the whole section width. */
+.clcargo-section--directions .wp-block-columns {
+  gap: 1.25rem !important;
+  flex-wrap: wrap !important;          /* allow wrapping below breakpoints */
+  justify-content: center;
+  max-width: none !important;
+  width: 100%;
+}
+
+.clcargo-direction-card.wp-block-column {
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius);
+  padding: 1.5rem !important;
+  box-shadow: var(--cl-shadow);
+  transition: box-shadow var(--cl-transition), transform var(--cl-transition), border-color var(--cl-transition);
+  box-sizing: border-box;
+  min-width: 0;        /* prevent flex overflow */
+  flex-grow: 0 !important; /* width controlled by breakpoints below */
+  /* Vertical stack so the last <p> (time strip) can stick to the bottom */
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Let the list consume all free space so <p> (ETA) stays pinned at the bottom */
+.clcargo-direction-card ul {
+  flex: 1 1 auto !important;
+  margin-bottom: 1rem !important;
+}
+
+.clcargo-direction-card > p:last-child {
+  margin-top: auto !important;
+}
+
+/* From tablet (≥600) stretch siblings to equal height within the row */
+@media (min-width: 600px) {
+  .clcargo-section--directions .wp-block-columns {
+    align-items: stretch !important;
+  }
+  .clcargo-direction-card.wp-block-column {
+    align-self: stretch !important;
+  }
+}
+
+/* On mobile (single column) no stretching needed */
+@media (max-width: 599.98px) {
+  .clcargo-section--directions .wp-block-columns {
+    align-items: flex-start !important;
+  }
+}
+
+.clcargo-direction-card.wp-block-column:hover {
+  box-shadow: var(--cl-shadow-hover);
+  transform: translateY(-3px);
+  border-color: var(--cl-blue);
+}
+
+.clcargo-direction-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--cl-text);
+}
+
+.clcargo-direction-card ul {
+  padding-left: 1.1rem;
+  margin: 0 0 1rem !important;
+}
+
+.clcargo-direction-card li {
+  margin-bottom: 0.4rem;
+  color: var(--cl-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.clcargo-direction-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--cl-blue) !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  background: var(--cl-blue-light);
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  margin: 0 !important;
+}
+
+/* ---- Service cards (on blue background) ---- */
+.clcargo-service-card {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: var(--cl-radius) !important;
+  padding: 1.5rem !important;
+  transition: background var(--cl-transition), border-color var(--cl-transition);
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.clcargo-service-card:hover {
+  background: rgba(255, 255, 255, 0.13) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.clcargo-service-card > p:first-child {
+  font-size: 2.2rem !important;
+  line-height: 1 !important;
+  margin: 0 0 0.75rem !important;
+}
+
+.clcargo-service-card h4 {
+  color: var(--cl-white) !important;
+  font-size: 1rem !important;
+  margin: 0 0 0.5rem !important;
+}
+
+.clcargo-service-card > p:last-child {
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+
+/* ---- Goods cards ---- */
+.clcargo-goods-card.wp-block-column {
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius);
+  padding: 1.5rem 1rem !important;
+  text-align: center;
+  box-shadow: var(--cl-shadow);
+  transition: box-shadow var(--cl-transition), transform var(--cl-transition), border-color var(--cl-transition);
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.clcargo-goods-card.wp-block-column:hover {
+  box-shadow: var(--cl-shadow-hover);
+  transform: translateY(-2px);
+  border-color: var(--cl-blue);
+}
+
+.clcargo-goods-card p:first-child {
+  font-size: 2.4rem !important;
+  line-height: 1 !important;
+  margin: 0 0 0.6rem !important;
+}
+
+.clcargo-goods-card p:not(:first-child) {
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  margin: 0 !important;
+  color: var(--cl-text);
+}
+
+.clcargo-goods-card p.goods-note {
+  font-size: 0.78rem !important;
+  color: var(--cl-blue) !important;
+  font-weight: 500 !important;
+  margin-top: 0.25rem !important;
+}
+
+/* ---- Why list ---- */
+.clcargo-why-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.clcargo-why-list li {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--cl-border);
+  font-size: 0.95rem;
+  color: var(--cl-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.clcargo-why-list li:last-child {
+  border-bottom: none;
+}
+
+/* ---- Stats / badge items ---- */
+.clcargo-badge-item.wp-block-column {
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius);
+  padding: 1.5rem 1rem !important;
+  text-align: center;
+  box-shadow: var(--cl-shadow);
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.clcargo-badge-item p:first-child {
+  font-weight: 800 !important;
+  font-size: 1.75rem !important;
+  color: var(--cl-blue) !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+.clcargo-badge-item p:last-child {
+  font-size: 0.82rem !important;
+  color: var(--cl-text-muted) !important;
+  margin: 0.35rem 0 0 !important;
+}

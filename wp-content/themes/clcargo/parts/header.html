@@ -1,0 +1,51 @@
+<!-- wp:group {"tagName":"header","className":"clcargo-header","layout":{"type":"default"}} -->
+<header class="wp-block-group clcargo-header">
+
+  <!-- wp:group {"className":"clcargo-header__row","layout":{"type":"default"}} -->
+  <div class="wp-block-group clcargo-header__row">
+
+    <!-- 1. BRAND -->
+    <!-- wp:site-title {"level":0,"className":"clcargo-header__brand"} /-->
+
+    <!-- 2. NAVIGATION -->
+    <!-- wp:navigation {"overlayMenu":"never","className":"clcargo-header__nav","textColor":"white","layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"}} -->
+      <!-- wp:navigation-link {"label":"Напрямки","url":"#directions"} /-->
+      <!-- wp:navigation-link {"label":"Послуги","url":"#services"} /-->
+      <!-- wp:navigation-link {"label":"Як працюємо","url":"#how-we-work"} /-->
+      <!-- wp:navigation-link {"label":"FAQ","url":"#faq"} /-->
+      <!-- wp:navigation-link {"label":"Контакти","url":"#contacts"} /-->
+    <!-- /wp:navigation -->
+
+    <!-- 3. PHONE -->
+    <!-- wp:paragraph {"className":"clcargo-header__phone"} -->
+    <p class="clcargo-header__phone"><a href="tel:+380661718289">📞 066-171-8289</a></p>
+    <!-- /wp:paragraph -->
+
+    <!-- 4. LANGUAGE SWITCHER -->
+    <!-- wp:polylang/language-switcher {"className":"clcargo-header__lang"} /-->
+
+    <!-- 5. CTA -->
+    <!-- wp:buttons {"className":"clcargo-header__cta-wrap"} -->
+    <div class="wp-block-buttons clcargo-header__cta-wrap">
+      <!-- wp:button {"className":"clcargo-header__cta","style":{"border":{"radius":"6px"}}} -->
+      <div class="wp-block-button clcargo-header__cta">
+        <a class="wp-block-button__link wp-element-button" href="#form" style="border-radius:6px">Розрахувати доставку</a>
+      </div>
+      <!-- /wp:button -->
+    </div>
+    <!-- /wp:buttons -->
+
+    <!-- BURGER (shown ≤1030px) -->
+    <!-- wp:html -->
+    <button class="clcargo-header__burger" type="button" aria-label="Відкрити меню" aria-expanded="false">
+      <span class="clcargo-header__burger-line"></span>
+      <span class="clcargo-header__burger-line"></span>
+      <span class="clcargo-header__burger-line"></span>
+    </button>
+    <!-- /wp:html -->
+
+  </div>
+  <!-- /wp:group -->
+
+</header>
+<!-- /wp:group -->

@@ -1,0 +1,141 @@
+/* =============================================
+   CL CARGO — Form Section
+   ============================================= */
+
+.clcargo-form-section > .wp-block-group {
+  max-width: var(--cl-narrow) !important;
+}
+
+/* Forminator base overrides */
+.clcargo-form-section .forminator-ui {
+  font-family: var(--cl-font) !important;
+}
+
+.clcargo-form-section .forminator-row {
+  margin-bottom: 1rem !important;
+}
+
+/* Labels */
+.clcargo-form-section .forminator-label,
+.clcargo-form-section .forminator-field-label {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--cl-text) !important;
+  margin-bottom: 0.4rem !important;
+  display: block;
+}
+
+/* Input fields */
+.clcargo-form-section input[type="text"],
+.clcargo-form-section input[type="email"],
+.clcargo-form-section input[type="tel"],
+.clcargo-form-section input[type="number"],
+.clcargo-form-section select,
+.clcargo-form-section textarea,
+.clcargo-form-section .forminator-input,
+.clcargo-form-section .forminator-textarea {
+  width: 100% !important;
+  border: 1.5px solid var(--cl-border) !important;
+  border-radius: var(--cl-radius-sm) !important;
+  padding: 0.7rem 0.9rem !important;
+  font-size: 0.95rem !important;
+  font-family: var(--cl-font) !important;
+  color: var(--cl-text) !important;
+  background: var(--cl-white) !important;
+  outline: none !important;
+  transition: border-color var(--cl-transition), box-shadow var(--cl-transition) !important;
+  box-sizing: border-box !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.clcargo-form-section input:focus,
+.clcargo-form-section select:focus,
+.clcargo-form-section textarea:focus,
+.clcargo-form-section .forminator-input:focus,
+.clcargo-form-section .forminator-textarea:focus {
+  border-color: var(--cl-blue) !important;
+  box-shadow: 0 0 0 3px rgba(32, 75, 115, 0.12) !important;
+}
+
+/* Select arrow */
+.clcargo-form-section select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A7490' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.9rem center !important;
+  padding-right: 2.5rem !important;
+}
+
+/* Checkbox */
+.clcargo-form-section input[type="checkbox"] {
+  width: 1rem !important;
+  height: 1rem !important;
+  border: 1.5px solid var(--cl-border) !important;
+  border-radius: 3px !important;
+  padding: 0 !important;
+  accent-color: var(--cl-blue);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.clcargo-form-section .forminator-checkbox-label,
+.clcargo-form-section .forminator-checkbox .forminator-label {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+/* Submit button */
+.clcargo-form-section .forminator-btn-submit,
+.clcargo-form-section button[type="submit"] {
+  width: 100% !important;
+  background: var(--cl-blue) !important;
+  color: var(--cl-white) !important;
+  border: none !important;
+  border-radius: var(--cl-radius-sm) !important;
+  padding: 0.9rem 2rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  font-family: var(--cl-font) !important;
+  cursor: pointer !important;
+  transition: background var(--cl-transition), transform var(--cl-transition) !important;
+  margin-top: 0.5rem !important;
+}
+
+.clcargo-form-section .forminator-btn-submit:hover,
+.clcargo-form-section button[type="submit"]:hover {
+  background: var(--cl-blue-dark) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Error messages */
+.clcargo-form-section .forminator-error,
+.clcargo-form-section .forminator-field-error,
+.clcargo-field-error {
+  color: #DC2626 !important;
+  font-size: 0.8rem !important;
+  margin-top: 0.3rem !important;
+  display: block;
+}
+
+/* Success message */
+.clcargo-form-section .forminator-response-output {
+  background: #F0FDF4 !important;
+  border: 1px solid #86EFAC !important;
+  border-radius: var(--cl-radius-sm) !important;
+  padding: 1rem !important;
+  color: #166534 !important;
+  font-size: 0.95rem !important;
+}
+
+/* Microtext under button */
+.clcargo-form-section > .wp-block-group > p:last-child {
+  font-size: 0.875rem;
+  color: var(--cl-text-muted);
+  text-align: center;
+  margin-top: 1.25rem !important;
+}

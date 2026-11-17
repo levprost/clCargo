@@ -1,0 +1,67 @@
+/* =============================================
+   CL CARGO — How We Work (Steps)
+   ============================================= */
+
+.clcargo-steps.wp-block-columns {
+  gap: 0.75rem !important;
+  align-items: stretch;
+}
+
+.clcargo-step.wp-block-column {
+  background: var(--cl-bg);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius);
+  padding: 1.5rem 1rem !important;
+  text-align: center;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 0;
+  transition: box-shadow var(--cl-transition), transform var(--cl-transition);
+}
+
+.clcargo-step.wp-block-column:hover {
+  box-shadow: var(--cl-shadow);
+  transform: translateY(-2px);
+}
+
+/* Step number circle */
+.clcargo-step__number {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 800 !important;
+  font-size: 1.1rem !important;
+  flex-shrink: 0;
+  margin: 0 auto 1rem !important;
+  line-height: 1 !important;
+  /* Reset WP group padding */
+  padding: 0 !important;
+}
+
+.clcargo-step h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  color: var(--cl-text);
+}
+
+.clcargo-step > p {
+  font-size: 0.85rem !important;
+  color: var(--cl-text-muted) !important;
+  margin: 0 !important;
+  line-height: 1.4;
+}
+
+/* Final caption */
+.clcargo-steps + p {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--cl-blue);
+  text-align: center;
+  margin-top: var(--cl-space-m) !important;
+}

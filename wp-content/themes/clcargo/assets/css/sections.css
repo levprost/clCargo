@@ -1,0 +1,152 @@
+/* =============================================
+   CL CARGO — Section Layout & Backgrounds
+   ============================================= */
+
+/* All full-width sections */
+.clcargo-section {
+  width: 100%;
+  overflow: hidden; /* prevents child overflow */
+}
+
+/* Section inner constraint */
+.clcargo-section > .wp-block-group {
+  max-width: var(--cl-container);
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--cl-space-m) !important;
+  padding-right: var(--cl-space-m) !important;
+  box-sizing: border-box;
+}
+
+/* Wider side gutters on larger screens — more breathing room */
+@media (min-width: 1024px) {
+  .clcargo-section > .wp-block-group {
+    padding-left: var(--cl-space-l) !important;   /* 2.5rem */
+    padding-right: var(--cl-space-l) !important;
+  }
+}
+@media (min-width: 1440px) {
+  .clcargo-section > .wp-block-group {
+    padding-left: var(--cl-space-xl) !important;  /* 4rem */
+    padding-right: var(--cl-space-xl) !important;
+  }
+}
+
+/* Section padding */
+.clcargo-section.alignfull {
+  padding-top: var(--cl-space-xxl) !important;
+  padding-bottom: var(--cl-space-xxl) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Background overrides (WP adds inline bg via has-*-background-color) */
+.clcargo-section.has-bg-light-background-color,
+.clcargo-section.has-white-background-color {
+  /* keep WP's colour, just ensure no overflow */
+}
+
+/* Section headings */
+.clcargo-section h2.wp-block-heading {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  margin-bottom: var(--cl-space-s);
+  text-align: center;
+}
+
+.clcargo-section h2.wp-block-heading + p {
+  text-align: center;
+  color: var(--cl-text-muted);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--cl-space-l);
+}
+
+/* Blue sections — white text */
+.clcargo-services h2.wp-block-heading,
+.clcargo-history h2.wp-block-heading,
+.clcargo-cta h2.wp-block-heading {
+  color: var(--cl-white);
+}
+
+/* Info notice strip (port routing) */
+.clcargo-notice {
+  border-left: 4px solid var(--cl-blue) !important;
+  border-radius: 0 var(--cl-radius) var(--cl-radius) 0 !important;
+  background: var(--cl-blue-light) !important;
+  padding: 1rem 1.25rem !important;
+  margin-bottom: var(--cl-space-l) !important;
+  box-sizing: border-box;
+}
+
+.clcargo-notice p {
+  margin: 0 !important;
+  font-size: 0.925rem;
+  color: var(--cl-text);
+  line-height: 1.6;
+}
+
+/* CTA banner in services section */
+.clcargo-banner {
+  border: 1px solid rgba(229, 188, 89, 0.5) !important;
+  border-radius: var(--cl-radius) !important;
+  background: rgba(229, 188, 89, 0.1) !important;
+  padding: 1.25rem 2rem !important;
+  margin-top: var(--cl-space-l) !important;
+  box-sizing: border-box;
+}
+
+.clcargo-banner p {
+  color: var(--cl-white) !important;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 !important;
+}
+
+/* History section paragraph */
+.clcargo-history .wp-block-group > p {
+  color: rgba(255,255,255,0.88) !important;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 760px;
+  margin: var(--cl-space-m) auto 0 !important;
+  text-align: center;
+}
+
+/* Final CTA section */
+.clcargo-cta > .wp-block-group {
+  max-width: 700px;
+}
+
+.clcargo-cta > .wp-block-group > p {
+  color: rgba(255,255,255,0.85) !important;
+  text-align: center;
+}
+
+/* CTA contact row */
+.clcargo-cta .contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: var(--cl-space-m);
+}
+
+.clcargo-cta .contact-row p {
+  color: var(--cl-white) !important;
+  text-align: center;
+  margin: 0 !important;
+  line-height: 1.5;
+}
+
+.clcargo-cta .contact-row a {
+  color: var(--cl-white) !important;
+  font-weight: 700;
+}
+
+.clcargo-cta .contact-row span {
+  font-size: 0.82rem;
+  opacity: 0.65;
+}

@@ -1,0 +1,174 @@
+/* =============================================
+   CL CARGO — Responsive (mobile-first)
+   ============================================= */
+
+/* =============================================
+   Direction cards — three breakpoints
+   mobile       (≤ 599)        → 1 per row
+   tablet / md  (600 – 1099)   → 2 per row
+   desktop lg   (≥ 1100)       → 4 per row
+   ============================================= */
+@media (min-width: 1100px) {
+  .clcargo-section--directions .wp-block-column.clcargo-direction-card {
+    flex: 0 0 calc(25% - 0.9375rem) !important;
+    max-width: calc(25% - 0.9375rem) !important;
+  }
+}
+@media (min-width: 600px) and (max-width: 1099.98px) {
+  .clcargo-section--directions .wp-block-column.clcargo-direction-card {
+    flex: 0 0 calc(50% - 0.625rem) !important;
+    max-width: calc(50% - 0.625rem) !important;
+  }
+}
+@media (max-width: 599.98px) {
+  .clcargo-section--directions .wp-block-column.clcargo-direction-card {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ---- Tablet: 768px ---- */
+@media (max-width: 768px) {
+  /* Services: 2 columns */
+  .clcargo-services .wp-block-columns {
+    flex-wrap: wrap !important;
+  }
+  .clcargo-services .wp-block-column {
+    flex-basis: calc(50% - 0.75rem) !important;
+    min-width: 0;
+  }
+
+  /* Steps: wrap */
+  .clcargo-steps.wp-block-columns {
+    flex-wrap: wrap !important;
+  }
+  .clcargo-step.wp-block-column {
+    flex-basis: calc(50% - 0.5rem) !important;
+    min-width: 0;
+  }
+
+  /* Goods: 3 columns */
+  .wp-block-columns:has(.clcargo-goods-card) {
+    flex-wrap: wrap !important;
+  }
+  .clcargo-goods-card.wp-block-column {
+    flex-basis: calc(33.333% - 0.75rem) !important;
+    min-width: 0;
+  }
+
+  /* Badges: 2 columns */
+  .clcargo-badge-item.wp-block-column {
+    flex-basis: calc(50% - 0.5rem) !important;
+    min-width: 0;
+  }
+
+  /* Section inner padding */
+  .clcargo-section > .wp-block-group {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+}
+
+/* ---- Mobile: 600px ---- */
+@media (max-width: 600px) {
+  /* Hero inner */
+  .clcargo-hero .wp-block-cover__inner-container > .wp-block-group {
+    padding: calc(var(--cl-space-xxl) * 0.75) var(--cl-space-s)
+      var(--cl-space-xl) !important;
+  }
+
+  /* Buttons stack */
+  .clcargo-hero .wp-block-buttons,
+  .clcargo-cta .wp-block-buttons {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .clcargo-hero .wp-block-buttons .wp-block-button,
+  .clcargo-cta .wp-block-buttons .wp-block-button {
+    width: 100% !important;
+  }
+
+  .clcargo-hero .wp-block-buttons .wp-block-button__link,
+  .clcargo-cta .wp-block-buttons .wp-block-button__link {
+    width: 100% !important;
+    text-align: center !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Trust badges: column */
+  .clcargo-trust-badges {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+  }
+
+  /* Services: 1 column */
+  .clcargo-services .wp-block-columns {
+    flex-direction: column !important;
+  }
+  .clcargo-services .wp-block-column {
+    flex-basis: 100% !important;
+  }
+
+  /* Steps: 1 column */
+  .clcargo-step.wp-block-column {
+    flex-basis: 100% !important;
+  }
+
+  /* Goods: 2 columns */
+  .clcargo-goods-card.wp-block-column {
+    flex-basis: calc(50% - 0.5rem) !important;
+  }
+
+  /* Why: 1 column */
+  .clcargo-section .wp-block-columns:has(.clcargo-why-list) {
+    flex-direction: column !important;
+  }
+
+  /* Badges: 2 col */
+  .clcargo-badge-item.wp-block-column {
+    flex-basis: calc(50% - 0.5rem) !important;
+  }
+
+  /* Section padding */
+  .clcargo-section.alignfull {
+    padding-top: var(--cl-space-xl) !important;
+    padding-bottom: var(--cl-space-xl) !important;
+  }
+
+  /* Section inner */
+  .clcargo-section > .wp-block-group {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Section h2 */
+  .clcargo-section h2.wp-block-heading {
+    font-size: 1.5rem !important;
+  }
+
+  /* CTA contacts */
+  .clcargo-cta .contact-row,
+  .clcargo-cta .wp-block-group[style*="gap:2rem"],
+  .clcargo-cta > .wp-block-group > .wp-block-group {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: center !important;
+  }
+}
+
+/* ---- Very small: 360px ---- */
+@media (max-width: 360px) {
+  .clcargo-goods-card.wp-block-column {
+    flex-basis: 100% !important;
+  }
+
+  .clcargo-badge-item.wp-block-column {
+    flex-basis: 100% !important;
+  }
+
+  .clcargo-hero h1.wp-block-heading {
+    font-size: 1.6rem !important;
+  }
+}

@@ -1,0 +1,171 @@
+/* =============================================
+   CL CARGO — Hero Section
+   ============================================= */
+
+.clcargo-hero {
+  position: relative;
+  background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1600&q=80&auto=format');
+  background-size: cover;
+  background-position: center 40%;
+  min-height: 100vh !important;
+  /* Reset WP inline padding */
+  padding: 0 !important;
+}
+
+/* Mobile: different crop */
+@media (max-width: 600px) {
+  .clcargo-hero {
+    background-image: url('https://images.unsplash.com/photo-1521727857535-28d2047619e7?w=800&q=80&auto=format');
+    background-position: center center;
+    min-height: 100svh !important;
+  }
+}
+
+/* Inner container alignment */
+.clcargo-hero .wp-block-cover__inner-container {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 !important;
+}
+
+.clcargo-hero .wp-block-cover__inner-container > .wp-block-group {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: var(--cl-space-xl) var(--cl-space-l) var(--cl-space-l) !important;
+  /* Frosted-glass card around the whole hero content */
+  background: rgba(22, 52, 82, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 600px) {
+  .clcargo-hero .wp-block-cover__inner-container > .wp-block-group {
+    max-width: calc(100% - 2rem);
+    padding: var(--cl-space-l) var(--cl-space-m) var(--cl-space-m) !important;
+    border-radius: 16px;
+  }
+}
+
+/* Yellow accent line */
+.clcargo-hero__accent-line {
+  width: 52px !important;
+  height: 4px !important;
+  background: var(--cl-yellow) !important;
+  border-radius: 3px !important;
+  margin-bottom: 1.5rem !important;
+  /* Override WP flex display */
+  display: block !important;
+  flex: none !important;
+}
+
+/* H1 */
+.clcargo-hero h1.wp-block-heading {
+  font-size: clamp(1.9rem, 4.5vw, 3.2rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  color: var(--cl-white) !important;
+  margin-bottom: 1.25rem !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+/* Subheading paragraph */
+.clcargo-hero .wp-block-cover__inner-container > .wp-block-group > p {
+  font-size: clamp(1rem, 2vw, 1.15rem) !important;
+  color: rgba(255,255,255,0.88) !important;
+  margin-bottom: 1.5rem !important;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* Direction badges row */
+.clcargo-directions {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center !important;
+  gap: 0.5rem;
+  margin-bottom: 2rem !important;
+}
+
+.clcargo-direction-badge {
+  display: inline-flex !important;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  border-radius: 20px !important;
+  padding: 0.3rem 0.9rem !important;
+  backdrop-filter: blur(6px);
+  flex: none !important;
+  min-width: 0 !important;
+}
+
+.clcargo-direction-badge p {
+  color: var(--cl-white) !important;
+  margin: 0 !important;
+  font-size: 0.9rem !important;
+  white-space: nowrap;
+}
+
+/* Buttons row */
+.clcargo-hero .wp-block-buttons {
+  flex-wrap: wrap;
+  justify-content: center !important;
+  gap: 0.875rem !important;
+  margin-bottom: 2.5rem !important;
+}
+
+/* Primary CTA */
+.clcargo-btn-primary .wp-block-button__link {
+  background: var(--cl-blue) !important;
+  border: 2px solid var(--cl-blue) !important;
+  color: var(--cl-white) !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  padding: 0.875rem 1.75rem !important;
+  box-shadow: 0 4px 16px rgba(32,75,115,0.4);
+}
+
+.clcargo-btn-primary .wp-block-button__link:hover {
+  background: var(--cl-blue-dark) !important;
+  border-color: var(--cl-blue-dark) !important;
+}
+
+/* Secondary CTA */
+.clcargo-btn-secondary .wp-block-button__link {
+  background: transparent !important;
+  border: 2px solid rgba(255,255,255,0.65) !important;
+  color: var(--cl-white) !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  padding: 0.875rem 1.75rem !important;
+}
+
+.clcargo-btn-secondary .wp-block-button__link:hover {
+  background: rgba(255,255,255,0.12) !important;
+  border-color: var(--cl-white) !important;
+}
+
+/* Trust badges strip — divider inside the already-frosted hero card */
+.clcargo-trust-badges {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center !important;
+  align-items: center;
+  gap: 0.75rem 2rem;
+  margin-top: 0.5rem !important;
+  padding-top: 1.25rem !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+.clcargo-trust-badges p {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-size: 0.875rem !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
