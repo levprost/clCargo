@@ -3,8 +3,9 @@
    ============================================= */
 
 .clcargo-footer.wp-block-group {
-  background: var(--cl-blue-dark) !important;
+  background: var(--cl-blue-darkest) !important;
   padding: var(--cl-space-m) var(--cl-space-m) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   overflow: hidden;
 }
 
@@ -21,7 +22,7 @@
 
 /* Copyright text */
 .clcargo-footer p {
-  color: rgba(255, 255, 255, 0.55) !important;
+  color: var(--cl-text-muted-on-dark) !important;
   font-size: 0.85rem !important;
   margin: 0 !important;
   line-height: 1.4;
@@ -36,7 +37,7 @@
 }
 
 .clcargo-footer a {
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: var(--cl-text-muted-on-dark) !important;
   font-size: 0.82rem;
   transition: color var(--cl-transition);
   text-decoration: none;

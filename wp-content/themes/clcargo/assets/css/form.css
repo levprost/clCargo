@@ -2,8 +2,55 @@
    CL CARGO — Form Section
    ============================================= */
 
+/* Ensure the alignfull section keeps horizontal breathing room on narrow
+   viewports so the form card never hits the screen edge. */
+@media (max-width: 600px) {
+  .clcargo-form-section.alignfull {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Form card: lifts the inner constrained group off the grey section
+   with a white panel, soft shadow, and a gold accent bar on top. */
 .clcargo-form-section > .wp-block-group {
   max-width: var(--cl-narrow) !important;
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-radius: 18px;
+  padding: 2.5rem !important;
+  box-shadow: 0 10px 40px rgba(10, 25, 47, 0.08),
+              0 2px 6px rgba(10, 25, 47, 0.04);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.clcargo-form-section > .wp-block-group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--cl-cta-gradient);
+}
+
+@media (max-width: 600px) {
+  .clcargo-form-section > .wp-block-group {
+    padding: 1.75rem 1.25rem !important;
+    border-radius: 14px;
+  }
+}
+
+/* Section heading inside the form card */
+.clcargo-form-section h2.wp-block-heading {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.clcargo-form-section h2.wp-block-heading + p {
+  margin-bottom: 1.75rem !important;
 }
 
 /* Forminator base overrides */
@@ -12,17 +59,25 @@
 }
 
 .clcargo-form-section .forminator-row {
-  margin-bottom: 1rem !important;
+  margin-bottom: 1.1rem !important;
 }
 
 /* Labels */
 .clcargo-form-section .forminator-label,
 .clcargo-form-section .forminator-field-label {
-  font-size: 0.875rem !important;
+  font-size: 0.82rem !important;
   font-weight: 600 !important;
   color: var(--cl-text) !important;
-  margin-bottom: 0.4rem !important;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.45rem !important;
   display: block;
+}
+
+/* Required asterisk — gold */
+.clcargo-form-section .forminator-required,
+.clcargo-form-section .forminator-label .forminator-required {
+  color: var(--cl-yellow-dark) !important;
+  margin-left: 0.15rem;
 }
 
 /* Input fields */
@@ -36,17 +91,30 @@
 .clcargo-form-section .forminator-textarea {
   width: 100% !important;
   border: 1.5px solid var(--cl-border) !important;
-  border-radius: var(--cl-radius-sm) !important;
-  padding: 0.7rem 0.9rem !important;
+  border-radius: 10px !important;
+  padding: 0.85rem 1rem !important;
   font-size: 0.95rem !important;
   font-family: var(--cl-font) !important;
   color: var(--cl-text) !important;
-  background: var(--cl-white) !important;
+  background: #FAFBFD !important;
   outline: none !important;
-  transition: border-color var(--cl-transition), box-shadow var(--cl-transition) !important;
+  transition: border-color var(--cl-transition), box-shadow var(--cl-transition), background var(--cl-transition) !important;
   box-sizing: border-box !important;
   -webkit-appearance: none;
   appearance: none;
+}
+
+.clcargo-form-section input::placeholder,
+.clcargo-form-section textarea::placeholder {
+  color: #94A3B8 !important;
+  opacity: 1;
+}
+
+.clcargo-form-section input:hover:not(:focus),
+.clcargo-form-section select:hover:not(:focus),
+.clcargo-form-section textarea:hover:not(:focus) {
+  border-color: #CBD5E1 !important;
+  background: var(--cl-white) !important;
 }
 
 .clcargo-form-section input:focus,
@@ -54,13 +122,14 @@
 .clcargo-form-section textarea:focus,
 .clcargo-form-section .forminator-input:focus,
 .clcargo-form-section .forminator-textarea:focus {
-  border-color: var(--cl-blue) !important;
-  box-shadow: 0 0 0 3px rgba(32, 75, 115, 0.12) !important;
+  border-color: var(--cl-yellow-dark) !important;
+  background: var(--cl-white) !important;
+  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.18) !important;
 }
 
 /* Select arrow */
 .clcargo-form-section select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A7490' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23475569' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
   background-position: right 0.9rem center !important;
   padding-right: 2.5rem !important;
@@ -73,7 +142,7 @@
   border: 1.5px solid var(--cl-border) !important;
   border-radius: 3px !important;
   padding: 0 !important;
-  accent-color: var(--cl-blue);
+  accent-color: var(--cl-yellow-dark);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -84,17 +153,33 @@
   align-items: flex-start;
   gap: 0.6rem;
   font-size: 0.9rem !important;
-  font-weight: 400 !important;
+  font-weight: 500 !important;
+  color: var(--cl-text) !important;
   cursor: pointer;
   line-height: 1.4;
+  padding: 0.65rem 0.85rem;
+  background: var(--cl-bg-alt);
+  border: 1px solid var(--cl-border);
+  border-radius: 10px;
+  transition: border-color var(--cl-transition), background var(--cl-transition);
 }
 
-/* Submit button */
+.clcargo-form-section .forminator-checkbox-label:hover,
+.clcargo-form-section .forminator-checkbox .forminator-label:hover {
+  border-color: rgba(251, 191, 36, 0.5);
+  background: #FFF7E0;
+}
+
+/* Submit button — gold gradient. Forminator uses .forminator-button and
+   .forminator-button-submit, not [type=submit] / .forminator-btn-submit. */
+.clcargo-form-section .forminator-button-submit,
+.clcargo-form-section .forminator-button.forminator-button-submit,
 .clcargo-form-section .forminator-btn-submit,
 .clcargo-form-section button[type="submit"] {
   width: 100% !important;
-  background: var(--cl-blue) !important;
-  color: var(--cl-white) !important;
+  background: var(--cl-cta-gradient) !important;
+  background-image: var(--cl-cta-gradient) !important;
+  color: var(--cl-cta-text) !important;
   border: none !important;
   border-radius: var(--cl-radius-sm) !important;
   padding: 0.9rem 2rem !important;
@@ -102,14 +187,20 @@
   font-weight: 700 !important;
   font-family: var(--cl-font) !important;
   cursor: pointer !important;
-  transition: background var(--cl-transition), transform var(--cl-transition) !important;
+  box-shadow: 0 4px 14px rgba(251, 191, 36, 0.3) !important;
+  transition: background var(--cl-transition), transform var(--cl-transition), box-shadow var(--cl-transition) !important;
   margin-top: 0.5rem !important;
 }
 
+.clcargo-form-section .forminator-button-submit:hover,
+.clcargo-form-section .forminator-button.forminator-button-submit:hover,
 .clcargo-form-section .forminator-btn-submit:hover,
 .clcargo-form-section button[type="submit"]:hover {
-  background: var(--cl-blue-dark) !important;
+  background: var(--cl-cta-gradient-hover) !important;
+  background-image: var(--cl-cta-gradient-hover) !important;
+  color: var(--cl-cta-text) !important;
   transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.4) !important;
 }
 
 /* Error messages */
@@ -134,8 +225,18 @@
 
 /* Microtext under button */
 .clcargo-form-section > .wp-block-group > p:last-child {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--cl-text-muted);
   text-align: center;
-  margin-top: 1.25rem !important;
+  margin-top: 1.5rem !important;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--cl-border);
+}
+
+.clcargo-form-section > .wp-block-group > p:last-child a {
+  color: var(--cl-blue-dark);
+  font-weight: 700;
+}
+.clcargo-form-section > .wp-block-group > p:last-child a:hover {
+  color: var(--cl-yellow-dark);
 }

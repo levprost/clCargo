@@ -5,39 +5,84 @@
 		"color": {
 			"palette": [
 				{
-					"slug": "bg-light",
-					"color": "#F8FAFC",
-					"name": "Background Light"
-				},
-				{
-					"slug": "text-dark",
-					"color": "#182A3B",
-					"name": "Text Dark"
-				},
-				{
-					"slug": "primary-blue",
-					"color": "#204B73",
-					"name": "Primary Blue"
-				},
-				{
-					"slug": "accent-yellow",
-					"color": "#E5BC59",
-					"name": "Accent Yellow"
-				},
-				{
 					"slug": "white",
 					"color": "#FFFFFF",
 					"name": "White"
 				},
 				{
+					"slug": "bg-light",
+					"color": "#F1F5F9",
+					"name": "Background Alt (light grey)"
+				},
+				{
+					"slug": "bg-soft",
+					"color": "#F8FAFC",
+					"name": "Background Soft (contacts)"
+				},
+				{
+					"slug": "text-dark",
+					"color": "#1E293B",
+					"name": "Text Dark"
+				},
+				{
+					"slug": "text-muted",
+					"color": "#475569",
+					"name": "Text Muted"
+				},
+				{
+					"slug": "border-light",
+					"color": "#E2E8F0",
+					"name": "Border Light"
+				},
+				{
+					"slug": "primary-blue",
+					"color": "#0A192F",
+					"name": "Primary Blue (dark)"
+				},
+				{
+					"slug": "blue-panel",
+					"color": "#112240",
+					"name": "Blue Panel"
+				},
+				{
 					"slug": "blue-dark",
-					"color": "#163452",
-					"name": "Blue Dark"
+					"color": "#060F1E",
+					"name": "Blue Deep (footer)"
+				},
+				{
+					"slug": "blue-accent",
+					"color": "#1D3557",
+					"name": "Blue Accent"
 				},
 				{
 					"slug": "blue-light",
-					"color": "#EBF2F9",
-					"name": "Blue Light"
+					"color": "#E8EFF7",
+					"name": "Blue Tint"
+				},
+				{
+					"slug": "accent-yellow",
+					"color": "#FBBF24",
+					"name": "Accent Yellow"
+				},
+				{
+					"slug": "accent-yellow-dark",
+					"color": "#F59E0B",
+					"name": "Accent Yellow Dark"
+				},
+				{
+					"slug": "accent-yellow-deep",
+					"color": "#D97706",
+					"name": "Accent Yellow Deep"
+				},
+				{
+					"slug": "text-on-dark",
+					"color": "#CBD5E1",
+					"name": "Text on Dark"
+				},
+				{
+					"slug": "text-muted-on-dark",
+					"color": "#94A3B8",
+					"name": "Text Muted on Dark"
 				}
 			],
 			"defaultPalette": false,
@@ -90,7 +135,7 @@
 	"styles": {
 		"color": {
 			"background": "#F8FAFC",
-			"text": "#182A3B"
+			"text": "#1E293B"
 		},
 		"typography": {
 			"fontFamily": "var(--wp--preset--font-family--inter)",
@@ -120,18 +165,18 @@
 				}
 			},
 			"link": {
-				"color": { "text": "#204B73" },
+				"color": { "text": "#0A192F" },
 				":hover": {
-					"color": { "text": "#163452" }
+					"color": { "text": "#F59E0B" }
 				}
 			},
 			"button": {
 				"color": {
-					"background": "#204B73",
-					"text": "#FFFFFF"
+					"background": "#FBBF24",
+					"text": "#0A192F"
 				},
 				"typography": {
-					"fontWeight": "600",
+					"fontWeight": "700",
 					"fontSize": "var(--wp--preset--font-size--medium)"
 				},
 				"border": { "radius": "6px" },
@@ -144,7 +189,7 @@
 					}
 				},
 				":hover": {
-					"color": { "background": "#163452" }
+					"color": { "background": "#F59E0B", "text": "#0A192F" }
 				}
 			}
 		},

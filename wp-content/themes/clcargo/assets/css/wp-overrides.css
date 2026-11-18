@@ -77,11 +77,11 @@ body.wp-has-global-padding > .wp-site-blocks {
   align-items: stretch !important;
 }
 
-/* Steps columns */
+/* Steps columns (grid specifics handled in steps.css) */
 .clcargo-steps.wp-block-columns {
   display: flex !important;
   flex-wrap: wrap !important;
-  gap: 0.75rem !important;
+  gap: 1rem !important;
   align-items: stretch !important;
 }
 
@@ -104,23 +104,46 @@ body.wp-has-global-padding > .wp-site-blocks {
   min-width: 0 !important;
 }
 
-/* Goods / badge items: 4 per row on desktop */
-.clcargo-goods-card.wp-block-column,
-.clcargo-badge-item.wp-block-column {
-  flex-basis: calc(25% - 1rem) !important;
+/* Goods: 3 per row on wide desktop, 2 on tablet, 1 on phone.
+   Gap 24px desktop/tablet, 16px phone (handled in media queries).
+   Selector carries .clcargo-section--goods .wp-block-columns > …
+   so it beats WP core's 0,3,0 stacking rule at <=781px. */
+.clcargo-section--goods .wp-block-columns > .clcargo-goods-card.wp-block-column {
+  flex-basis: calc(33.333% - 1rem) !important;
   flex-grow: 1 !important;
   min-width: 0 !important;
 }
 
+/* Badge items keep 4 per row. Higher-specificity selector beats WP core's
+   stacking rule on tablet/mobile. */
+.clcargo-section--why .wp-block-columns > .clcargo-badge-item.wp-block-column,
+.clcargo-badge-item.wp-block-column {
+  flex-basis: calc(25% - 0.75rem) !important;
+  flex-grow: 1 !important;
+  min-width: 0 !important;
+}
+
+/* Goods columns strip: allow wrap + equal-height alignment.
+   Override the 720px contentSize that WP applies to nested blocks in a
+   constrained layout — the goods grid must span the full section width. */
+.clcargo-section--goods .wp-block-columns {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1.5rem !important;  /* 24px desktop/tablet */
+  align-items: stretch !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
 .clcargo-step.wp-block-column {
-  flex-basis: calc(20% - 0.75rem) !important;
+  flex-basis: calc(20% - 0.8rem) !important;
   flex-grow: 1 !important;
   min-width: 0 !important;
 }
 
 /* Hero overlay */
 .clcargo-hero .wp-block-cover__background {
-  background-color: rgba(22, 52, 82, 0.62) !important;
+  background-color: rgba(10, 25, 47, 0.72) !important;
 }
 
 /* Button full width in hero on mobile handled in responsive.css */

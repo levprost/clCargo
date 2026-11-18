@@ -10,8 +10,11 @@
   position: sticky;
   top: 0;
   z-index: 200;
-  background: linear-gradient(135deg, var(--cl-blue-dark) 0%, var(--cl-blue) 100%);
-  box-shadow: 0 2px 12px rgba(22, 52, 82, 0.35);
+  background: rgba(10, 25, 47, 0.95);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  backdrop-filter: blur(12px) saturate(1.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
   width: 100%;
   box-sizing: border-box;
   padding: 0 !important;
@@ -192,7 +195,7 @@
 .pll-switcher-block .current-lang a {
   color: var(--cl-blue-dark) !important;
   background: var(--cl-yellow) !important;
-  box-shadow: 0 1px 4px rgba(229, 188, 89, 0.4);
+  box-shadow: 0 1px 4px rgba(251, 191, 36, 0.4);
 }
 
 /* ---- 5. CTA ---- */
@@ -200,20 +203,20 @@
 .clcargo-header__cta-wrap .wp-block-button { margin: 0 !important; }
 
 .clcargo-header__cta .wp-block-button__link {
-  background: var(--cl-yellow) !important;
-  color: var(--cl-blue-dark) !important;
+  background: var(--cl-cta-gradient) !important;
+  color: var(--cl-cta-text) !important;
   font-weight: 700 !important;
   font-size: 0.875rem !important;
   padding: 0.6rem 1.1rem !important;
   border-radius: var(--cl-radius-sm) !important;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(229,188,89,0.3);
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.35);
   transition: background var(--cl-transition), box-shadow var(--cl-transition);
 }
 
 .clcargo-header__cta .wp-block-button__link:hover {
-  background: var(--cl-yellow-dark) !important;
-  box-shadow: 0 4px 14px rgba(229,188,89,0.4);
+  background: var(--cl-cta-gradient-hover) !important;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4);
 }
 
 /* ---- Burger (hidden on desktop) ---- */

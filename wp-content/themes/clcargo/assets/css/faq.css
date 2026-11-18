@@ -15,12 +15,12 @@
 }
 
 .clcargo-faq-item.wp-block-details:hover {
-  border-color: var(--cl-blue);
+  border-color: var(--cl-yellow);
 }
 
 .clcargo-faq-item[open] {
-  border-color: var(--cl-blue) !important;
-  box-shadow: 0 2px 10px rgba(32,75,115,0.08) !important;
+  border-color: var(--cl-yellow) !important;
+  box-shadow: 0 2px 10px rgba(251, 191, 36, 0.15) !important;
 }
 
 .clcargo-faq-item summary {
@@ -28,7 +28,7 @@
   cursor: pointer;
   font-weight: 600;
   font-size: 0.95rem;
-  color: var(--cl-text);
+  color: var(--cl-blue-dark);
   list-style: none !important;
   -webkit-appearance: none;
   display: flex !important;
@@ -41,7 +41,7 @@
 }
 
 .clcargo-faq-item summary:focus-visible {
-  outline: 2px solid var(--cl-blue);
+  outline: 2px solid var(--cl-focus-ring);
   outline-offset: 4px;
   border-radius: 4px;
 }
@@ -71,13 +71,14 @@
   content: '+';
   font-size: 1.5rem;
   font-weight: 300;
-  color: var(--cl-blue);
+  color: var(--cl-yellow-dark);
   flex-shrink: 0;
   line-height: 1;
-  transition: transform var(--cl-transition);
+  transition: transform var(--cl-transition), color var(--cl-transition);
 }
 
 .clcargo-faq-item[open] summary::after {
+  color: var(--cl-yellow-deep);
   transform: rotate(45deg);
 }
 

@@ -3,27 +3,54 @@
    ============================================= */
 
 :root {
-  /* Brand colours */
-  --cl-blue:        #204B73;
-  --cl-blue-dark:   #163452;
-  --cl-blue-light:  #EBF2F9;
-  --cl-yellow:      #E5BC59;
-  --cl-yellow-dark: #C9A33E;
-  --cl-bg:          #F8FAFC;
-  --cl-text:        #182A3B;
-  --cl-text-muted:  #5A7490;
-  --cl-white:       #FFFFFF;
-  --cl-border:      #D6E4F0;
+  /* ---- Dark blues ---- */
+  --cl-blue-dark:      #0A192F;  /* hero, dark sections, headings on light bg */
+  --cl-blue-panel:     #112240;  /* cards / form panels on dark bg */
+  --cl-blue:           #1D3557;  /* decorative transitions, secondary blue */
+  --cl-blue-darkest:   #060F1E;  /* footer */
 
-  /* Typography */
+  /* Subtle blue tint, kept for notice strips / direction-time pills */
+  --cl-blue-light:     #E8EFF7;
+
+  /* ---- Golden accents ---- */
+  --cl-yellow:         #FBBF24;  /* primary accent */
+  --cl-yellow-dark:    #F59E0B;  /* rich gold, right side of CTA gradient */
+  --cl-yellow-deep:    #D97706;  /* hover gold */
+
+  /* ---- Backgrounds / text on light ---- */
+  --cl-bg:             #F8FAFC;  /* very light contacts background */
+  --cl-bg-alt:         #F1F5F9;  /* alternating light-grey sections */
+  --cl-white:          #FFFFFF;  /* white sections, cards */
+  --cl-text:           #1E293B;  /* primary text on light bg */
+  --cl-text-muted:     #475569;  /* secondary text on light bg */
+  --cl-border:         #E2E8F0;  /* borders on light bg */
+
+  /* ---- Text on dark ---- */
+  --cl-text-on-dark:        #CBD5E1;  /* primary explanation text on dark */
+  --cl-text-muted-on-dark:  #94A3B8;  /* secondary captions on dark */
+
+  /* ---- Messenger brand colours ---- */
+  --cl-whatsapp:  #16A34A;
+  --cl-telegram:  #0284C7;
+  --cl-viber:     #9333EA;
+
+  /* ---- CTA gradient ---- */
+  --cl-cta-gradient:        linear-gradient(90deg, #FBBF24, #F59E0B);
+  --cl-cta-gradient-hover:  linear-gradient(90deg, #F59E0B, #D97706);
+  --cl-cta-text:            #0A192F;
+
+  /* ---- Focus ring ---- */
+  --cl-focus-ring: #FBBF24;
+
+  /* ---- Typography ---- */
   --cl-font:        'Inter', 'Helvetica Neue', Arial, sans-serif;
 
-  /* Layout */
+  /* ---- Layout ---- */
   --cl-container:   1200px;
   --cl-narrow:      760px;
   --cl-header-h:    72px;
 
-  /* Spacing */
+  /* ---- Spacing ---- */
   --cl-space-xs:    0.5rem;
   --cl-space-s:     1rem;
   --cl-space-m:     1.5rem;
@@ -31,10 +58,10 @@
   --cl-space-xl:    4rem;
   --cl-space-xxl:   6rem;
 
-  /* Effects */
+  /* ---- Effects ---- */
   --cl-radius:      8px;
   --cl-radius-sm:   6px;
-  --cl-shadow:      0 4px 16px rgba(24, 42, 59, 0.10);
-  --cl-shadow-hover:0 8px 28px rgba(24, 42, 59, 0.16);
+  --cl-shadow:      0 4px 16px rgba(10, 25, 47, 0.08);
+  --cl-shadow-hover:0 8px 28px rgba(10, 25, 47, 0.14);
   --cl-transition:  0.2s ease;
 }

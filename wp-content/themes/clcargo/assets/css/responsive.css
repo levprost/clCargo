@@ -38,25 +38,12 @@
     min-width: 0;
   }
 
-  /* Steps: wrap */
-  .clcargo-steps.wp-block-columns {
-    flex-wrap: wrap !important;
-  }
-  .clcargo-step.wp-block-column {
-    flex-basis: calc(50% - 0.5rem) !important;
-    min-width: 0;
-  }
+  /* (Steps breakpoints handled dedicatedly in steps.css) */
 
-  /* Goods: 3 columns */
-  .wp-block-columns:has(.clcargo-goods-card) {
-    flex-wrap: wrap !important;
-  }
-  .clcargo-goods-card.wp-block-column {
-    flex-basis: calc(33.333% - 0.75rem) !important;
-    min-width: 0;
-  }
+  /* (Goods breakpoints handled in dedicated media queries below) */
 
-  /* Badges: 2 columns */
+  /* Badges: 2 columns on tablet */
+  .clcargo-section--why .wp-block-columns > .clcargo-badge-item.wp-block-column,
   .clcargo-badge-item.wp-block-column {
     flex-basis: calc(50% - 0.5rem) !important;
     min-width: 0;
@@ -111,22 +98,17 @@
     flex-basis: 100% !important;
   }
 
-  /* Steps: 1 column */
-  .clcargo-step.wp-block-column {
-    flex-basis: 100% !important;
-  }
+  /* (Steps breakpoint handled in steps.css) */
 
-  /* Goods: 2 columns */
-  .clcargo-goods-card.wp-block-column {
-    flex-basis: calc(50% - 0.5rem) !important;
-  }
+  /* (Goods breakpoint handled dedicatedly below) */
 
   /* Why: 1 column */
   .clcargo-section .wp-block-columns:has(.clcargo-why-list) {
     flex-direction: column !important;
   }
 
-  /* Badges: 2 col */
+  /* Badges: 2 col on mobile */
+  .clcargo-section--why .wp-block-columns > .clcargo-badge-item.wp-block-column,
   .clcargo-badge-item.wp-block-column {
     flex-basis: calc(50% - 0.5rem) !important;
   }
@@ -158,12 +140,27 @@
   }
 }
 
-/* ---- Very small: 360px ---- */
-@media (max-width: 360px) {
-  .clcargo-goods-card.wp-block-column {
+/* =============================================
+   Goods section — dedicated 3 / 2 / 1 grid
+   ≥1030 → 3 cards, 600–1029 → 2 cards, <600 → 1 card
+   Gap: 24px down to 600px, then 16px.
+   ============================================= */
+@media (max-width: 1029.98px) and (min-width: 600px) {
+  .clcargo-section--goods .wp-block-columns > .clcargo-goods-card.wp-block-column {
+    flex-basis: calc(50% - 0.75rem) !important;
+  }
+}
+@media (max-width: 599.98px) {
+  .clcargo-section--goods .wp-block-columns {
+    gap: 1rem !important; /* 16px mobile */
+  }
+  .clcargo-section--goods .wp-block-columns > .clcargo-goods-card.wp-block-column {
     flex-basis: 100% !important;
   }
+}
 
+/* ---- Very small: 360px ---- */
+@media (max-width: 360px) {
   .clcargo-badge-item.wp-block-column {
     flex-basis: 100% !important;
   }

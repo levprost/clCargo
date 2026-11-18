@@ -46,12 +46,13 @@
   /* keep WP's colour, just ensure no overflow */
 }
 
-/* Section headings */
+/* Section headings — dark blue on light sections */
 .clcargo-section h2.wp-block-heading {
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   font-weight: 800;
   margin-bottom: var(--cl-space-s);
   text-align: center;
+  color: var(--cl-blue-dark);
 }
 
 .clcargo-section h2.wp-block-heading + p {
@@ -63,16 +64,26 @@
   margin-bottom: var(--cl-space-l);
 }
 
-/* Blue sections — white text */
+/* Dark sections — intro paragraph uses the on-dark muted colour */
+.clcargo-services h2.wp-block-heading + p,
+.clcargo-history h2.wp-block-heading + p {
+  color: var(--cl-text-on-dark);
+}
+
+/* Dark sections — white headings */
 .clcargo-services h2.wp-block-heading,
-.clcargo-history h2.wp-block-heading,
-.clcargo-cta h2.wp-block-heading {
+.clcargo-history h2.wp-block-heading {
   color: var(--cl-white);
+}
+
+/* Contacts section is now on a very light background — dark heading */
+.clcargo-cta h2.wp-block-heading {
+  color: var(--cl-blue-dark);
 }
 
 /* Info notice strip (port routing) */
 .clcargo-notice {
-  border-left: 4px solid var(--cl-blue) !important;
+  border-left: 4px solid var(--cl-yellow) !important;
   border-radius: 0 var(--cl-radius) var(--cl-radius) 0 !important;
   background: var(--cl-blue-light) !important;
   padding: 1rem 1.25rem !important;
@@ -89,9 +100,9 @@
 
 /* CTA banner in services section */
 .clcargo-banner {
-  border: 1px solid rgba(229, 188, 89, 0.5) !important;
+  border: 1px solid rgba(251, 191, 36, 0.5) !important;
   border-radius: var(--cl-radius) !important;
-  background: rgba(229, 188, 89, 0.1) !important;
+  background: rgba(251, 191, 36, 0.1) !important;
   padding: 1.25rem 2rem !important;
   margin-top: var(--cl-space-l) !important;
   box-sizing: border-box;
@@ -107,7 +118,7 @@
 
 /* History section paragraph */
 .clcargo-history .wp-block-group > p {
-  color: rgba(255,255,255,0.88) !important;
+  color: var(--cl-text-on-dark) !important;
   font-size: 1.05rem;
   line-height: 1.7;
   max-width: 760px;
@@ -115,13 +126,13 @@
   text-align: center;
 }
 
-/* Final CTA section */
+/* Final CTA / contacts section — light background, dark text */
 .clcargo-cta > .wp-block-group {
   max-width: 700px;
 }
 
 .clcargo-cta > .wp-block-group > p {
-  color: rgba(255,255,255,0.85) !important;
+  color: var(--cl-text-muted) !important;
   text-align: center;
 }
 
@@ -135,7 +146,7 @@
 }
 
 .clcargo-cta .contact-row p {
-  color: var(--cl-white) !important;
+  color: var(--cl-text) !important;
   text-align: center;
   margin: 0 !important;
   line-height: 1.5;
@@ -143,21 +154,22 @@
 
 .clcargo-cta .contact-row a,
 .clcargo-cta .clcargo-phone-link {
-  color: var(--cl-white) !important;
+  color: var(--cl-blue-dark) !important;
   font-weight: 700;
   text-decoration: none;
 }
 
 .clcargo-cta .clcargo-phone-link:hover {
+  color: var(--cl-yellow-dark) !important;
   text-decoration: underline;
 }
 
 .clcargo-cta .contact-row span {
   font-size: 0.82rem;
-  opacity: 0.65;
+  color: var(--cl-text-muted);
 }
 
-/* Messenger list inside CTA / contact section */
+/* Messenger list — brand-coloured chips on the light contacts section */
 .clcargo-cta .clcargo-messengers {
   list-style: none !important;
   padding: 0 !important;
@@ -177,17 +189,26 @@
   align-items: center;
   gap: 0.4rem;
   color: var(--cl-white) !important;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  padding: 0.55rem 1.1rem;
-  border-radius: 6px;
+  padding: 0.6rem 1.15rem;
+  border-radius: 8px;
   text-decoration: none !important;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(10, 25, 47, 0.08);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .clcargo-cta .clcargo-messengers__link:hover {
-  background: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(10, 25, 47, 0.18);
+  color: var(--cl-white) !important;
 }
+
+.clcargo-cta .clcargo-messengers__link--whatsapp { background: var(--cl-whatsapp); }
+.clcargo-cta .clcargo-messengers__link--whatsapp:hover { background: #15803D; }
+
+.clcargo-cta .clcargo-messengers__link--telegram { background: var(--cl-telegram); }
+.clcargo-cta .clcargo-messengers__link--telegram:hover { background: #0369A1; }
+
+.clcargo-cta .clcargo-messengers__link--viber { background: var(--cl-viber); }
+.clcargo-cta .clcargo-messengers__link--viber:hover { background: #7E22CE; }
