@@ -1,0 +1,161 @@
+[
+  {
+    "path": "assets/flags/cn.svg",
+    "bytes": 895,
+    "sha256": "251f5b5d4ffa6833a890bf144d32f7bff6473b2e87146bdb04e4cec4c668538c"
+  },
+  {
+    "path": "assets/flags/eu.svg",
+    "bytes": 2013,
+    "sha256": "b054bb890d3d15b18f04bfc68acfdb0bc7fa19c79987c46ff01114cb5957526c"
+  },
+  {
+    "path": "assets/flags/in.svg",
+    "bytes": 1512,
+    "sha256": "c2ec1bdce52243cb91043d797f0564bf148935c83e25cbacb6bfb47982324cb9"
+  },
+  {
+    "path": "assets/flags/pl.svg",
+    "bytes": 146,
+    "sha256": "b98d01fe3b5f4c75c5098cb0fb776df132bd7b924e3085cdd9f8e510fef4737a"
+  },
+  {
+    "path": "assets/flags/tr.svg",
+    "bytes": 377,
+    "sha256": "3ab083bd722d0ebfbe0786966916138161a76bb99d170da8b962520d05900b31"
+  },
+  {
+    "path": "assets/icons/calculator.svg",
+    "bytes": 361,
+    "sha256": "5ff9f67dc63df63207f9037ee45afec7ee901e2267920a4f69215449ace1b788"
+  },
+  {
+    "path": "assets/icons/credit-card.svg",
+    "bytes": 282,
+    "sha256": "736b1062fc72bfd4bddd27c03fbbf0544a0bd42c48deeafa92168ebef5e9a34e"
+  },
+  {
+    "path": "assets/icons/package.svg",
+    "bytes": 287,
+    "sha256": "9d36c65f539c07c57bf1cefdef74088db770662883c009dd8208d62d87ad0f8e"
+  },
+  {
+    "path": "assets/icons/phone.svg",
+    "bytes": 427,
+    "sha256": "1a7d8b8d76204c9ad733fd2da92fa344b7148123f28a10dad0aba075c008c152"
+  },
+  {
+    "path": "assets/icons/shield-check.svg",
+    "bytes": 291,
+    "sha256": "f44fd87f92ad1975787d23b7308422851361de9629be8a16bc5417f71c72a683"
+  },
+  {
+    "path": "assets/icons/warehouse.svg",
+    "bytes": 285,
+    "sha256": "60892150b56d9fdbc579e03957b239bbde341d0416965f37236ab10327805396"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-1254.jpg",
+    "bytes": 600034,
+    "sha256": "1039740c43d21282d6d15bad4fbd9c17b3be729f0f7ff7aef3746df2ce5774e1",
+    "width": 1254,
+    "height": 1254,
+    "format": "JPEG"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-1254.webp",
+    "bytes": 307036,
+    "sha256": "0006bb7254de43ccc78e01b45484132b33b98b50d1802a89b6fe7d4adff0b15d",
+    "width": 1254,
+    "height": 1254,
+    "format": "WEBP"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-320.jpg",
+    "bytes": 63767,
+    "sha256": "dfe5486ad7e01cddcf276158b2e569189f52ed78385630eeec0308b0b1ca84e8",
+    "width": 320,
+    "height": 320,
+    "format": "JPEG"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-320.webp",
+    "bytes": 35674,
+    "sha256": "30e270472d7463c733ee0307800e89fd92f8da5a71b69002ad8a96039b944954",
+    "width": 320,
+    "height": 320,
+    "format": "WEBP"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-480.jpg",
+    "bytes": 123336,
+    "sha256": "86a8312e24484689ceef8f15e8086559a14f2c2c285ed0c20c5bb9688420d520",
+    "width": 480,
+    "height": 480,
+    "format": "JPEG"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-480.webp",
+    "bytes": 66536,
+    "sha256": "50ce5135d33c38e4d3b15d23c90a432a77fa749ca44803fb93c3336a01f2a32f",
+    "width": 480,
+    "height": 480,
+    "format": "WEBP"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-640.jpg",
+    "bytes": 194547,
+    "sha256": "73fb98331276af7d0071f30847572242e835044d52d9a9e1b9250a33744c835f",
+    "width": 640,
+    "height": 640,
+    "format": "JPEG"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-640.webp",
+    "bytes": 103706,
+    "sha256": "885b9feb0527dc427f8f8bc778ef31ec7126c6a1c997f7773ee650a96dc5cc67",
+    "width": 640,
+    "height": 640,
+    "format": "WEBP"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-768.jpg",
+    "bytes": 260079,
+    "sha256": "7fe051798c0f182223e03be479e7843ec87400e8abee65ff6b260fad4ab94354",
+    "width": 768,
+    "height": 768,
+    "format": "JPEG"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-768.webp",
+    "bytes": 135158,
+    "sha256": "53d86c0c1f5b9455b26c077bef3d9c7ebc305e2dde06f6698b05465c5775e26e",
+    "width": 768,
+    "height": 768,
+    "format": "WEBP"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-960.jpg",
+    "bytes": 365919,
+    "sha256": "3abbb5295d3f87bbcf565c237ee96abc59771f581d2211de0767a43ecbc03d9b",
+    "width": 960,
+    "height": 960,
+    "format": "JPEG"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-960.webp",
+    "bytes": 189024,
+    "sha256": "3672215b741251b90d74c58e41014ddc9a8de4c926f9faf76eff46338904c12e",
+    "width": 960,
+    "height": 960,
+    "format": "WEBP"
+  },
+  {
+    "path": "assets/mobile-banner/cl-cargo-mobile-original.png",
+    "bytes": 3062372,
+    "sha256": "4801046083d98bbfe934e14dc59d3ac21436759ad821ef35c77b414e87052fe9",
+    "width": 1254,
+    "height": 1254,
+    "format": "PNG"
+  }
+]

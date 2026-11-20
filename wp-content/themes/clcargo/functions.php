@@ -107,6 +107,259 @@ add_shortcode( 'clcargo_phone', function () {
 	);
 } );
 
+/* =============================================
+ * Hero content + SVG assets (content kit v1, 2026-11)
+ *
+ * All UA/RU copy comes verbatim from cl-cargo-hero-kit/content.json.
+ * Edit here when the copy changes — this is the theme's source of
+ * truth for the hero block. The page content only invokes
+ * `[clcargo_hero]`; language is picked via `pll_current_language()`.
+ * ============================================= */
+function clcargo_hero_content() {
+	return [
+		'uk' => [
+			'expBadge'          => 'Понад 30 років досвіду у міжнародній логістиці',
+			'heroTitle'         => 'Міжнародна логістика та митниця',
+			'heroTitleAccent'   => '«під ключ»',
+			'heroLead'          => 'Надійна доставка комерційних та збірних вантажів вагою',
+			'heroWeight'        => 'від 20 кг',
+			'destinationsLabel' => 'Країни відправлення',
+			'destinations'      => [
+				[ 'name' => 'Туреччина', 'flags' => [ 'tr' ] ],
+				[ 'name' => 'Китай',     'flags' => [ 'cn' ] ],
+				[ 'name' => 'Індія',     'flags' => [ 'in' ] ],
+				[ 'name' => 'Європа',    'flags' => [ 'eu', 'pl' ] ],
+			],
+			'heroDetails'       => 'Беремо на себе повний цикл: викуп та безпечну оплату товару постачальникам, приймання та консолідацію на наших закордонних складах, міжнародне перевезення та офіційне митне оформлення в Україні.',
+			'mottoTitle'        => '«Надійність, перевірена десятиліттями — ваш вантаж у безпеці на кожному кілометрі шляху!»',
+			'mottoSub'          => 'Гарантія збереження, суворий контроль термінів та повна юридична чистота угоди.',
+			'highlights'        => [
+				[ 'icon' => 'shield-check', 'text' => '100% відповідальність за збереження вантажу' ],
+				[ 'icon' => 'package',      'text' => 'Збірні та комерційні партії від 20 кг' ],
+				[ 'icon' => 'credit-card',  'text' => 'Допомога з оплатою товару постачальникам' ],
+				[ 'icon' => 'warehouse',    'text' => 'Власні склади консолідації за кордоном' ],
+			],
+			'btnCalc'           => 'Розрахувати доставку',
+			'btnCall'           => 'Зателефонувати менеджеру',
+			'bannerAlt'         => 'CL CARGO — доставка та митне оформлення комерційних вантажів з-за кордону',
+			'bannerLinkLabel'   => 'Перейти до розрахунку доставки',
+			'desktopPhotoAlt'   => 'Вантажівка та контейнери у вантажному терміналі',
+		],
+		'ru' => [
+			'expBadge'          => 'Более 30 лет опыта в международной логистике',
+			'heroTitle'         => 'Международная логистика и таможня',
+			'heroTitleAccent'   => '«под ключ»',
+			'heroLead'          => 'Надёжная доставка коммерческих и сборных грузов весом',
+			'heroWeight'        => 'от 20 кг',
+			'destinationsLabel' => 'Страны отправления',
+			'destinations'      => [
+				[ 'name' => 'Турция', 'flags' => [ 'tr' ] ],
+				[ 'name' => 'Китай',  'flags' => [ 'cn' ] ],
+				[ 'name' => 'Индия',  'flags' => [ 'in' ] ],
+				[ 'name' => 'Европа', 'flags' => [ 'eu', 'pl' ] ],
+			],
+			'heroDetails'       => 'Берём на себя полный цикл: выкуп и безопасную оплату товара поставщикам, приём и консолидацию на наших зарубежных складах, международную перевозку и официальное таможенное оформление в Украине.',
+			'mottoTitle'        => '«Надёжность, проверенная десятилетиями — ваш груз в безопасности на каждом километре пути!»',
+			'mottoSub'          => 'Гарантия сохранности, строгий контроль сроков и полная юридическая чистота сделки.',
+			'highlights'        => [
+				[ 'icon' => 'shield-check', 'text' => '100% ответственность за сохранность груза' ],
+				[ 'icon' => 'package',      'text' => 'Сборные и коммерческие партии от 20 кг' ],
+				[ 'icon' => 'credit-card',  'text' => 'Помощь с оплатой товара поставщикам' ],
+				[ 'icon' => 'warehouse',    'text' => 'Собственные склады консолидации за рубежом' ],
+			],
+			'btnCalc'           => 'Рассчитать доставку',
+			'btnCall'           => 'Позвонить менеджеру',
+			'bannerAlt'         => 'CL CARGO — доставка и таможенное оформление коммерческих грузов из-за рубежа',
+			'bannerLinkLabel'   => 'Перейти к расчёту доставки',
+			'desktopPhotoAlt'   => 'Грузовик и контейнеры на грузовом терминале',
+		],
+	];
+}
+
+/** Flag SVGs supplied with the hero kit — embedded verbatim. */
+function clcargo_hero_flag_svg( $code ) {
+	$svgs = [
+		'tr' => '<svg class="clcargo-hero__flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="#E30A17" d="M0 0h60v40H0z"/><circle cx="25" cy="20" r="10" fill="white"/><circle cx="28" cy="20" r="8" fill="#E30A17"/><g fill="white"><polygon points="43.500,20.000 39.700,21.235 39.700,25.231 37.351,21.998 33.550,23.233 35.899,20.000 33.550,16.767 37.351,18.002 39.700,14.769 39.700,18.765"/></g></svg>',
+		'cn' => '<svg class="clcargo-hero__flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="#DE2910" d="M0 0h60v40H0z"/><g fill="#FFDE00"><polygon points="10.000,4.000 11.347,8.146 15.706,8.146 12.180,10.708 13.527,14.854 10.000,12.292 6.473,14.854 7.820,10.708 4.294,8.146 8.653,8.146"/><polygon points="18.285,5.029 19.239,3.933 18.491,2.687 19.829,3.255 20.783,2.159 20.655,3.607 21.992,4.176 20.576,4.502 20.449,5.949 19.701,4.703"/><polygon points="22.020,8.283 23.325,7.643 23.119,6.204 24.131,7.247 25.436,6.607 24.756,7.892 25.768,8.935 24.336,8.686 23.657,9.970 23.452,8.532"/><polygon points="22.077,13.451 23.529,13.398 23.928,12.001 24.427,13.366 25.879,13.314 24.735,14.210 25.233,15.575 24.027,14.764 22.883,15.659 23.282,14.262"/><polygon points="18.438,16.751 19.798,17.263 20.706,16.129 20.638,17.580 21.998,18.093 20.597,18.477 20.529,19.929 19.730,18.715 18.329,19.099 19.237,17.965"/></g></svg>',
+		'in' => '<svg class="clcargo-hero__flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="#FF9933" d="M0 0h60v13.333H0z"/><path fill="white" d="M0 13.333h60v13.334H0z"/><path fill="#138808" d="M0 26.667h60V40H0z"/><g fill="none" stroke="#000080"><circle cx="30" cy="20" r="5.7" stroke-width=".65"/></g><circle cx="30" cy="20" r="1" fill="#000080"/></svg>',
+		'eu' => '<svg class="clcargo-hero__flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="#003399" d="M0 0h60v40H0z"/><g fill="#FFCC00"><polygon points="30.000,6.000 30.449,7.382 31.902,7.382 30.727,8.236 31.176,9.618 30.000,8.764 28.824,9.618 29.273,8.236 28.098,7.382 29.551,7.382"/><polygon points="36.000,7.608 36.449,8.990 37.902,8.990 36.727,9.844 37.176,11.226 36.000,10.372 34.824,11.226 35.273,9.844 34.098,8.990 35.551,8.990"/><polygon points="40.392,12.000 40.841,13.382 42.294,13.382 41.119,14.236 41.568,15.618 40.392,14.764 39.217,15.618 39.666,14.236 38.490,13.382 39.943,13.382"/><polygon points="42.000,18.000 42.449,19.382 43.902,19.382 42.727,20.236 43.176,21.618 42.000,20.764 40.824,21.618 41.273,20.236 40.098,19.382 41.551,19.382"/><polygon points="40.392,24.000 40.841,25.382 42.294,25.382 41.119,26.236 41.568,27.618 40.392,26.764 39.217,27.618 39.666,26.236 38.490,25.382 39.943,25.382"/><polygon points="36.000,28.392 36.449,29.774 37.902,29.774 36.727,30.628 37.176,32.010 36.000,31.156 34.824,32.010 35.273,30.628 34.098,29.774 35.551,29.774"/><polygon points="30.000,30.000 30.449,31.382 31.902,31.382 30.727,32.236 31.176,33.618 30.000,32.764 28.824,33.618 29.273,32.236 28.098,31.382 29.551,31.382"/><polygon points="24.000,28.392 24.449,29.774 25.902,29.774 24.727,30.628 25.176,32.010 24.000,31.156 22.824,32.010 23.273,30.628 22.098,29.774 23.551,29.774"/><polygon points="19.608,24.000 20.057,25.382 21.510,25.382 20.334,26.236 20.783,27.618 19.608,26.764 18.432,27.618 18.881,26.236 17.706,25.382 19.159,25.382"/><polygon points="18.000,18.000 18.449,19.382 19.902,19.382 18.727,20.236 19.176,21.618 18.000,20.764 16.824,21.618 17.273,20.236 16.098,19.382 17.551,19.382"/><polygon points="19.608,12.000 20.057,13.382 21.510,13.382 20.334,14.236 20.783,15.618 19.608,14.764 18.432,15.618 18.881,14.236 17.706,13.382 19.159,13.382"/><polygon points="24.000,7.608 24.449,8.990 25.902,8.990 24.727,9.844 25.176,11.226 24.000,10.372 22.824,11.226 23.273,9.844 22.098,8.990 23.551,8.990"/></g></svg>',
+		'pl' => '<svg class="clcargo-hero__flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="white" d="M0 0h60v20H0z"/><path fill="#DC143C" d="M0 20h60v20H0z"/></svg>',
+	];
+	return isset( $svgs[ $code ] ) ? $svgs[ $code ] : '';
+}
+
+/** UI icon SVGs supplied with the hero kit — stroke currentColor so CSS controls colour. */
+function clcargo_hero_icon_svg( $name ) {
+	$svgs = [
+		'calculator'   => '<svg class="clcargo-hero__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="2" width="14" height="20" rx="2"/><rect x="8" y="5" width="8" height="4" rx=".4"/><path d="M8 13h1M12 13h1M16 13h.1M8 17h1M12 17h1M16 17h.1"/></svg>',
+		'phone'        => '<svg class="clcargo-hero__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7.2 3.5 4.6 4.7c-1.4.6-1.8 2-1.2 3.5 2.4 6.1 6.8 10.5 12.9 12.9 1.5.6 2.9.2 3.5-1.2l1.2-2.6a1 1 0 0 0-.4-1.3l-4-2.2a1 1 0 0 0-1.2.2l-1.6 1.6a15 15 0 0 1-5.4-5.4L10 8.6a1 1 0 0 0 .2-1.2L8.5 3.9a1 1 0 0 0-1.3-.4Z"/></svg>',
+		'shield-check' => '<svg class="clcargo-hero__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3 20 6v5c0 5-3.3 8-8 10-4.7-2-8-5-8-10V6Z"/><path d="m8 12 2.5 2.5L16 9"/></svg>',
+		'package'      => '<svg class="clcargo-hero__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 2 9 5v10l-9 5-9-5V7Z"/><path d="m3 7 9 5 9-5M12 12v10M7.5 4.5l9 5v4"/></svg>',
+		'credit-card'  => '<svg class="clcargo-hero__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20M6 15h4"/></svg>',
+		'warehouse'    => '<svg class="clcargo-hero__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21V8l9-5 9 5v13M7 21V11h10v10M2 21h20"/><path d="M9 16h6v5M12 13v3"/></svg>',
+	];
+	return isset( $svgs[ $name ] ) ? $svgs[ $name ] : '';
+}
+
+/**
+ * Responsive <picture> for the mobile banner. 6 widths × WebP + JPEG.
+ *
+ * Structure: both <source> elements are gated by media="(max-width: 1030px)",
+ * so on desktop neither matches and the browser falls back to the <img>,
+ * which carries a 1×1 transparent GIF as src — zero network impact on
+ * desktop while still providing an <img> for a11y. On mobile the browser
+ * picks the correct WebP/JPEG candidate from srcset based on the
+ * actual rendered width (sizes mirrors the real container padding).
+ *
+ * The whole picture is wrapped in an anchor to #form because the banner
+ * already depicts a "Розрахувати доставку" button — the whole image
+ * is one link, not a hotspot map.
+ */
+function clcargo_hero_mobile_banner_html( $strings ) {
+	$base   = get_stylesheet_directory_uri() . '/assets/hero/mobile-banner';
+	$widths = [ 320, 480, 640, 768, 960, 1254 ];
+	$webp   = [];
+	$jpeg   = [];
+	foreach ( $widths as $w ) {
+		$webp[] = sprintf( '%s/cl-cargo-mobile-%d.webp %dw', $base, $w, $w );
+		$jpeg[] = sprintf( '%s/cl-cargo-mobile-%d.jpg %dw',  $base, $w, $w );
+	}
+	// Mirror the actual CSS padding on .clcargo-hero__inner:
+	// ≤639 → 16px (16+16=32); 640–1030 → 24px (24+24=48).
+	$sizes = '(max-width: 639px) calc(100vw - 32px), (max-width: 1030px) calc(100vw - 48px), 1px';
+
+	// 1×1 transparent GIF — used as desktop fallback so no banner bytes
+	// are fetched when sources don't match.
+	$blank = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+	$alt   = esc_attr( $strings['bannerAlt'] );
+	$label = esc_attr( $strings['bannerLinkLabel'] );
+
+	return sprintf(
+		'<a class="clcargo-hero__banner" href="#form" aria-label="%1$s">'
+			. '<picture>'
+				. '<source media="(max-width: 1030px)" type="image/webp" srcset="%2$s" sizes="%3$s">'
+				. '<source media="(max-width: 1030px)" type="image/jpeg" srcset="%4$s" sizes="%3$s">'
+				. '<img src="%5$s" width="1254" height="1254" alt="%6$s" decoding="async" fetchpriority="high">'
+			. '</picture>'
+		. '</a>',
+		$label,
+		esc_attr( implode( ', ', $webp ) ),
+		esc_attr( $sizes ),
+		esc_attr( implode( ', ', $jpeg ) ),
+		esc_attr( $blank ),
+		$alt
+	);
+}
+
+/**
+ * Full hero block. Language is resolved from Polylang; falls back to
+ * UA. Preserves the two existing actions: calc CTA → anchor #form
+ * (existing Forminator block id="form"), call CTA → opens the
+ * contact modal via the shared `[data-clcargo-contact-open]` hook.
+ */
+add_shortcode( 'clcargo_hero', function () {
+	$lang    = function_exists( 'pll_current_language' ) ? pll_current_language() : 'uk';
+	$content = clcargo_hero_content();
+	$s       = isset( $content[ $lang ] ) ? $content[ $lang ] : $content['uk'];
+
+	ob_start();
+	?>
+	<section class="clcargo-section clcargo-section--hero clcargo-hero">
+		<div class="clcargo-hero__inner">
+			<?php echo clcargo_hero_mobile_banner_html( $s ); ?>
+
+			<div class="clcargo-hero__grid">
+
+				<div class="clcargo-hero__col clcargo-hero__col--text">
+					<span class="clcargo-hero__badge">
+						<span class="clcargo-hero__badge-dot" aria-hidden="true"></span>
+						<?php echo esc_html( $s['expBadge'] ); ?>
+					</span>
+
+					<h1 class="clcargo-hero__title">
+						<?php echo esc_html( $s['heroTitle'] ); ?>
+						<span class="clcargo-hero__title-accent"><?php echo esc_html( $s['heroTitleAccent'] ); ?></span>
+					</h1>
+
+					<p class="clcargo-hero__lead">
+						<?php echo esc_html( $s['heroLead'] ); ?>
+						<strong class="clcargo-hero__lead-weight"><?php echo esc_html( $s['heroWeight'] ); ?></strong>
+					</p>
+
+					<ul class="clcargo-hero__destinations" aria-label="<?php echo esc_attr( $s['destinationsLabel'] ); ?>">
+						<?php foreach ( $s['destinations'] as $dest ) : ?>
+							<li class="clcargo-hero__dest">
+								<span class="clcargo-hero__dest-flags">
+									<?php foreach ( $dest['flags'] as $flag ) {
+										echo clcargo_hero_flag_svg( $flag );
+									} ?>
+								</span>
+								<span class="clcargo-hero__dest-name"><?php echo esc_html( $dest['name'] ); ?></span>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+
+					<p class="clcargo-hero__details"><?php echo esc_html( $s['heroDetails'] ); ?></p>
+
+					<div class="clcargo-hero__ctas">
+						<a class="clcargo-hero__cta clcargo-hero__cta--primary" href="#form">
+							<?php echo clcargo_hero_icon_svg( 'calculator' ); ?>
+							<span><?php echo esc_html( $s['btnCalc'] ); ?></span>
+						</a>
+						<button type="button" class="clcargo-hero__cta clcargo-hero__cta--secondary" aria-haspopup="dialog" aria-controls="clcargo-contact-modal" data-clcargo-contact-open>
+							<?php echo clcargo_hero_icon_svg( 'phone' ); ?>
+							<span><?php echo esc_html( $s['btnCall'] ); ?></span>
+						</button>
+					</div>
+				</div>
+
+				<div class="clcargo-hero__col clcargo-hero__col--visual">
+					<?php
+					$photo_base = get_stylesheet_directory_uri() . '/assets/hero/mobile-banner';
+					$photo_widths = [ 320, 480, 640, 768, 960, 1254 ];
+					$photo_webp = [];
+					$photo_jpeg = [];
+					foreach ( $photo_widths as $pw ) {
+						$photo_webp[] = sprintf( '%s/cl-cargo-mobile-%d.webp %dw', $photo_base, $pw, $pw );
+						$photo_jpeg[] = sprintf( '%s/cl-cargo-mobile-%d.jpg %dw',  $photo_base, $pw, $pw );
+					}
+					// 44% of a 1280px container minus ~40px padding ≈ 540px fallback.
+					$photo_sizes = '(min-width: 1281px) 540px, 44vw';
+					?>
+					<div class="clcargo-hero__photo">
+						<picture>
+							<source media="(min-width: 1031px)" type="image/webp" srcset="<?php echo esc_attr( implode( ', ', $photo_webp ) ); ?>" sizes="<?php echo esc_attr( $photo_sizes ); ?>">
+							<source media="(min-width: 1031px)" type="image/jpeg" srcset="<?php echo esc_attr( implode( ', ', $photo_jpeg ) ); ?>" sizes="<?php echo esc_attr( $photo_sizes ); ?>">
+							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1254" height="1254" alt="<?php echo esc_attr( $s['desktopPhotoAlt'] ); ?>" decoding="async">
+						</picture>
+					</div>
+
+					<div class="clcargo-hero__motto">
+						<span class="clcargo-hero__motto-icon">
+							<?php echo clcargo_hero_icon_svg( 'shield-check' ); ?>
+						</span>
+						<p class="clcargo-hero__motto-title"><?php echo esc_html( $s['mottoTitle'] ); ?></p>
+						<p class="clcargo-hero__motto-sub"><?php echo esc_html( $s['mottoSub'] ); ?></p>
+					</div>
+				</div>
+
+			</div>
+
+			<ul class="clcargo-hero__highlights">
+				<?php foreach ( $s['highlights'] as $h ) : ?>
+					<li class="clcargo-hero__highlight">
+						<span class="clcargo-hero__highlight-icon"><?php echo clcargo_hero_icon_svg( $h['icon'] ); ?></span>
+						<span class="clcargo-hero__highlight-text"><?php echo esc_html( $h['text'] ); ?></span>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</section>
+	<?php
+	return ob_get_clean();
+} );
+
 /**
  * Brand mark: flag badge (blue top / yellow bottom + "CL") + wordmark.
  * Links to the home page of the current language so switching languages

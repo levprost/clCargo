@@ -1,229 +1,458 @@
 /* =============================================
-   CL CARGO — Hero Section
+   CL CARGO — Hero (content-kit v1, design pass v2)
+   Palette, sizes and rules per cl-cargo-hero-kit/02-design-and-icons.md.
+   All rules are scoped to .clcargo-hero.
    ============================================= */
 
+:root {
+  /* Hero-local tokens (design kit v2). Scoped by naming to avoid
+     colliding with sitewide tokens in variables.css. */
+  --cl-hero-bg:         #0A192F;
+  --cl-hero-panel:      #112240;
+  --cl-hero-blue-alt:   #1D3557;
+  --cl-hero-text:       #FFFFFF;
+  --cl-hero-text-mute:  #CBD5E1;
+  --cl-hero-text-dim:   #94A3B8;
+  --cl-hero-gold:       #FBBF24;
+  --cl-hero-gold-deep:  #F59E0B;
+  --cl-hero-gold-hover: #D97706;
+  --cl-hero-divider:    rgba(148, 163, 184, 0.35);
+  --cl-hero-chip-bd:    rgba(203, 213, 225, 0.55);
+  --cl-hero-container:  1280px;
+}
+
+/* ---- Section ---- */
 .clcargo-hero {
   position: relative;
-  background-color: var(--cl-blue-dark);
-  background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1600&q=80&auto=format');
-  background-size: cover;
-  background-position: center 40%;
-  min-height: 100vh !important;
-  /* Reset WP inline padding */
-  padding: 0 !important;
+  background: var(--cl-hero-bg);
+  color: var(--cl-hero-text-mute);
+  padding: 2.5rem 0 3rem !important;
 }
 
-/* Mobile: different crop */
-@media (max-width: 600px) {
-  .clcargo-hero {
-    background-image: url('https://images.unsplash.com/photo-1521727857535-28d2047619e7?w=800&q=80&auto=format');
-    background-position: center center;
-    min-height: 100svh !important;
-  }
-}
-
-/* Inner container alignment */
-.clcargo-hero .wp-block-cover__inner-container {
-  display: flex;
-  align-items: center;
-  min-height: 100vh;
-  padding: 0 !important;
-}
-
-.clcargo-hero .wp-block-cover__inner-container > .wp-block-group {
+.clcargo-hero__inner {
   width: 100%;
-  max-width: 820px;
+  max-width: var(--cl-hero-container);
   margin: 0 auto;
-  padding: var(--cl-space-xl) var(--cl-space-l) var(--cl-space-l) !important;
-  /* Panel-style card: deep blue + golden border */
-  background: rgba(17, 34, 64, 0.95);
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  padding: 0 1rem;                       /* 16px narrow */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .clcargo-hero__inner { padding: 0 1.5rem; }    /* 24px */
+}
+@media (min-width: 1280px) {
+  .clcargo-hero__inner { padding: 0 2.5rem; }    /* 40px at the widest */
+}
+
+/* ---- Mobile banner (≤1030) ----
+   - Hidden on desktop via `display: none`.
+   - On mobile, full container width, 1:1 aspect.
+   - Space is reserved from the img's 1254×1254 width/height attributes,
+     so the layout doesn't jump once the chosen srcset candidate loads.
+   - No `object-fit: cover` — the client banner has embedded text/logo/
+     phone that must NEVER be cropped. `width: 100%; height: auto` lets
+     the natural 1:1 ratio decide the height. */
+.clcargo-hero__banner {
+  display: none;
   border-radius: 20px;
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
-  backdrop-filter: blur(14px) saturate(1.1);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  background: var(--cl-hero-panel);
+  outline-offset: 4px;
 }
 
-@media (max-width: 600px) {
-  .clcargo-hero .wp-block-cover__inner-container > .wp-block-group {
-    max-width: calc(100% - 2rem);
-    padding: var(--cl-space-l) var(--cl-space-m) var(--cl-space-m) !important;
-    border-radius: 16px;
+.clcargo-hero__banner picture { display: block; }
+
+.clcargo-hero__banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;      /* belt-and-braces alongside width/height attrs */
+}
+
+.clcargo-hero__banner:focus-visible {
+  outline: 3px solid var(--cl-hero-gold);
+}
+
+/* ---- Grid ---- */
+.clcargo-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1031px) {
+  .clcargo-hero__grid {
+    /* fr columns ≈ 56/44 after a 44px gap */
+    grid-template-columns: minmax(0, 56fr) minmax(0, 44fr);
+    gap: 2.75rem;
+    align-items: start;
   }
 }
 
-@media (max-width: 448px) {
-  .clcargo-hero .wp-block-cover__inner-container > .wp-block-group {
-    border-radius: 0 !important;
-  }
+/* ---- Text column ---- */
+.clcargo-hero__col--text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
 }
 
-/* Yellow accent line */
-.clcargo-hero__accent-line {
-  width: 52px !important;
-  height: 4px !important;
-  background: var(--cl-yellow) !important;
-  border-radius: 3px !important;
-  margin-bottom: 1.5rem !important;
-  /* Override WP flex display */
-  display: block !important;
-  flex: none !important;
-}
-
-/* H1 */
-.clcargo-hero h1.wp-block-heading {
-  font-size: clamp(1.9rem, 4.5vw, 3.2rem) !important;
-  font-weight: 800 !important;
-  line-height: 1.15 !important;
-  color: var(--cl-white) !important;
-  margin-bottom: 1.25rem !important;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Yellow highlight span inside H1 — allows designers to wrap a word
-   in <span class="clcargo-hero__accent"> and get the gold accent. */
-.clcargo-hero h1 .clcargo-hero__accent,
-.clcargo-hero h1 em,
-.clcargo-hero h1 strong {
-  color: var(--cl-yellow) !important;
-  font-style: normal;
-}
-
-/* Subheading paragraph */
-.clcargo-hero .wp-block-cover__inner-container > .wp-block-group > p {
-  font-size: clamp(1rem, 2vw, 1.15rem) !important;
-  color: var(--cl-text-on-dark) !important;
-  margin-bottom: 1.5rem !important;
-  max-width: 600px;
-  line-height: 1.6;
-}
-
-/* Direction badges row */
-.clcargo-directions {
-  display: flex !important;
-  flex-wrap: wrap;
-  justify-content: center !important;
-  gap: 0.5rem;
-  margin-bottom: 2rem !important;
-}
-
-.clcargo-direction-badge {
-  display: inline-flex !important;
+/* ---- Experience badge ---- */
+.clcargo-hero__badge {
+  display: inline-flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(251, 191, 36, 0.35) !important;
-  border-radius: 20px !important;
-  padding: 0.3rem 0.9rem !important;
-  backdrop-filter: blur(6px);
-  flex: none !important;
-  min-width: 0 !important;
+  gap: 0.55rem;
+  align-self: flex-start;
+  padding: 0.4rem 0.9rem;
+  background: transparent;
+  border: 1px solid rgba(251, 191, 36, 0.55);
+  border-radius: 999px;
+  color: var(--cl-hero-gold);
+  font-size: 0.85rem;             /* ≈ 13.6px */
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 100%;
+}
+.clcargo-hero__badge-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--cl-hero-gold);
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.25);
 }
 
-.clcargo-direction-badge p {
-  color: var(--cl-white) !important;
-  margin: 0 !important;
-  font-size: 0.9rem !important;
+@media (max-width: 480px) {
+  .clcargo-hero__badge {
+    white-space: normal;
+    text-align: left;
+  }
+}
+
+/* ---- H1 ---- */
+.clcargo-hero__title {
+  margin: 0;
+  color: var(--cl-hero-text);
+  font-family: var(--cl-font);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  /* 30 → 52px; keeps the three-line composition from the reference
+     without forcing manual <br>s. Spec range: 48–64px wide, 30–36 phone. */
+  font-size: clamp(1.875rem, 3vw + 0.8rem, 3.25rem);
+}
+.clcargo-hero__title-accent {
+  color: var(--cl-hero-gold);
+  white-space: nowrap;            /* keep the accent phrase together */
+}
+
+/* ---- Lead ---- */
+.clcargo-hero__lead {
+  margin: 0;
+  color: var(--cl-hero-text-mute);
+  font-size: clamp(1.0625rem, 0.9rem + 0.6vw, 1.375rem);   /* 17 → 22px */
+  font-weight: 500;
+  line-height: 1.5;
+}
+.clcargo-hero__lead-weight {
+  color: var(--cl-hero-gold);
+  font-weight: 800;
   white-space: nowrap;
 }
 
-/* Buttons row */
-.clcargo-hero .wp-block-buttons {
-  flex-wrap: wrap;
-  justify-content: center !important;
-  gap: 0.875rem !important;
-  margin-bottom: 2.5rem !important;
+/* ---- Destinations ---- */
+.clcargo-hero__destinations {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;                  /* 10px */
 }
 
-/* Primary CTA — gold gradient */
-.clcargo-btn-primary .wp-block-button__link {
-  background: var(--cl-cta-gradient) !important;
-  border: none !important;
-  color: var(--cl-cta-text) !important;
-  font-weight: 700 !important;
-  font-size: 1rem !important;
-  padding: 0.875rem 1.75rem !important;
-  box-shadow: 0 4px 16px rgba(251, 191, 36, 0.35);
+@media (min-width: 560px) {
+  .clcargo-hero__destinations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
 }
 
-.clcargo-btn-primary .wp-block-button__link:hover {
-  background: var(--cl-cta-gradient-hover) !important;
-  color: var(--cl-cta-text) !important;
-  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.45);
+@media (max-width: 360px) {
+  .clcargo-hero__destinations { grid-template-columns: 1fr; }
 }
 
-/* Secondary CTA — ghost with gold border on hover */
-.clcargo-btn-secondary .wp-block-button__link {
-  background: transparent !important;
-  border: 2px solid rgba(255, 255, 255, 0.5) !important;
-  color: var(--cl-white) !important;
-  font-weight: 600 !important;
-  font-size: 1rem !important;
-  padding: 0.875rem 1.75rem !important;
-}
-
-.clcargo-btn-secondary .wp-block-button__link:hover {
-  background: rgba(251, 191, 36, 0.12) !important;
-  border-color: var(--cl-yellow) !important;
-  color: var(--cl-white) !important;
-}
-
-/* Trust badges strip — gold-tinted panel that frames the three badges */
-.clcargo-trust-badges {
-  display: flex !important;
-  flex-wrap: wrap;
-  justify-content: center !important;
-  align-items: center;
-  gap: 0 !important;
-  margin-top: 0.75rem !important;
-  padding: 0.85rem 1.25rem !important;
-  background: linear-gradient(135deg,
-    rgba(251, 191, 36, 0.12) 0%,
-    rgba(251, 191, 36, 0.05) 100%);
-  border: 1px solid rgba(251, 191, 36, 0.35);
-  border-radius: 14px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18),
-              inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-
-.clcargo-trust-badges p {
-  color: var(--cl-white) !important;
-  font-size: 0.9rem !important;
-  font-weight: 500;
-  margin: 0 !important;
-  padding: 0.25rem 1.1rem;
+.clcargo-hero__dest {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  line-height: 1.3;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.4rem 0.8rem 0.4rem 0.55rem;
+  background: var(--cl-hero-panel);
+  border: 1px solid var(--cl-hero-chip-bd);
+  border-radius: 12px;
+  color: var(--cl-hero-text);
+  font-size: 0.9375rem;           /* 15px */
+  font-weight: 500;
+}
+.clcargo-hero__dest-flags {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.clcargo-hero__flag {
+  width: 24px;
+  height: 16px;
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-/* The ✓ at the start of each badge → gold, bolder */
-.clcargo-trust-badges p::first-letter {
-  color: var(--cl-yellow);
-  font-size: 1.15em;
-  font-weight: 800;
+/* ---- Details paragraph ---- */
+.clcargo-hero__details {
+  margin: 0;
+  color: var(--cl-hero-text-mute);
+  font-size: 1rem;                /* 16px */
+  font-weight: 400;
+  line-height: 1.6;
 }
 
-/* Thin gold separator between badges on wider screens */
-@media (min-width: 601px) {
-  .clcargo-trust-badges p + p {
-    border-left: 1px solid rgba(251, 191, 36, 0.3);
+@media (min-width: 1031px) {
+  .clcargo-hero__details { font-size: 1.0625rem; }  /* 17px */
+}
+
+/* ---- CTAs ---- */
+.clcargo-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.clcargo-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.9rem 1.4rem;         /* 14px / 22px — grows with wrapped label */
+  font-family: inherit;
+  font-size: 0.9375rem;           /* 15px */
+  font-weight: 700;
+  line-height: 1.2;
+  border-radius: 12px;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+@media (min-width: 1031px) {
+  .clcargo-hero__cta { padding: 0.95rem 1.6rem; font-size: 1rem; }
+}
+
+.clcargo-hero__cta--primary {
+  background: linear-gradient(90deg, var(--cl-hero-gold), var(--cl-hero-gold-deep));
+  color: var(--cl-hero-bg);       /* dark navy text on gold */
+  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.28);
+}
+.clcargo-hero__cta--primary:hover,
+.clcargo-hero__cta--primary:focus-visible {
+  background: linear-gradient(90deg, var(--cl-hero-gold-deep), var(--cl-hero-gold-hover));
+  box-shadow: 0 8px 24px rgba(217, 119, 6, 0.4);
+  transform: translateY(-1px);
+  color: var(--cl-hero-bg);
+}
+
+.clcargo-hero__cta--secondary {
+  background: transparent;
+  color: var(--cl-hero-text);
+  border: 1.5px solid var(--cl-hero-chip-bd);
+}
+.clcargo-hero__cta--secondary:hover,
+.clcargo-hero__cta--secondary:focus-visible {
+  background: var(--cl-hero-panel);
+  border-color: var(--cl-hero-text-mute);
+  color: var(--cl-hero-text);
+  transform: translateY(-1px);
+}
+
+.clcargo-hero__cta:active { transform: translateY(0); }
+
+.clcargo-hero__cta:focus-visible {
+  outline: 2px solid var(--cl-hero-gold);
+  outline-offset: 3px;
+}
+
+/* Icon colour inside buttons:
+   — primary (gold bg) → dark navy stroke for contrast;
+   — secondary (ghost) → gold stroke. */
+.clcargo-hero__cta .clcargo-hero__icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+}
+.clcargo-hero__cta--primary   .clcargo-hero__icon { color: var(--cl-hero-bg); }
+.clcargo-hero__cta--secondary .clcargo-hero__icon { color: var(--cl-hero-gold); }
+
+@media (min-width: 1031px) {
+  .clcargo-hero__cta .clcargo-hero__icon { width: 22px; height: 22px; flex-basis: 22px; }
+}
+
+/* ---- Visual column ---- */
+.clcargo-hero__col--visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.clcargo-hero__photo {
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--cl-hero-panel);
+  aspect-ratio: 1 / 1;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+}
+.clcargo-hero__photo picture,
+.clcargo-hero__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Square banner has embedded text/logo/phone that must NEVER be cropped.
+     Container is 1:1 too, so there is nothing to letterbox in practice. */
+  object-fit: contain;
+}
+
+@media (max-width: 1030px) {
+  .clcargo-hero__photo { display: none; }
+}
+
+/* ---- Motto block: gold vertical stripe + shield icon + title/sub ---- */
+.clcargo-hero__motto {
+  position: relative;
+  padding: 1.1rem 1.25rem 1.1rem 1.5rem;
+  background: var(--cl-hero-panel);
+  border-radius: 12px;
+  border-left: 3px solid var(--cl-hero-gold);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.85rem;
+  row-gap: 0.35rem;
+}
+.clcargo-hero__motto-icon {
+  grid-row: 1;
+  grid-column: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--cl-hero-gold);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.clcargo-hero__motto-icon .clcargo-hero__icon {
+  width: 30px;
+  height: 30px;
+}
+.clcargo-hero__motto-title {
+  grid-row: 1;
+  grid-column: 2;
+  margin: 0;
+  color: var(--cl-hero-text);
+  font-weight: 700;
+  line-height: 1.35;
+  font-size: clamp(1.125rem, 0.9rem + 0.7vw, 1.5rem);   /* 18 → 24px */
+}
+.clcargo-hero__motto-sub {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--cl-hero-text-mute);
+  font-size: 0.9375rem;           /* 15px */
+  line-height: 1.55;
+}
+
+@media (min-width: 1031px) {
+  .clcargo-hero__motto-sub { font-size: 1rem; }
+}
+
+/* ---- Highlights ---- */
+.clcargo-hero__highlights {
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--cl-hero-divider);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));   /* mobile default: 2 per row */
+  column-gap: 1.25rem;
+  row-gap: 1rem;
+}
+
+@media (max-width: 359px) {
+  .clcargo-hero__highlights { grid-template-columns: 1fr; }   /* fallback at very narrow */
+}
+
+@media (min-width: 1031px) {
+  .clcargo-hero__highlights {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 2rem;
   }
 }
 
-@media (max-width: 600px) {
-  .clcargo-trust-badges {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 0.35rem !important;
-    padding: 1rem 1.1rem !important;
+.clcargo-hero__highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--cl-hero-text);
+  font-size: 0.95rem;             /* 15px */
+  font-weight: 500;
+  line-height: 1.45;
+}
+.clcargo-hero__highlight-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  color: var(--cl-hero-gold);
+  margin-top: -0.15rem;           /* visually centres with the first text line */
+}
+.clcargo-hero__highlight-icon .clcargo-hero__icon {
+  width: 28px;
+  height: 28px;
+}
+.clcargo-hero__highlight-text { min-width: 0; }
+
+/* =============================================
+   Mobile visibility — ≤1030: banner on top,
+   desktop photo hidden (handled above).
+   ============================================= */
+@media (max-width: 1030px) {
+  .clcargo-hero__banner {
+    display: block;
+    order: -1;
   }
-  .clcargo-trust-badges p {
-    justify-content: center;
-    padding: 0.25rem 0;
-  }
-  .clcargo-trust-badges p + p {
-    border-top: 1px solid rgba(251, 191, 36, 0.22);
-    padding-top: 0.5rem;
-  }
+  .clcargo-hero__inner { gap: 1.5rem; }
+  .clcargo-hero__grid  { gap: 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .clcargo-hero                 { padding: 1.5rem 0 2rem !important; }
+  .clcargo-hero__banner         { border-radius: 16px; }
+  .clcargo-hero__cta            { flex: 1 1 100%; }
+  .clcargo-hero__highlights     { padding-top: 1.25rem; row-gap: 0.85rem; }
 }
