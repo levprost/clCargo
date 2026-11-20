@@ -1,0 +1,279 @@
+/* =============================================
+   CL CARGO — Contact modal (native <dialog>)
+   Triggered by [data-clcargo-contact-open] in the header.
+   ============================================= */
+
+/* ---- Dialog container ---- */
+.clcargo-contact-modal {
+  width: min(92vw, 520px);
+  max-width: 520px;
+  max-height: min(90vh, 720px);
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: var(--cl-white);
+  color: var(--cl-blue-dark);
+  box-shadow: 0 24px 64px rgba(10, 25, 47, 0.35);
+  overflow: hidden;           /* let .__body handle inner scroll */
+
+  /*
+   * Open/close animation. @starting-style + allow-discrete lets the
+   * native <dialog> fade/scale in on showModal() and back out on close().
+   * Gracefully degrades to instant show in older browsers.
+   */
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    overlay 0.2s ease allow-discrete,
+    display 0.2s ease allow-discrete;
+}
+
+.clcargo-contact-modal[open] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@starting-style {
+  .clcargo-contact-modal[open] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.clcargo-contact-modal:not([open]) { display: none; }
+
+.clcargo-contact-modal::backdrop {
+  background: rgba(10, 25, 47, 0);
+  -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0);
+  transition:
+    background 0.2s ease,
+    backdrop-filter 0.2s ease,
+    -webkit-backdrop-filter 0.2s ease,
+    overlay 0.2s ease allow-discrete,
+    display 0.2s ease allow-discrete;
+}
+
+.clcargo-contact-modal[open]::backdrop {
+  background: rgba(10, 25, 47, 0.6);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+@starting-style {
+  .clcargo-contact-modal[open]::backdrop {
+    background: rgba(10, 25, 47, 0);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clcargo-contact-modal,
+  .clcargo-contact-modal::backdrop {
+    transition: none;
+  }
+}
+
+/* ---- Inner column: header (fixed) + body (scrolls) ---- */
+.clcargo-contact-modal__inner {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+  max-height: min(90vh, 720px);
+}
+
+.clcargo-contact-modal__header {
+  position: relative;
+  padding: 1.5rem 3.25rem 1rem 1.5rem;
+  border-bottom: 1px solid var(--cl-border);
+  flex-shrink: 0;
+}
+
+.clcargo-contact-modal__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--cl-font);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--cl-blue-dark);
+  letter-spacing: -0.01em;
+}
+
+.clcargo-contact-modal__subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--cl-text-muted);
+}
+
+/* ---- Close button (top-right) ---- */
+.clcargo-contact-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--cl-blue-dark);
+  transition: background var(--cl-transition), border-color var(--cl-transition);
+}
+
+.clcargo-contact-modal__close:hover {
+  background: rgba(10, 25, 47, 0.07);
+}
+
+.clcargo-contact-modal__close:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 2px;
+}
+
+.clcargo-contact-modal__close svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+/* ---- Scrollable body ---- */
+.clcargo-contact-modal__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.25rem 1.5rem 1.5rem;
+  overscroll-behavior: contain;
+}
+
+/* ---- Cards list ---- */
+.clcargo-contact-modal__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.clcargo-contact-card {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--cl-border);
+}
+
+.clcargo-contact-card:first-child { border-top: 0; padding-top: 1rem; }
+.clcargo-contact-card:last-child  { padding-bottom: 0.25rem; }
+
+.clcargo-contact-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.4rem;
+}
+
+.clcargo-contact-card__icon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;      /* fixed size, never shrinks */
+  display: block;
+  border-radius: 50%;  /* all three operator marks are circular */
+  overflow: hidden;    /* safety clip around the SVG bounds */
+}
+
+.clcargo-contact-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cl-blue-dark);
+  letter-spacing: -0.01em;
+}
+
+/* ---- Phone (click-to-call) ---- */
+.clcargo-contact-card__phone {
+  display: inline-block;
+  margin: 0.15rem 0 0.7rem;
+  padding: 0.15rem 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--cl-blue-dark);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: color var(--cl-transition);
+}
+
+.clcargo-contact-card__phone:hover,
+.clcargo-contact-card__phone:focus-visible {
+  color: var(--cl-yellow-deep);
+}
+
+.clcargo-contact-card__phone:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- Messenger buttons ---- */
+.clcargo-contact-card__messengers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.clcargo-contact-card__msg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 40px;
+  padding: 0.5rem 0.85rem;
+  font-family: var(--cl-font);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--cl-white);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: transform var(--cl-transition), filter var(--cl-transition);
+  white-space: nowrap;
+}
+
+.clcargo-contact-card__msg-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;   /* fixed size, never shrinks */
+  display: block;
+}
+
+.clcargo-contact-card__msg-label { display: inline-block; }
+
+.clcargo-contact-card__msg--whatsapp { background: var(--cl-whatsapp); }
+.clcargo-contact-card__msg--telegram { background: var(--cl-telegram); }
+.clcargo-contact-card__msg--viber    { background: var(--cl-viber); }
+
+.clcargo-contact-card__msg:hover { filter: brightness(1.08); }
+.clcargo-contact-card__msg:active { transform: translateY(1px); }
+
+.clcargo-contact-card__msg:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ---- Scroll lock on body while dialog is open ---- */
+body.clcargo-scroll-lock {
+  overflow: hidden;
+}
+
+/* ---- Small screens: tighter padding, full-width-ish ---- */
+@media (max-width: 480px) {
+  .clcargo-contact-modal {
+    width: calc(100vw - 1.5rem);
+    border-radius: 12px;
+  }
+  .clcargo-contact-modal__header { padding: 1.1rem 3rem 0.9rem 1.1rem; }
+  .clcargo-contact-modal__body   { padding: 0.25rem 1.1rem 1.1rem; }
+  .clcargo-contact-modal__title  { font-size: 1.2rem; }
+  .clcargo-contact-card__phone   { font-size: 1.1rem; }
+}

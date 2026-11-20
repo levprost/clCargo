@@ -4,8 +4,10 @@
   <!-- wp:group {"className":"clcargo-header__row","layout":{"type":"default"}} -->
   <div class="wp-block-group clcargo-header__row">
 
-    <!-- 1. BRAND -->
-    <!-- wp:site-title {"level":0,"className":"clcargo-header__brand"} /-->
+    <!-- 1. BRAND (flag badge + wordmark) -->
+    <!-- wp:html -->
+    [clcargo_brand]
+    <!-- /wp:html -->
 
     <!-- 2. NAVIGATION -->
     <!-- wp:navigation {"overlayMenu":"never","className":"clcargo-header__nav","textColor":"white","layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"}} -->
@@ -16,10 +18,10 @@
       <!-- wp:navigation-link {"label":"Контакти","url":"#contacts"} /-->
     <!-- /wp:navigation -->
 
-    <!-- 3. PHONE -->
-    <!-- wp:paragraph {"className":"clcargo-header__phone"} -->
-    <p class="clcargo-header__phone"><span class="clcargo-header__phone-icon" aria-hidden="true">📞</span> [clcargo_phone]</p>
-    <!-- /wp:paragraph -->
+    <!-- 3. CONTACT BUTTON (opens contacts modal — modal implemented separately) -->
+    <!-- wp:html -->
+    <button type="button" class="clcargo-header__contact" aria-haspopup="dialog" aria-controls="clcargo-contact-modal" data-clcargo-contact-open>Зв'язатися з нами</button>
+    <!-- /wp:html -->
 
     <!-- 4. LANGUAGE SWITCHER -->
     <!-- wp:polylang/language-switcher {"className":"clcargo-header__lang"} /-->

@@ -1,8 +1,8 @@
 /* =============================================
    CL CARGO — Header
-   - Desktop >1030px : [brand] [nav]        [phone] [lang] [cta]
-   - Compact ≤1030px : [brand]                              [☰]
-     и nav/phone/lang/cta в раскрывающемся меню
+   - Desktop >1030px : [brand] [nav]        [contact] [lang] [cta]
+   - Compact ≤1030px : [brand-badge]  [contact]  [☰]
+     + nav/lang/cta collapse into dropdown (brand wordmark hides)
    ============================================= */
 
 /* ---- Outer sticky wrapper ---- */
@@ -20,7 +20,7 @@
   padding: 0 !important;
 }
 
-/* ---- The single grid row: 5 flat children ---- */
+/* ---- The single grid row ---- */
 .clcargo-header__row {
   max-width: var(--cl-container);
   margin: 0 auto !important;
@@ -28,7 +28,7 @@
   min-height: var(--cl-header-h);
   display: grid !important;
   grid-template-columns: auto minmax(0, 1fr) auto auto auto;
-  grid-template-areas: "brand nav phone lang cta";
+  grid-template-areas: "brand nav contact lang cta";
   column-gap: 1.25rem;
   row-gap: 0;
   align-items: center;
@@ -41,22 +41,62 @@
 }
 
 /* ---- Assign cells ---- */
-.clcargo-header__brand,
-.clcargo-header__brand.wp-block-site-title { grid-area: brand; }
-.clcargo-header__nav                       { grid-area: nav;   }
-.clcargo-header__phone                     { grid-area: phone; }
-.clcargo-header__lang                      { grid-area: lang;  }
-.clcargo-header__cta-wrap                  { grid-area: cta;   }
+.clcargo-brand                             { grid-area: brand;   }
+.clcargo-header__nav                       { grid-area: nav;     }
+.clcargo-header__contact                   { grid-area: contact; }
+.clcargo-header__lang                      { grid-area: lang;    }
+.clcargo-header__cta-wrap                  { grid-area: cta;     }
 
-/* ---- 1. Brand ---- */
-.clcargo-header__brand a {
-  font-size: 1.35rem !important;
-  font-weight: 800 !important;
-  color: var(--cl-white) !important;
+/* ---- 1. Brand (badge + wordmark) ---- */
+.clcargo-brand {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.65rem;
   text-decoration: none !important;
-  letter-spacing: -0.03em;
-  white-space: nowrap;
+  color: var(--cl-white) !important;
   line-height: 1;
+  flex-shrink: 0;
+}
+
+.clcargo-brand__badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #1D3557 0%, #1D3557 50%, var(--cl-yellow) 50%, var(--cl-yellow) 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.clcargo-brand__badge-letters {
+  color: var(--cl-white);
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  /* Dual shadow keeps letters readable on blue (top half) AND yellow (bottom half) */
+  text-shadow:
+    0 0 2px rgba(10, 25, 47, 0.55),
+    0 1px 2px rgba(10, 25, 47, 0.45);
+}
+
+.clcargo-brand__name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--cl-white);
+  white-space: nowrap;
+}
+
+.clcargo-brand:hover .clcargo-brand__name { opacity: 0.9; }
+.clcargo-brand:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 3px;
+  border-radius: 10px;
 }
 
 /* ---- 2. Navigation ---- */
@@ -106,32 +146,41 @@
   transform: scaleX(1);
 }
 
-/* ---- 3. Phone ---- */
-.clcargo-header__phone {
-  white-space: nowrap;
+/* ---- 3. Contact button (height matches the burger, ≈ 44px desktop) ---- */
+.clcargo-header__contact {
+  justify-self: end;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  color: var(--cl-white);
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.15rem;
+  background: var(--cl-cta-gradient);
+  color: var(--cl-cta-text);
+  font-family: inherit;
+  font-weight: 700;
   font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.clcargo-header__phone a,
-.clcargo-header__phone .clcargo-phone-link {
-  color: var(--cl-white) !important;
-  font-weight: 600;
-  opacity: 0.9;
-  transition: opacity var(--cl-transition);
-  text-decoration: none;
-}
-
-.clcargo-header__phone a:hover,
-.clcargo-header__phone .clcargo-phone-link:hover { opacity: 1; }
-
-/* Shared: keep the phone number on a single line everywhere it appears. */
-.clcargo-phone-link {
+  line-height: 1.1;
+  border: 0;
+  border-radius: var(--cl-radius-sm);
+  cursor: pointer;
   white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.35);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.clcargo-header__contact:hover,
+.clcargo-header__contact:focus-visible {
+  background: var(--cl-cta-gradient-hover);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.45);
+  transform: translateY(-1px);
+}
+
+.clcargo-header__contact:active { transform: translateY(0); }
+
+.clcargo-header__contact:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 3px;
 }
 
 /* ---- 4. Language switcher ---- */
@@ -164,7 +213,19 @@
 .pll-switcher-block li {
   margin: 0 !important;
   padding: 0 !important;
+  order: 10;
 }
+
+/* Fixed order: UA first, RU second (covers Polylang's various class patterns) */
+.clcargo-header__lang li.lang-item-uk,
+.clcargo-header__lang li[class*="lang-item-uk"],
+.clcargo-header__lang li:has(a[lang="uk"]),
+.wp-block-polylang-language-switcher li:has(a[lang="uk"]) { order: 1; }
+
+.clcargo-header__lang li.lang-item-ru,
+.clcargo-header__lang li[class*="lang-item-ru"],
+.clcargo-header__lang li:has(a[lang="ru"]),
+.wp-block-polylang-language-switcher li:has(a[lang="ru"]) { order: 2; }
 
 .clcargo-header__lang a,
 .wp-block-polylang-language-switcher a,
@@ -235,6 +296,7 @@
   flex-direction: column;
   gap: 5px;
   justify-self: end;
+  flex-shrink: 0;
   transition: background var(--cl-transition), border-color var(--cl-transition);
 }
 
@@ -275,8 +337,10 @@
     left: 0.55rem;
     right: 0.55rem;
   }
-  .clcargo-header__phone,
-  .clcargo-header__phone a   { font-size: 0.82rem; }
+  .clcargo-header__contact {
+    padding: 0 0.95rem;
+    font-size: 0.85rem;
+  }
   .clcargo-header__lang a    { padding: 0.3rem 0.45rem !important; font-size: 0.72rem !important; }
   .clcargo-header__cta .wp-block-button__link {
     padding: 0.55rem 0.9rem !important;
@@ -285,70 +349,116 @@
 }
 
 /* =============================================
-   Compact: ≤1030px — brand + burger; everything else
-   collapses into dropdown, driven by .is-open
+   Compact: ≤1030px
+   Top row (always visible): [brand-badge] [contact] [burger]
+   Wordmark hides, nav/lang/cta collapse into dropdown.
    ============================================= */
 @media (max-width: 1030px) {
 
+  /*
+   * Row layout: auto rows for each area — each collapsible row sizes
+   * to whatever its (itself-animated) content currently is.
+   */
   .clcargo-header__row {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     grid-template-areas:
-      "brand  burger"
-      "nav    nav"
-      "phone  phone"
-      "lang   lang"
-      "cta    cta";
-    column-gap: 0;
+      "brand  contact  burger"
+      "nav    nav      nav"
+      "lang   lang     lang"
+      "cta    cta      cta";
+    column-gap: 0.5rem;
     padding: 0.5rem var(--cl-space-m) !important;
   }
 
-  .clcargo-header__brand { min-height: calc(var(--cl-header-h) - 1rem); display: flex; align-items: center; }
+  /* Hide the wordmark on compact — badge-only brand link */
+  .clcargo-brand__name { display: none; }
 
+  .clcargo-brand        { gap: 0; }
   .clcargo-header__burger { display: flex; }
 
-  /* Collapsible rows: keep laid out, animate max-height + opacity */
+  /* Contact button stays centered in its cell between badge and burger.
+     Height stays at base 44px (same as the burger) across 481-1030px;
+     shrinks to 40px at ≤480 to match the smaller burger there. */
+  .clcargo-header__contact {
+    justify-self: center;
+    padding: 0 0.95rem;
+    font-size: 0.875rem;
+    max-width: 100%;
+  }
+
+  /*
+   * Collapsible blocks animate `max-height` with per-element targets
+   * close to actual content size — that's what fixes the "dead-time"
+   * problem the user reported (an 80vh ceiling makes 60% of the
+   * transition invisible). Visibility delays its flip so pointer
+   * events / a11y tree only engage while visible.
+   */
   .clcargo-header__nav,
-  .clcargo-header__phone,
   .clcargo-header__lang,
   .clcargo-header__cta-wrap {
     display: flex !important;
     overflow: hidden;
+    min-height: 0;
+    width: 100%;
     max-height: 0;
     opacity: 0;
-    transform: translateY(-6px);
-    margin: 0 !important;
+    visibility: hidden;
     padding: 0 !important;
+    margin: 0 !important;
     border-top: 1px solid transparent;
     transition:
-      max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.3s ease,
-      transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-      padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-      margin 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 0.35s ease;
+      max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.22s ease,
+      visibility 0s linear 0.32s,
+      padding 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      margin 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.32s ease;
   }
 
-  /* Reveal when open */
   .clcargo-header.is-open .clcargo-header__nav,
-  .clcargo-header.is-open .clcargo-header__phone,
   .clcargo-header.is-open .clcargo-header__lang,
   .clcargo-header.is-open .clcargo-header__cta-wrap {
-    max-height: 80vh;
     opacity: 1;
-    transform: translateY(0);
+    visibility: visible;
+    transition:
+      max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.28s ease 0.08s,
+      visibility 0s linear 0s,
+      padding 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      margin 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.32s ease;
   }
 
-  .clcargo-header.is-open .clcargo-header__nav      { padding-top: 0.75rem !important; border-top-color: rgba(255,255,255,0.12); margin-top: 0.5rem !important; width: 100%; }
-  .clcargo-header.is-open .clcargo-header__phone    { justify-content: center; padding: 0.5rem 0 !important; width: 100%; }
-  .clcargo-header.is-open .clcargo-header__lang     { justify-content: center; padding: 0.25rem 0 !important; width: 100%; }
-  .clcargo-header.is-open .clcargo-header__cta-wrap { padding: 0.25rem 0 0.75rem !important; margin-top: 1rem !important; width: 100%; }
+  /* Open-state: per-block max-heights ≈ actual content + small headroom
+     so the animation never idles on invisible travel. */
+  .clcargo-header.is-open .clcargo-header__nav {
+    max-height: 420px;
+    padding-top: 0.75rem !important;
+    border-top-color: rgba(255,255,255,0.12);
+    margin-top: 0.5rem !important;
+  }
+  .clcargo-header.is-open .clcargo-header__lang {
+    max-height: 60px;
+    justify-content: center;
+    padding: 0.5rem 0 0.25rem !important;
+  }
+  .clcargo-header.is-open .clcargo-header__cta-wrap {
+    max-height: 110px;
+    padding: 0.25rem 0 0.75rem !important;
+    margin-top: 1rem !important;
+  }
 
-  /* Nav items stack */
+  /* Nav items stack full-width. */
   .clcargo-header__nav .wp-block-navigation__container {
     flex-direction: column !important;
-    align-items: stretch;
+    align-items: stretch !important;
     gap: 0 !important;
     width: 100%;
+  }
+
+  /* Lang switcher pill: centered in the open menu */
+  .clcargo-header.is-open .clcargo-header__lang > * {
+    margin: 0 auto;
   }
   .clcargo-header__nav .wp-block-navigation-item__content {
     padding: 0.75rem 0.5rem !important;
@@ -359,16 +469,6 @@
   .clcargo-header__nav .wp-block-navigation-item__content::after { display: none; }
   .clcargo-header__nav .wp-block-navigation-item:hover .wp-block-navigation-item__content {
     background: rgba(255,255,255,0.08);
-  }
-
-  /* Phone larger inside menu */
-  .clcargo-header__phone {
-    justify-content: center;
-    width: 100%;
-    font-size: 1.05rem;
-  }
-  .clcargo-header__phone a {
-    font-size: 1.05rem;
   }
 
   /* CTA fills the dropdown */
@@ -384,8 +484,30 @@
   }
 }
 
-/* Very narrow — brand smaller */
+/* ---- Very narrow: ≤480px — tighten contact button, keep 3 items on one line ---- */
 @media (max-width: 480px) {
-  .clcargo-header__brand a { font-size: 1.15rem !important; }
-  .clcargo-header__row     { padding: 0.5rem var(--cl-space-s) !important; }
+  .clcargo-header__row {
+    padding: 0.5rem var(--cl-space-s) !important;
+    column-gap: 0.4rem;
+  }
+  .clcargo-brand__badge { width: 36px; height: 36px; }
+  .clcargo-brand__badge-letters { font-size: 0.95rem; }
+  .clcargo-header__contact {
+    min-height: 40px;        /* match the shrunken burger */
+    padding: 0 0.85rem;
+    font-size: 0.82rem;
+  }
+  .clcargo-header__burger { width: 40px; height: 40px; }
+}
+
+/* ---- Ultra narrow: ≤360px ---- */
+@media (max-width: 360px) {
+  .clcargo-header__row {
+    padding: 0.5rem 0.6rem !important;
+    column-gap: 0.3rem;
+  }
+  .clcargo-header__contact {
+    padding: 0 0.6rem;
+    font-size: 0.76rem;
+  }
 }

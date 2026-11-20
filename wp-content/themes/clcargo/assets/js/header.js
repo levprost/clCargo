@@ -8,20 +8,25 @@
 		var burger = header.querySelector('.clcargo-header__burger');
 		if (!burger) return;
 
+		var isRu = (document.documentElement.getAttribute('lang') || '').toLowerCase().indexOf('ru') === 0;
+		var labels = isRu
+			? { open: 'Открыть меню', close: 'Закрыть меню' }
+			: { open: 'Відкрити меню', close: 'Закрити меню' };
+
 		function setOpen(open) {
 			header.classList.toggle('is-open', open);
 			burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-			burger.setAttribute('aria-label', open ? 'Закрити меню' : 'Відкрити меню');
+			burger.setAttribute('aria-label', open ? labels.close : labels.open);
 		}
 
 		burger.addEventListener('click', function () {
 			setOpen(!header.classList.contains('is-open'));
 		});
 
-		// Close menu when a nav link or CTA is clicked (mobile)
+		// Close menu when a nav link, CTA, or the contact button is clicked (mobile)
 		header.addEventListener('click', function (e) {
-			var link = e.target.closest('a');
-			if (!link) return;
+			var trigger = e.target.closest('a, [data-clcargo-contact-open]');
+			if (!trigger) return;
 			if (header.classList.contains('is-open') && window.innerWidth < 1030) {
 				setOpen(false);
 			}
