@@ -16,7 +16,6 @@
 
 /* --- Sections (block content hidden) --- */
 .clcargo-section--services,   /* #services — Полный комплекс логистических услуг */
-.clcargo-section--how,        /* #how-we-work — Как мы работаем */
 .clcargo-section--history,    /* На рынке международной логистики с 1994 года */
 .clcargo-section--goods,      /* #goods — Доставляем любые виды товаров */
 .clcargo-section--why {       /* #why — Почему выбирают CL CARGO */
@@ -26,7 +25,6 @@
 /* --- Header nav items pointing to hidden sections ---
    Убирает «битые» якорные ссылки из главного меню шапки,
    пока соответствующие секции скрыты. */
-.clcargo-header__nav a[href="#services"],
-.clcargo-header__nav a[href="#how-we-work"] {
+.clcargo-header__nav a[href="#services"] {
   display: none !important;
 }

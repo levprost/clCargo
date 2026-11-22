@@ -13,11 +13,11 @@
   width: 100% !important;
 }
 
-/* 5 columns ≥1030px; 2 columns 600–1029 (orphan card stays half-width);
-   1 column <600. flex-grow:0 keeps cards from stretching into the space
-   left by orphans. */
+/* 3 columns ≥1030px; 2 columns 600–1029 (orphan card centres via
+   justify-content:center); 1 column <600. flex-grow:0 keeps cards from
+   stretching into empty slots. */
 .clcargo-section--how .clcargo-steps > .clcargo-step.wp-block-column {
-  flex-basis: calc(20% - 0.8rem) !important;
+  flex-basis: calc(33.333% - 0.667rem) !important;
   flex-grow: 0 !important;
   min-width: 0 !important;
 }

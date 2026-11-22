@@ -2131,11 +2131,11 @@ body.wp-has-global-padding > .wp-site-blocks {
   width: 100% !important;
 }
 
-/* 5 columns ≥1030px; 2 columns 600–1029 (orphan card stays half-width);
-   1 column <600. flex-grow:0 keeps cards from stretching into the space
-   left by orphans. */
+/* 3 columns ≥1030px; 2 columns 600–1029 (orphan card centres via
+   justify-content:center); 1 column <600. flex-grow:0 keeps cards from
+   stretching into empty slots. */
 .clcargo-section--how .clcargo-steps > .clcargo-step.wp-block-column {
-  flex-basis: calc(20% - 0.8rem) !important;
+  flex-basis: calc(33.333% - 0.667rem) !important;
   flex-grow: 0 !important;
   min-width: 0 !important;
 }
@@ -3504,7 +3504,6 @@ body.clcargo-scroll-lock {
 
 /* --- Sections (block content hidden) --- */
 .clcargo-section--services,   /* #services — Полный комплекс логистических услуг */
-.clcargo-section--how,        /* #how-we-work — Как мы работаем */
 .clcargo-section--history,    /* На рынке международной логистики с 1994 года */
 .clcargo-section--goods,      /* #goods — Доставляем любые виды товаров */
 .clcargo-section--why {       /* #why — Почему выбирают CL CARGO */
@@ -3514,7 +3513,6 @@ body.clcargo-scroll-lock {
 /* --- Header nav items pointing to hidden sections ---
    Убирает «битые» якорные ссылки из главного меню шапки,
    пока соответствующие секции скрыты. */
-.clcargo-header__nav a[href="#services"],
-.clcargo-header__nav a[href="#how-we-work"] {
+.clcargo-header__nav a[href="#services"] {
   display: none !important;
 }
