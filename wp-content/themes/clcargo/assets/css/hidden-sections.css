@@ -1,0 +1,32 @@
+/* =============================================
+   CL CARGO — Temporarily hidden sections
+   ---------------------------------------------
+   Эти блоки скрыты только визуально. Контент сохранён в базе
+   WordPress — восстановить блок можно в один шаг.
+
+   Как вернуть ВСЕ блоки сразу:
+     1. Удалить этот файл (или его содержимое)
+     2. Убрать строку 'hidden-sections' в functions.php
+        → function clcargo_theme_css_sources()
+
+   Как вернуть ОДИН конкретный блок:
+     Закомментировать или удалить соответствующую строку
+     селектора ниже.
+   ============================================= */
+
+/* --- Sections (block content hidden) --- */
+.clcargo-section--services,   /* #services — Полный комплекс логистических услуг */
+.clcargo-section--how,        /* #how-we-work — Как мы работаем */
+.clcargo-section--history,    /* На рынке международной логистики с 1994 года */
+.clcargo-section--goods,      /* #goods — Доставляем любые виды товаров */
+.clcargo-section--why {       /* #why — Почему выбирают CL CARGO */
+  display: none !important;
+}
+
+/* --- Header nav items pointing to hidden sections ---
+   Убирает «битые» якорные ссылки из главного меню шапки,
+   пока соответствующие секции скрыты. */
+.clcargo-header__nav a[href="#services"],
+.clcargo-header__nav a[href="#how-we-work"] {
+  display: none !important;
+}

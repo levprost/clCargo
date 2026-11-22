@@ -266,6 +266,64 @@ body.clcargo-scroll-lock {
   overflow: hidden;
 }
 
+/* =============================================
+   Inline contact list — same operator cards as the modal, but
+   rendered directly in the contacts section (no dialog).
+   Shortcode: [clcargo_contact_list]
+   ============================================= */
+.clcargo-contact-list {
+  list-style: none;
+  margin: var(--cl-space-l) 0 var(--cl-space-m);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+/* Boxed cards override the vertical-list look used inside the modal. */
+.clcargo-contact-list > .clcargo-contact-card {
+  padding: 1.25rem 1.25rem;
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-top: 1px solid var(--cl-border);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(10, 25, 47, 0.04);
+  transition: transform var(--cl-transition),
+              box-shadow var(--cl-transition),
+              border-color var(--cl-transition);
+}
+
+/* Beat the modal's first/last-child padding/border tweaks. */
+.clcargo-contact-list > .clcargo-contact-card:first-child,
+.clcargo-contact-list > .clcargo-contact-card:last-child {
+  padding: 1.25rem 1.25rem;
+  border-top: 1px solid var(--cl-border);
+}
+
+.clcargo-contact-list > .clcargo-contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(10, 25, 47, 0.1);
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+/* In the CTA section the parent wp-block-group constrains children to
+   700px (contentSize); the operator list needs more room to keep all three
+   messenger buttons on one row per card. */
+.clcargo-cta .clcargo-contact-list {
+  max-width: 940px !important;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Meta strip (address + schedule) below the list */
+.clcargo-cta .clcargo-cta__meta {
+  color: var(--cl-text-muted) !important;
+  font-size: 0.9rem !important;
+  margin: var(--cl-space-s) 0 0 !important;
+  text-align: center;
+}
+
 /* ---- Small screens: tighter padding, full-width-ish ---- */
 @media (max-width: 480px) {
   .clcargo-contact-modal {

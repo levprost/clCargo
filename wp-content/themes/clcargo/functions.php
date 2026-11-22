@@ -21,6 +21,9 @@ function clcargo_theme_css_sources() {
 		'footer',
 		'responsive',
 		'contact-modal',
+		// Visibility override — listed last so it beats earlier rules.
+		// Remove this entry (and the file) to restore all hidden sections.
+		'hidden-sections',
 	];
 }
 
@@ -791,6 +794,64 @@ add_action( 'wp_footer', function () {
 	<?php
 	echo ob_get_clean();
 }, 20 );
+
+/**
+ * Inline contact list — same operator cards as the header modal, but
+ * rendered directly on the page (no dialog, no trigger button). Used in
+ * the final CTA section so visitors see every phone and messenger at a
+ * glance.
+ */
+add_shortcode( 'clcargo_contact_list', function () {
+	$lang  = function_exists( 'pll_current_language' ) ? pll_current_language() : 'uk';
+	$is_ru = $lang === 'ru';
+
+	$strings = $is_ru
+		? [
+			'call_aria' => 'Позвонить',
+			'wa_aria'   => 'Написать в WhatsApp',
+			'tg_aria'   => 'Написать в Telegram',
+			'vb_aria'   => 'Написать в Viber',
+			'whatsapp'  => 'WhatsApp',
+			'telegram'  => 'Telegram',
+			'viber'     => 'Viber',
+		]
+		: [
+			'call_aria' => 'Зателефонувати',
+			'wa_aria'   => 'Написати у WhatsApp',
+			'tg_aria'   => 'Написати в Telegram',
+			'vb_aria'   => 'Написати у Viber',
+			'whatsapp'  => 'WhatsApp',
+			'telegram'  => 'Telegram',
+			'viber'     => 'Viber',
+		];
+
+	$operators = clcargo_contact_modal_operators();
+
+	ob_start();
+	?>
+	<ul class="clcargo-contact-list">
+		<?php foreach ( $operators as $op ) :
+			$name = $is_ru ? $op['name_ru'] : $op['name_uk'];
+		?>
+			<li class="clcargo-contact-card">
+				<div class="clcargo-contact-card__head">
+					<?php echo clcargo_contact_icon_svg( $op['icon'] ); ?>
+					<span class="clcargo-contact-card__name"><?php echo esc_html( $name ); ?></span>
+				</div>
+				<a class="clcargo-contact-card__phone" href="<?php echo esc_url( 'tel:' . $op['tel'] ); ?>" aria-label="<?php echo esc_attr( $strings['call_aria'] . ' ' . $name . ': ' . $op['display'] ); ?>">
+					<?php echo esc_html( $op['display'] ); ?>
+				</a>
+				<div class="clcargo-contact-card__messengers">
+					<a class="clcargo-contact-card__msg clcargo-contact-card__msg--whatsapp" href="<?php echo esc_url( $op['whatsapp'] ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $strings['wa_aria'] . ' — ' . $name ); ?>"><?php echo clcargo_messenger_icon_svg( 'whatsapp' ); ?><span class="clcargo-contact-card__msg-label"><?php echo esc_html( $strings['whatsapp'] ); ?></span></a>
+					<a class="clcargo-contact-card__msg clcargo-contact-card__msg--telegram" href="<?php echo esc_url( $op['telegram'] ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $strings['tg_aria'] . ' — ' . $name ); ?>"><?php echo clcargo_messenger_icon_svg( 'telegram' ); ?><span class="clcargo-contact-card__msg-label"><?php echo esc_html( $strings['telegram'] ); ?></span></a>
+					<a class="clcargo-contact-card__msg clcargo-contact-card__msg--viber" href="<?php echo esc_url( $op['viber'], [ 'viber' ] ); ?>" rel="noopener" aria-label="<?php echo esc_attr( $strings['vb_aria'] . ' — ' . $name ); ?>"><?php echo clcargo_messenger_icon_svg( 'viber' ); ?><span class="clcargo-contact-card__msg-label"><?php echo esc_html( $strings['viber'] ); ?></span></a>
+				</div>
+			</li>
+		<?php endforeach; ?>
+	</ul>
+	<?php
+	return ob_get_clean();
+} );
 
 /**
  * Rename switcher labels to UA / RU (displayed in the Polylang language
