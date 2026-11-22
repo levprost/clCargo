@@ -1,0 +1,3344 @@
+
+/* === variables.css === */
+/* =============================================
+   CL CARGO — CSS Custom Properties
+   ============================================= */
+
+:root {
+  /* ---- Dark blues ---- */
+  --cl-blue-dark:      #0A192F;  /* hero, dark sections, headings on light bg */
+  --cl-blue-panel:     #112240;  /* cards / form panels on dark bg */
+  --cl-blue:           #1D3557;  /* decorative transitions, secondary blue */
+  --cl-blue-darkest:   #060F1E;  /* footer */
+
+  /* Subtle blue tint, kept for notice strips / direction-time pills */
+  --cl-blue-light:     #E8EFF7;
+
+  /* ---- Golden accents ---- */
+  --cl-yellow:         #FBBF24;  /* primary accent */
+  --cl-yellow-dark:    #F59E0B;  /* rich gold, right side of CTA gradient */
+  --cl-yellow-deep:    #D97706;  /* hover gold */
+
+  /* ---- Backgrounds / text on light ---- */
+  --cl-bg:             #F8FAFC;  /* very light contacts background */
+  --cl-bg-alt:         #F1F5F9;  /* alternating light-grey sections */
+  --cl-white:          #FFFFFF;  /* white sections, cards */
+  --cl-text:           #1E293B;  /* primary text on light bg */
+  --cl-text-muted:     #475569;  /* secondary text on light bg */
+  --cl-border:         #E2E8F0;  /* borders on light bg */
+
+  /* ---- Text on dark ---- */
+  --cl-text-on-dark:        #CBD5E1;  /* primary explanation text on dark */
+  --cl-text-muted-on-dark:  #94A3B8;  /* secondary captions on dark */
+
+  /* ---- Messenger brand colours ---- */
+  --cl-whatsapp:  #16A34A;
+  --cl-telegram:  #0284C7;
+  --cl-viber:     #9333EA;
+
+  /* ---- CTA gradient ---- */
+  --cl-cta-gradient:        linear-gradient(90deg, #FBBF24, #F59E0B);
+  --cl-cta-gradient-hover:  linear-gradient(90deg, #F59E0B, #D97706);
+  --cl-cta-text:            #0A192F;
+
+  /* ---- Focus ring ---- */
+  --cl-focus-ring: #FBBF24;
+
+  /* ---- Typography ---- */
+  --cl-font:        'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  /* ---- Layout ---- */
+  --cl-container:   1200px;
+  --cl-narrow:      760px;
+  --cl-header-h:    72px;
+
+  /* ---- Spacing ---- */
+  --cl-space-xs:    0.5rem;
+  --cl-space-s:     1rem;
+  --cl-space-m:     1.5rem;
+  --cl-space-l:     2.5rem;
+  --cl-space-xl:    4rem;
+  --cl-space-xxl:   6rem;
+
+  /* ---- Effects ---- */
+  --cl-radius:      8px;
+  --cl-radius-sm:   6px;
+  --cl-shadow:      0 4px 16px rgba(10, 25, 47, 0.08);
+  --cl-shadow-hover:0 8px 28px rgba(10, 25, 47, 0.14);
+  --cl-transition:  0.2s ease;
+}
+
+/* === base.css === */
+/* =============================================
+   CL CARGO — Base Reset & Typography
+   ============================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--cl-font);
+  color: var(--cl-text);
+  background: var(--cl-bg);
+  margin: 0;
+  overflow-x: hidden;
+  line-height: 1.65;
+}
+
+/* ---- WordPress block reset ---- */
+
+/* Remove default block vertical margins that cause gaps */
+.wp-site-blocks > * {
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+}
+
+/* Full-width sections must not overflow */
+.alignfull {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box;
+}
+
+/* Constrained inner containers */
+.clcargo-inner {
+  width: 100%;
+  max-width: var(--cl-container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--cl-space-m);
+  padding-right: var(--cl-space-m);
+}
+
+/* Anchor scroll offset for sticky header */
+:target {
+  scroll-margin-top: calc(var(--cl-header-h) + 16px);
+}
+
+/* Links */
+a {
+  color: var(--cl-blue-dark);
+  text-decoration: none;
+  transition: color var(--cl-transition);
+}
+
+a:hover {
+  color: var(--cl-yellow-dark);
+}
+
+/* Global focus ring — gold on both light and dark backgrounds */
+:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--cl-blue-dark);
+  margin-top: 0;
+}
+
+/* Lists inside cards */
+.clcargo-direction-card ul,
+.clcargo-direction-card ol {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.clcargo-direction-card li {
+  margin-bottom: 0.4rem;
+  color: var(--cl-text-muted);
+  font-size: 0.9rem;
+}
+
+/* Buttons reset */
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* WordPress block buttons override — gold gradient CTA by default */
+.wp-block-button__link {
+  background: var(--cl-cta-gradient) !important;
+  color: var(--cl-cta-text) !important;
+  border: none !important;
+  font-weight: 700 !important;
+  transition: background var(--cl-transition), transform var(--cl-transition), box-shadow var(--cl-transition) !important;
+}
+
+.wp-block-button__link:hover {
+  background: var(--cl-cta-gradient-hover) !important;
+  color: var(--cl-cta-text) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.35);
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === wp-overrides.css === */
+/* =============================================
+   CL CARGO — WordPress Block Overrides
+   Force our layout over WP inline styles
+   ============================================= */
+
+/* Prevent any horizontal overflow from WP block system */
+.wp-site-blocks,
+.wp-block-post-content,
+main.wp-block-group {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Remove WP body padding that breaks full-width */
+body.wp-has-global-padding {
+  --wp--style--root--padding-left: 0px !important;
+  --wp--style--root--padding-right: 0px !important;
+}
+
+body.wp-has-global-padding > .wp-site-blocks {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Full-width sections override */
+.wp-block-group.alignfull {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Post-content full width */
+.wp-block-post-content {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+}
+
+/* Inner constrained container inside each section */
+.clcargo-section > .wp-block-group,
+.clcargo-form-section > .wp-block-group,
+.clcargo-history > .wp-block-group,
+.clcargo-cta > .wp-block-group {
+  max-width: var(--cl-container) !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--cl-space-m) !important;
+  padding-right: var(--cl-space-m) !important;
+  box-sizing: border-box !important;
+}
+
+/* Section vertical padding */
+.clcargo-section.alignfull {
+  padding-top: var(--cl-space-xxl) !important;
+  padding-bottom: var(--cl-space-xxl) !important;
+}
+
+/* Direction cards columns */
+.clcargo-direction-cards .wp-block-columns {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1.25rem !important;
+  align-items: stretch !important;
+  margin: 0 !important;
+}
+
+/* Service columns */
+.clcargo-services .wp-block-columns {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1.25rem !important;
+  align-items: stretch !important;
+}
+
+/* Steps columns (grid specifics handled in steps.css) */
+.clcargo-steps.wp-block-columns {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+  align-items: stretch !important;
+}
+
+/* Why columns */
+.clcargo-section .wp-block-columns:has(.clcargo-why-list) {
+  gap: 2rem !important;
+}
+
+/* Badge items columns */
+.clcargo-badges-row .wp-block-columns {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+}
+
+/* Direction cards: 2 per row on desktop */
+.clcargo-direction-card.wp-block-column {
+  flex-basis: calc(50% - 0.75rem) !important;
+  flex-grow: 1 !important;
+  min-width: 0 !important;
+}
+
+/* Goods: 3 per row on wide desktop, 2 on tablet, 1 on phone.
+   Gap 24px desktop/tablet, 16px phone (handled in media queries).
+   Selector carries .clcargo-section--goods .wp-block-columns > …
+   so it beats WP core's 0,3,0 stacking rule at <=781px. */
+.clcargo-section--goods .wp-block-columns > .clcargo-goods-card.wp-block-column {
+  flex-basis: calc(33.333% - 1rem) !important;
+  flex-grow: 1 !important;
+  min-width: 0 !important;
+}
+
+/* Badge items keep 4 per row. Higher-specificity selector beats WP core's
+   stacking rule on tablet/mobile. */
+.clcargo-section--why .wp-block-columns > .clcargo-badge-item.wp-block-column,
+.clcargo-badge-item.wp-block-column {
+  flex-basis: calc(25% - 0.75rem) !important;
+  flex-grow: 1 !important;
+  min-width: 0 !important;
+}
+
+/* Goods columns strip: allow wrap + equal-height alignment.
+   Override the 720px contentSize that WP applies to nested blocks in a
+   constrained layout — the goods grid must span the full section width. */
+.clcargo-section--goods .wp-block-columns {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1.5rem !important;  /* 24px desktop/tablet */
+  align-items: stretch !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.clcargo-step.wp-block-column {
+  flex-basis: calc(20% - 0.8rem) !important;
+  flex-grow: 1 !important;
+  min-width: 0 !important;
+}
+
+/* Hero overlay */
+.clcargo-hero .wp-block-cover__background {
+  background-color: rgba(10, 25, 47, 0.72) !important;
+}
+
+/* Button full width in hero on mobile handled in responsive.css */
+/* Ensure buttons don't overflow */
+.wp-block-buttons {
+  flex-wrap: wrap !important;
+  max-width: 100%;
+}
+
+/* Form section narrow */
+.clcargo-form-section > .wp-block-group {
+  max-width: var(--cl-narrow) !important;
+}
+
+/* Hero inner group no constrained width limit */
+.clcargo-hero .wp-block-cover__inner-container > .wp-block-group {
+  max-width: 820px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+/* === header.css === */
+/* =============================================
+   CL CARGO — Header
+   - Desktop >1030px : [brand] [nav]        [contact] [lang] [cta]
+   - Compact ≤1030px : [brand-badge]  [contact]  [☰]
+     + nav/lang/cta collapse into dropdown (brand wordmark hides)
+   ============================================= */
+
+/* ---- Outer sticky wrapper ---- */
+.clcargo-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(10, 25, 47, 0.95);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  backdrop-filter: blur(12px) saturate(1.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 !important;
+}
+
+/* ---- The single grid row ---- */
+.clcargo-header__row {
+  max-width: var(--cl-container);
+  margin: 0 auto !important;
+  padding: 0 var(--cl-space-m) !important;
+  min-height: var(--cl-header-h);
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+  grid-template-areas: "brand nav contact lang cta";
+  column-gap: 1.25rem;
+  row-gap: 0;
+  align-items: center;
+}
+
+/* Kill inner flex/wp-group behaviour that could impose extra gaps */
+.clcargo-header__row > * {
+  margin: 0 !important;
+  min-width: 0;
+}
+
+/* ---- Assign cells ---- */
+.clcargo-brand                             { grid-area: brand;   }
+.clcargo-header__nav                       { grid-area: nav;     }
+.clcargo-header__contact                   { grid-area: contact; }
+.clcargo-header__lang                      { grid-area: lang;    }
+.clcargo-header__cta-wrap                  { grid-area: cta;     }
+
+/* ---- 1. Brand (badge + wordmark) ---- */
+.clcargo-brand {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none !important;
+  color: var(--cl-white) !important;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.clcargo-brand__badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #1D3557 0%, #1D3557 50%, var(--cl-yellow) 50%, var(--cl-yellow) 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.clcargo-brand__badge-letters {
+  color: var(--cl-white);
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  /* Dual shadow keeps letters readable on blue (top half) AND yellow (bottom half) */
+  text-shadow:
+    0 0 2px rgba(10, 25, 47, 0.55),
+    0 1px 2px rgba(10, 25, 47, 0.45);
+}
+
+.clcargo-brand__name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--cl-white);
+  white-space: nowrap;
+}
+
+.clcargo-brand:hover .clcargo-brand__name { opacity: 0.9; }
+.clcargo-brand:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+/* ---- 2. Navigation ---- */
+.clcargo-header__nav {
+  justify-self: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.clcargo-header__nav .wp-block-navigation__container {
+  gap: 0.15rem !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 2px;
+}
+
+.clcargo-header__nav .wp-block-navigation-item__content {
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  padding: 0.45rem 0.75rem !important;
+  border-radius: 4px;
+  transition: color var(--cl-transition), background var(--cl-transition);
+  position: relative;
+  white-space: nowrap;
+}
+
+.clcargo-header__nav .wp-block-navigation-item__content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0.75rem;
+  right: 0.75rem;
+  height: 2px;
+  background: var(--cl-yellow);
+  transform: scaleX(0);
+  transition: transform var(--cl-transition);
+  border-radius: 2px;
+}
+
+.clcargo-header__nav .wp-block-navigation-item:hover .wp-block-navigation-item__content {
+  color: var(--cl-white) !important;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.clcargo-header__nav .wp-block-navigation-item:hover .wp-block-navigation-item__content::after {
+  transform: scaleX(1);
+}
+
+/* ---- 3. Contact button (height matches the burger, ≈ 44px desktop) ---- */
+.clcargo-header__contact {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.15rem;
+  background: var(--cl-cta-gradient);
+  color: var(--cl-cta-text);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.1;
+  border: 0;
+  border-radius: var(--cl-radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.35);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.clcargo-header__contact:hover,
+.clcargo-header__contact:focus-visible {
+  background: var(--cl-cta-gradient-hover);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.45);
+  transform: translateY(-1px);
+}
+
+.clcargo-header__contact:active { transform: translateY(0); }
+
+.clcargo-header__contact:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 3px;
+}
+
+/* ---- 4. Language switcher ---- */
+.clcargo-header__lang,
+.wp-block-polylang-language-switcher,
+.pll-switcher-block {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.clcargo-header__lang ul,
+.wp-block-polylang-language-switcher ul,
+.pll-switcher-block ul {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 2px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: 0;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.clcargo-header__lang li,
+.wp-block-polylang-language-switcher li,
+.pll-switcher-block li {
+  margin: 0 !important;
+  padding: 0 !important;
+  order: 10;
+}
+
+/* Fixed order: UA first, RU second (covers Polylang's various class patterns) */
+.clcargo-header__lang li.lang-item-uk,
+.clcargo-header__lang li[class*="lang-item-uk"],
+.clcargo-header__lang li:has(a[lang="uk"]),
+.wp-block-polylang-language-switcher li:has(a[lang="uk"]) { order: 1; }
+
+.clcargo-header__lang li.lang-item-ru,
+.clcargo-header__lang li[class*="lang-item-ru"],
+.clcargo-header__lang li:has(a[lang="ru"]),
+.wp-block-polylang-language-switcher li:has(a[lang="ru"]) { order: 2; }
+
+.clcargo-header__lang a,
+.wp-block-polylang-language-switcher a,
+.pll-switcher-block a {
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.55rem !important;
+  border-radius: 4px;
+  transition: all var(--cl-transition);
+  text-decoration: none !important;
+  display: block;
+  line-height: 1;
+}
+
+.clcargo-header__lang a:hover,
+.wp-block-polylang-language-switcher a:hover,
+.pll-switcher-block a:hover {
+  color: var(--cl-white) !important;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.clcargo-header__lang .pll-current-lang a,
+.clcargo-header__lang .current-lang a,
+.wp-block-polylang-language-switcher .pll-current-lang a,
+.pll-switcher-block .current-lang a {
+  color: var(--cl-blue-dark) !important;
+  background: var(--cl-yellow) !important;
+  box-shadow: 0 1px 4px rgba(251, 191, 36, 0.4);
+}
+
+/* ---- 5. CTA ---- */
+.clcargo-header__cta-wrap { justify-self: end; }
+.clcargo-header__cta-wrap .wp-block-button { margin: 0 !important; }
+
+.clcargo-header__cta .wp-block-button__link {
+  background: var(--cl-cta-gradient) !important;
+  color: var(--cl-cta-text) !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  padding: 0.6rem 1.1rem !important;
+  border-radius: var(--cl-radius-sm) !important;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.35);
+  transition: background var(--cl-transition), box-shadow var(--cl-transition);
+}
+
+.clcargo-header__cta .wp-block-button__link:hover {
+  background: var(--cl-cta-gradient-hover) !important;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4);
+}
+
+/* ---- Burger (hidden on desktop) ---- */
+.clcargo-header__burger {
+  display: none;
+  grid-area: burger;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  justify-self: end;
+  flex-shrink: 0;
+  transition: background var(--cl-transition), border-color var(--cl-transition);
+}
+
+.clcargo-header__burger:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.clcargo-header__burger-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--cl-white);
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+}
+
+.clcargo-header.is-open .clcargo-header__burger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.clcargo-header.is-open .clcargo-header__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
+.clcargo-header.is-open .clcargo-header__burger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* =============================================
+   Tight desktop: 1031–1200px — shrink gaps/padding,
+   allow nav to wrap to 2 rows if needed. Header grows.
+   ============================================= */
+@media (min-width: 1031px) and (max-width: 1200px) {
+  .clcargo-header__row {
+    padding: 0.35rem var(--cl-space-s) !important;
+    column-gap: 0.75rem;
+    min-height: var(--cl-header-h);
+  }
+  .clcargo-header__nav .wp-block-navigation-item__content {
+    padding: 0.4rem 0.55rem !important;
+    font-size: 0.85rem !important;
+  }
+  .clcargo-header__nav .wp-block-navigation-item__content::after {
+    left: 0.55rem;
+    right: 0.55rem;
+  }
+  .clcargo-header__contact {
+    padding: 0 0.95rem;
+    font-size: 0.85rem;
+  }
+  .clcargo-header__lang a    { padding: 0.3rem 0.45rem !important; font-size: 0.72rem !important; }
+  .clcargo-header__cta .wp-block-button__link {
+    padding: 0.55rem 0.9rem !important;
+    font-size: 0.82rem !important;
+  }
+}
+
+/* =============================================
+   Compact: ≤1030px
+   Top row (always visible): [brand-badge] [contact] [burger]
+   Wordmark hides, nav/lang/cta collapse into dropdown.
+   ============================================= */
+@media (max-width: 1030px) {
+
+  /*
+   * Row layout: auto rows for each area — each collapsible row sizes
+   * to whatever its (itself-animated) content currently is.
+   */
+  .clcargo-header__row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand  contact  burger"
+      "nav    nav      nav"
+      "lang   lang     lang"
+      "cta    cta      cta";
+    column-gap: 0.5rem;
+    padding: 0.5rem var(--cl-space-m) !important;
+  }
+
+  /* Hide the wordmark on compact — badge-only brand link */
+  .clcargo-brand__name { display: none; }
+
+  .clcargo-brand        { gap: 0; }
+  .clcargo-header__burger { display: flex; }
+
+  /* Contact button stays centered in its cell between badge and burger.
+     Height stays at base 44px (same as the burger) across 481-1030px;
+     shrinks to 40px at ≤480 to match the smaller burger there. */
+  .clcargo-header__contact {
+    justify-self: center;
+    padding: 0 0.95rem;
+    font-size: 0.875rem;
+    max-width: 100%;
+  }
+
+  /*
+   * Collapsible blocks animate `max-height` with per-element targets
+   * close to actual content size — that's what fixes the "dead-time"
+   * problem the user reported (an 80vh ceiling makes 60% of the
+   * transition invisible). Visibility delays its flip so pointer
+   * events / a11y tree only engage while visible.
+   */
+  .clcargo-header__nav,
+  .clcargo-header__lang,
+  .clcargo-header__cta-wrap {
+    display: flex !important;
+    overflow: hidden;
+    min-height: 0;
+    width: 100%;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-top: 1px solid transparent;
+    transition:
+      max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.22s ease,
+      visibility 0s linear 0.32s,
+      padding 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      margin 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.32s ease;
+  }
+
+  .clcargo-header.is-open .clcargo-header__nav,
+  .clcargo-header.is-open .clcargo-header__lang,
+  .clcargo-header.is-open .clcargo-header__cta-wrap {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.28s ease 0.08s,
+      visibility 0s linear 0s,
+      padding 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      margin 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.32s ease;
+  }
+
+  /* Open-state: per-block max-heights ≈ actual content + small headroom
+     so the animation never idles on invisible travel. */
+  .clcargo-header.is-open .clcargo-header__nav {
+    max-height: 420px;
+    padding-top: 0.75rem !important;
+    border-top-color: rgba(255,255,255,0.12);
+    margin-top: 0.5rem !important;
+  }
+  .clcargo-header.is-open .clcargo-header__lang {
+    max-height: 60px;
+    justify-content: center;
+    padding: 0.5rem 0 0.25rem !important;
+  }
+  .clcargo-header.is-open .clcargo-header__cta-wrap {
+    max-height: 110px;
+    padding: 0.25rem 0 0.75rem !important;
+    margin-top: 1rem !important;
+  }
+
+  /* Nav items stack full-width. */
+  .clcargo-header__nav .wp-block-navigation__container {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    width: 100%;
+  }
+
+  /* Lang switcher pill: centered in the open menu */
+  .clcargo-header.is-open .clcargo-header__lang > * {
+    margin: 0 auto;
+  }
+  .clcargo-header__nav .wp-block-navigation-item__content {
+    padding: 0.75rem 0.5rem !important;
+    font-size: 1rem !important;
+    border-radius: 6px;
+    text-align: left;
+  }
+  .clcargo-header__nav .wp-block-navigation-item__content::after { display: none; }
+  .clcargo-header__nav .wp-block-navigation-item:hover .wp-block-navigation-item__content {
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* CTA fills the dropdown */
+  .clcargo-header__cta-wrap .wp-block-button,
+  .clcargo-header__cta { width: 100%; }
+  .clcargo-header__cta .wp-block-button__link {
+    display: block;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.85rem 1.25rem !important;
+    font-size: 1rem !important;
+  }
+}
+
+/* ---- Very narrow: ≤480px — tighten contact button, keep 3 items on one line ---- */
+@media (max-width: 480px) {
+  .clcargo-header__row {
+    padding: 0.5rem var(--cl-space-s) !important;
+    column-gap: 0.4rem;
+  }
+  .clcargo-brand__badge { width: 36px; height: 36px; }
+  .clcargo-brand__badge-letters { font-size: 0.95rem; }
+  .clcargo-header__contact {
+    min-height: 40px;        /* match the shrunken burger */
+    padding: 0 0.85rem;
+    font-size: 0.82rem;
+  }
+  .clcargo-header__burger { width: 40px; height: 40px; }
+}
+
+/* ---- Ultra narrow: ≤360px ---- */
+@media (max-width: 360px) {
+  .clcargo-header__row {
+    padding: 0.5rem 0.6rem !important;
+    column-gap: 0.3rem;
+  }
+  .clcargo-header__contact {
+    padding: 0 0.6rem;
+    font-size: 0.76rem;
+  }
+}
+
+/* === hero.css === */
+/* =============================================
+   CL CARGO — Hero (content-kit v1, design pass v2)
+   Palette, sizes and rules per cl-cargo-hero-kit/02-design-and-icons.md.
+   All rules are scoped to .clcargo-hero.
+   ============================================= */
+
+:root {
+  /* Hero-local tokens (design kit v2). Scoped by naming to avoid
+     colliding with sitewide tokens in variables.css. */
+  --cl-hero-bg:         #0A192F;
+  --cl-hero-panel:      #112240;
+  --cl-hero-blue-alt:   #1D3557;
+  --cl-hero-text:       #FFFFFF;
+  --cl-hero-text-mute:  #CBD5E1;
+  --cl-hero-text-dim:   #94A3B8;
+  --cl-hero-gold:       #FBBF24;
+  --cl-hero-gold-deep:  #F59E0B;
+  --cl-hero-gold-hover: #D97706;
+  --cl-hero-divider:    rgba(148, 163, 184, 0.35);
+  --cl-hero-chip-bd:    rgba(203, 213, 225, 0.55);
+  --cl-hero-container:  1280px;
+}
+
+/* ---- Section ---- */
+.clcargo-hero {
+  position: relative;
+  background: var(--cl-hero-bg);
+  color: var(--cl-hero-text-mute);
+  padding: 2.5rem 0 3rem !important;
+}
+
+.clcargo-hero__inner {
+  width: 100%;
+  max-width: var(--cl-hero-container);
+  margin: 0 auto;
+  padding: 0 1rem;                       /* 16px narrow */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .clcargo-hero__inner { padding: 0 1.5rem; }    /* 24px */
+}
+@media (min-width: 1280px) {
+  .clcargo-hero__inner { padding: 0 2.5rem; }    /* 40px at the widest */
+}
+
+/* ---- Mobile banner (≤1030) ----
+   - Hidden on desktop via `display: none`.
+   - On mobile, full container width, 1:1 aspect.
+   - Space is reserved from the img's 1254×1254 width/height attributes,
+     so the layout doesn't jump once the chosen srcset candidate loads.
+   - No `object-fit: cover` — the client banner has embedded text/logo/
+     phone that must NEVER be cropped. `width: 100%; height: auto` lets
+     the natural 1:1 ratio decide the height. */
+.clcargo-hero__banner {
+  display: none;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--cl-hero-panel);
+  outline-offset: 4px;
+}
+
+.clcargo-hero__banner picture { display: block; }
+
+.clcargo-hero__banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;      /* belt-and-braces alongside width/height attrs */
+}
+
+.clcargo-hero__banner:focus-visible {
+  outline: 3px solid var(--cl-hero-gold);
+}
+
+/* ---- Grid ---- */
+.clcargo-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1031px) {
+  .clcargo-hero__grid {
+    /* fr columns ≈ 56/44 after a 44px gap */
+    grid-template-columns: minmax(0, 56fr) minmax(0, 44fr);
+    gap: 2.75rem;
+    align-items: start;
+  }
+}
+
+/* ---- Text column ---- */
+.clcargo-hero__col--text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+/* ---- Experience badge ---- */
+.clcargo-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  align-self: flex-start;
+  padding: 0.4rem 0.9rem;
+  background: transparent;
+  border: 1px solid rgba(251, 191, 36, 0.55);
+  border-radius: 999px;
+  color: var(--cl-hero-gold);
+  font-size: 0.85rem;             /* ≈ 13.6px */
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 100%;
+}
+.clcargo-hero__badge-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--cl-hero-gold);
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.25);
+}
+
+@media (max-width: 480px) {
+  .clcargo-hero__badge {
+    white-space: normal;
+    text-align: left;
+  }
+}
+
+/* ---- H1 ---- */
+.clcargo-hero__title {
+  margin: 0;
+  color: var(--cl-hero-text);
+  font-family: var(--cl-font);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  /* 30 → 52px; keeps the three-line composition from the reference
+     without forcing manual <br>s. Spec range: 48–64px wide, 30–36 phone. */
+  font-size: clamp(1.875rem, 3vw + 0.8rem, 3.25rem);
+}
+.clcargo-hero__title-accent {
+  color: var(--cl-hero-gold);
+  white-space: nowrap;            /* keep the accent phrase together */
+}
+
+/* ---- Lead ---- */
+.clcargo-hero__lead {
+  margin: 0;
+  color: var(--cl-hero-text-mute);
+  font-size: clamp(1.0625rem, 0.9rem + 0.6vw, 1.375rem);   /* 17 → 22px */
+  font-weight: 500;
+  line-height: 1.5;
+}
+.clcargo-hero__lead-weight {
+  color: var(--cl-hero-gold);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* ---- Destinations ---- */
+.clcargo-hero__destinations {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;                  /* 10px */
+}
+
+@media (min-width: 560px) {
+  .clcargo-hero__destinations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .clcargo-hero__destinations { grid-template-columns: 1fr; }
+}
+
+.clcargo-hero__dest {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.4rem 0.8rem 0.4rem 0.55rem;
+  background: var(--cl-hero-panel);
+  border: 1px solid var(--cl-hero-chip-bd);
+  border-radius: 12px;
+  color: var(--cl-hero-text);
+  font-size: 0.9375rem;           /* 15px */
+  font-weight: 500;
+}
+.clcargo-hero__dest-flags {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.clcargo-hero__flag {
+  width: 24px;
+  height: 16px;
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ---- Details paragraph ---- */
+.clcargo-hero__details {
+  margin: 0;
+  color: var(--cl-hero-text-mute);
+  font-size: 1rem;                /* 16px */
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+@media (min-width: 1031px) {
+  .clcargo-hero__details { font-size: 1.0625rem; }  /* 17px */
+}
+
+/* ---- CTAs ---- */
+.clcargo-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.clcargo-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.9rem 1.4rem;         /* 14px / 22px — grows with wrapped label */
+  font-family: inherit;
+  font-size: 0.9375rem;           /* 15px */
+  font-weight: 700;
+  line-height: 1.2;
+  border-radius: 12px;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+@media (min-width: 1031px) {
+  .clcargo-hero__cta { padding: 0.95rem 1.6rem; font-size: 1rem; }
+}
+
+.clcargo-hero__cta--primary {
+  background: linear-gradient(90deg, var(--cl-hero-gold), var(--cl-hero-gold-deep));
+  color: var(--cl-hero-bg);       /* dark navy text on gold */
+  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.28);
+}
+.clcargo-hero__cta--primary:hover,
+.clcargo-hero__cta--primary:focus-visible {
+  background: linear-gradient(90deg, var(--cl-hero-gold-deep), var(--cl-hero-gold-hover));
+  box-shadow: 0 8px 24px rgba(217, 119, 6, 0.4);
+  transform: translateY(-1px);
+  color: var(--cl-hero-bg);
+}
+
+.clcargo-hero__cta--secondary {
+  background: transparent;
+  color: var(--cl-hero-text);
+  border: 1.5px solid var(--cl-hero-chip-bd);
+}
+.clcargo-hero__cta--secondary:hover,
+.clcargo-hero__cta--secondary:focus-visible {
+  background: var(--cl-hero-panel);
+  border-color: var(--cl-hero-text-mute);
+  color: var(--cl-hero-text);
+  transform: translateY(-1px);
+}
+
+.clcargo-hero__cta:active { transform: translateY(0); }
+
+.clcargo-hero__cta:focus-visible {
+  outline: 2px solid var(--cl-hero-gold);
+  outline-offset: 3px;
+}
+
+/* Icon colour inside buttons:
+   — primary (gold bg) → dark navy stroke for contrast;
+   — secondary (ghost) → gold stroke. */
+.clcargo-hero__cta .clcargo-hero__icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+}
+.clcargo-hero__cta--primary   .clcargo-hero__icon { color: var(--cl-hero-bg); }
+.clcargo-hero__cta--secondary .clcargo-hero__icon { color: var(--cl-hero-gold); }
+
+@media (min-width: 1031px) {
+  .clcargo-hero__cta .clcargo-hero__icon { width: 22px; height: 22px; flex-basis: 22px; }
+}
+
+/* ---- Visual column ---- */
+.clcargo-hero__col--visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.clcargo-hero__photo {
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--cl-hero-panel);
+  aspect-ratio: 1 / 1;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+}
+.clcargo-hero__photo picture,
+.clcargo-hero__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Square banner has embedded text/logo/phone that must NEVER be cropped.
+     Container is 1:1 too, so there is nothing to letterbox in practice. */
+  object-fit: contain;
+}
+
+@media (max-width: 1030px) {
+  .clcargo-hero__photo { display: none; }
+}
+
+/* ---- Motto block: gold vertical stripe + shield icon + title/sub ---- */
+.clcargo-hero__motto {
+  position: relative;
+  padding: 1.1rem 1.25rem 1.1rem 1.5rem;
+  background: var(--cl-hero-panel);
+  border-radius: 12px;
+  border-left: 3px solid var(--cl-hero-gold);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.85rem;
+  row-gap: 0.35rem;
+}
+.clcargo-hero__motto-icon {
+  grid-row: 1;
+  grid-column: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--cl-hero-gold);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.clcargo-hero__motto-icon .clcargo-hero__icon {
+  width: 30px;
+  height: 30px;
+}
+.clcargo-hero__motto-title {
+  grid-row: 1;
+  grid-column: 2;
+  margin: 0;
+  color: var(--cl-hero-text);
+  font-weight: 700;
+  line-height: 1.35;
+  font-size: clamp(1.125rem, 0.9rem + 0.7vw, 1.5rem);   /* 18 → 24px */
+}
+.clcargo-hero__motto-sub {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--cl-hero-text-mute);
+  font-size: 0.9375rem;           /* 15px */
+  line-height: 1.55;
+}
+
+@media (min-width: 1031px) {
+  .clcargo-hero__motto-sub { font-size: 1rem; }
+}
+
+/* ---- Highlights ---- */
+.clcargo-hero__highlights {
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--cl-hero-divider);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));   /* mobile default: 2 per row */
+  column-gap: 1.25rem;
+  row-gap: 1rem;
+}
+
+@media (max-width: 359px) {
+  .clcargo-hero__highlights { grid-template-columns: 1fr; }   /* fallback at very narrow */
+}
+
+@media (min-width: 1031px) {
+  .clcargo-hero__highlights {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+}
+
+.clcargo-hero__highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--cl-hero-text);
+  font-size: 0.95rem;             /* 15px */
+  font-weight: 500;
+  line-height: 1.45;
+}
+.clcargo-hero__highlight-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  color: var(--cl-hero-gold);
+  margin-top: -0.15rem;           /* visually centres with the first text line */
+}
+.clcargo-hero__highlight-icon .clcargo-hero__icon {
+  width: 28px;
+  height: 28px;
+}
+.clcargo-hero__highlight-text { min-width: 0; }
+
+/* =============================================
+   Mobile visibility — ≤1030: banner on top,
+   desktop photo hidden (handled above).
+   ============================================= */
+@media (max-width: 1030px) {
+  .clcargo-hero__banner {
+    display: block;
+    order: -1;
+  }
+  .clcargo-hero__inner { gap: 1.5rem; }
+  .clcargo-hero__grid  { gap: 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .clcargo-hero                 { padding: 1.5rem 0 2rem !important; }
+  .clcargo-hero__banner         { border-radius: 16px; }
+  .clcargo-hero__cta            { flex: 1 1 100%; }
+  .clcargo-hero__highlights     { padding-top: 1.25rem; row-gap: 0.85rem; }
+}
+
+/* === sections.css === */
+/* =============================================
+   CL CARGO — Section Layout & Backgrounds
+   ============================================= */
+
+/* All full-width sections */
+.clcargo-section {
+  width: 100%;
+  overflow: hidden; /* prevents child overflow */
+}
+
+/* Section inner constraint */
+.clcargo-section > .wp-block-group {
+  max-width: var(--cl-container);
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--cl-space-m) !important;
+  padding-right: var(--cl-space-m) !important;
+  box-sizing: border-box;
+}
+
+/* Wider side gutters on larger screens — more breathing room */
+@media (min-width: 1024px) {
+  .clcargo-section > .wp-block-group {
+    padding-left: var(--cl-space-l) !important;   /* 2.5rem */
+    padding-right: var(--cl-space-l) !important;
+  }
+}
+@media (min-width: 1440px) {
+  .clcargo-section > .wp-block-group {
+    padding-left: var(--cl-space-xl) !important;  /* 4rem */
+    padding-right: var(--cl-space-xl) !important;
+  }
+}
+
+/* Section padding */
+.clcargo-section.alignfull {
+  padding-top: var(--cl-space-xxl) !important;
+  padding-bottom: var(--cl-space-xxl) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Background overrides (WP adds inline bg via has-*-background-color) */
+.clcargo-section.has-bg-light-background-color,
+.clcargo-section.has-white-background-color {
+  /* keep WP's colour, just ensure no overflow */
+}
+
+/* Section headings — dark blue on light sections */
+.clcargo-section h2.wp-block-heading {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  margin-bottom: var(--cl-space-s);
+  text-align: center;
+  color: var(--cl-blue-dark);
+}
+
+.clcargo-section h2.wp-block-heading + p {
+  text-align: center;
+  color: var(--cl-text-muted);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--cl-space-l);
+}
+
+/* Dark sections — intro paragraph uses the on-dark muted colour */
+.clcargo-services h2.wp-block-heading + p,
+.clcargo-history h2.wp-block-heading + p {
+  color: var(--cl-text-on-dark);
+}
+
+/* Dark sections — white headings */
+.clcargo-services h2.wp-block-heading,
+.clcargo-history h2.wp-block-heading {
+  color: var(--cl-white);
+}
+
+/* Contacts section is now on a very light background — dark heading */
+.clcargo-cta h2.wp-block-heading {
+  color: var(--cl-blue-dark);
+}
+
+/* Info notice strip (port routing) */
+.clcargo-notice {
+  border-left: 4px solid var(--cl-yellow) !important;
+  border-radius: 0 var(--cl-radius) var(--cl-radius) 0 !important;
+  background: var(--cl-blue-light) !important;
+  padding: 1rem 1.25rem !important;
+  margin-bottom: var(--cl-space-l) !important;
+  box-sizing: border-box;
+}
+
+.clcargo-notice p {
+  margin: 0 !important;
+  font-size: 0.925rem;
+  color: var(--cl-text);
+  line-height: 1.6;
+}
+
+/* CTA banner in services section */
+.clcargo-banner {
+  border: 1px solid rgba(251, 191, 36, 0.5) !important;
+  border-radius: var(--cl-radius) !important;
+  background: rgba(251, 191, 36, 0.1) !important;
+  padding: 1.25rem 2rem !important;
+  margin-top: var(--cl-space-l) !important;
+  box-sizing: border-box;
+}
+
+.clcargo-banner p {
+  color: var(--cl-white) !important;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 !important;
+}
+
+/* History section paragraph */
+.clcargo-history .wp-block-group > p {
+  color: var(--cl-text-on-dark) !important;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 760px;
+  margin: var(--cl-space-m) auto 0 !important;
+  text-align: center;
+}
+
+/* Final CTA / contacts section — light background, dark text */
+.clcargo-cta > .wp-block-group {
+  max-width: 700px;
+}
+
+.clcargo-cta > .wp-block-group > p {
+  color: var(--cl-text-muted) !important;
+  text-align: center;
+}
+
+/* CTA contact row */
+.clcargo-cta .contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: var(--cl-space-m);
+}
+
+.clcargo-cta .contact-row p {
+  color: var(--cl-text) !important;
+  text-align: center;
+  margin: 0 !important;
+  line-height: 1.5;
+}
+
+.clcargo-cta .contact-row a,
+.clcargo-cta .clcargo-phone-link {
+  color: var(--cl-blue-dark) !important;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.clcargo-cta .clcargo-phone-link:hover {
+  color: var(--cl-yellow-dark) !important;
+  text-decoration: underline;
+}
+
+.clcargo-cta .contact-row span {
+  font-size: 0.82rem;
+  color: var(--cl-text-muted);
+}
+
+/* Messenger list — brand-coloured chips on the light contacts section */
+.clcargo-cta .clcargo-messengers {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: var(--cl-space-m) auto 0 !important;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.clcargo-cta .clcargo-messengers li {
+  margin: 0;
+}
+
+.clcargo-cta .clcargo-messengers__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--cl-white) !important;
+  padding: 0.6rem 1.15rem;
+  border-radius: 8px;
+  text-decoration: none !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px rgba(10, 25, 47, 0.08);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clcargo-cta .clcargo-messengers__link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(10, 25, 47, 0.18);
+  color: var(--cl-white) !important;
+}
+
+.clcargo-cta .clcargo-messengers__link--whatsapp { background: var(--cl-whatsapp); }
+.clcargo-cta .clcargo-messengers__link--whatsapp:hover { background: #15803D; }
+
+.clcargo-cta .clcargo-messengers__link--telegram { background: var(--cl-telegram); }
+.clcargo-cta .clcargo-messengers__link--telegram:hover { background: #0369A1; }
+
+.clcargo-cta .clcargo-messengers__link--viber { background: var(--cl-viber); }
+.clcargo-cta .clcargo-messengers__link--viber:hover { background: #7E22CE; }
+
+/* === cards.css === */
+/* =============================================
+   CL CARGO — Cards
+   ============================================= */
+
+/* ---- Direction cards ---- */
+/* theme.json contentSize=720px would otherwise squash the 4-column row,
+   so let the columns strip span the whole section width. */
+.clcargo-section--directions .wp-block-columns {
+  gap: 1.25rem !important;
+  flex-wrap: wrap !important;          /* allow wrapping below breakpoints */
+  justify-content: center;
+  max-width: none !important;
+  width: 100%;
+}
+
+.clcargo-direction-card.wp-block-column {
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius);
+  padding: 1.5rem !important;
+  box-shadow: var(--cl-shadow);
+  transition: box-shadow var(--cl-transition), transform var(--cl-transition), border-color var(--cl-transition);
+  box-sizing: border-box;
+  min-width: 0;        /* prevent flex overflow */
+  flex-grow: 0 !important; /* width controlled by breakpoints below */
+  /* Vertical stack so the last <p> (time strip) can stick to the bottom */
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Let the list consume all free space so <p> (ETA) stays pinned at the bottom */
+.clcargo-direction-card ul {
+  flex: 1 1 auto !important;
+  margin-bottom: 1rem !important;
+}
+
+.clcargo-direction-card > p:last-child {
+  margin-top: auto !important;
+}
+
+/* From tablet (≥600) stretch siblings to equal height within the row */
+@media (min-width: 600px) {
+  .clcargo-section--directions .wp-block-columns {
+    align-items: stretch !important;
+  }
+  .clcargo-direction-card.wp-block-column {
+    align-self: stretch !important;
+  }
+}
+
+/* On mobile (single column) no stretching needed */
+@media (max-width: 599.98px) {
+  .clcargo-section--directions .wp-block-columns {
+    align-items: flex-start !important;
+  }
+}
+
+.clcargo-direction-card.wp-block-column:hover {
+  box-shadow: var(--cl-shadow-hover);
+  transform: translateY(-3px);
+  border-color: var(--cl-yellow);
+}
+
+.clcargo-direction-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--cl-blue-dark);
+}
+
+.clcargo-direction-card ul {
+  padding-left: 1.1rem;
+  margin: 0 0 1rem !important;
+}
+
+.clcargo-direction-card li {
+  margin-bottom: 0.4rem;
+  color: var(--cl-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.clcargo-direction-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--cl-blue-dark) !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  background: var(--cl-blue-light);
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  margin: 0 !important;
+}
+
+/* ---- Service cards (on dark #0A192F background) ---- */
+.clcargo-service-card {
+  background: var(--cl-blue-panel) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: var(--cl-radius) !important;
+  padding: 1.5rem !important;
+  transition: background var(--cl-transition), border-color var(--cl-transition), transform var(--cl-transition);
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.clcargo-service-card:hover {
+  background: #152A4C !important;
+  border-color: rgba(251, 191, 36, 0.4) !important;
+  transform: translateY(-2px);
+}
+
+.clcargo-service-card > p:first-child {
+  font-size: 2.2rem !important;
+  line-height: 1 !important;
+  margin: 0 0 0.75rem !important;
+  color: var(--cl-yellow) !important;
+}
+
+.clcargo-service-card h4 {
+  color: var(--cl-white) !important;
+  font-size: 1rem !important;
+  margin: 0 0 0.5rem !important;
+}
+
+.clcargo-service-card > p:last-child {
+  color: var(--cl-text-on-dark) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+
+/* ---- Goods cards ---- */
+/* Composition: dark-blue visual area on top (fixed aspect ratio → identical
+   height across cards in a row), white body underneath that grows with the
+   text. The 6th card is a single gold-gradient panel with a dark CTA button
+   pinned to the bottom. */
+.clcargo-goods-card.wp-block-column {
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-radius: 16px;
+  padding: 0 !important;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(10, 25, 47, 0.04);
+  box-sizing: border-box;
+  min-width: 0;
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  transition: transform var(--cl-transition),
+              box-shadow var(--cl-transition),
+              border-color var(--cl-transition);
+}
+
+.clcargo-goods-card.wp-block-column:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(10, 25, 47, 0.12);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+/* Visual area — dark gradient panel with illustration and flags */
+.clcargo-goods-card__visual {
+  position: relative;
+  aspect-ratio: 5 / 3;
+  background: linear-gradient(135deg, #112240 0%, #0A192F 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Soft gold glow behind the illustration */
+.clcargo-goods-card__visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 55%,
+    rgba(251, 191, 36, 0.18) 0%,
+    rgba(251, 191, 36, 0.05) 40%,
+    transparent 70%);
+  pointer-events: none;
+}
+
+/* Illustration SVG */
+.clcargo-goods-card__svg {
+  position: relative;
+  width: clamp(64px, 25%, 96px);
+  height: auto;
+  color: var(--cl-white);
+  flex-shrink: 0;
+}
+
+/* Flags cluster — top-right corner of the visual area */
+.clcargo-goods-card__flags {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(10, 25, 47, 0.55);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  line-height: 1;
+  letter-spacing: 1px;
+  margin: 0 !important;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  z-index: 1;
+}
+
+/* Text body — grows with content */
+.clcargo-goods-card__body {
+  padding: 1.25rem 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1 1 auto;
+  text-align: left;
+}
+
+.clcargo-goods-card__title {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: var(--cl-blue-dark) !important;
+  margin: 0 !important;
+  line-height: 1.3;
+}
+
+.clcargo-goods-card__desc {
+  font-size: 0.9rem !important;
+  color: var(--cl-text-muted) !important;
+  line-height: 1.55;
+  margin: 0 !important;
+}
+
+/* =========================================================
+   6th card — single gold-gradient panel, no split
+   ========================================================= */
+.clcargo-goods-card--cta.wp-block-column {
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%) !important;
+  border: none !important;
+  padding: 1.6rem 1.4rem !important;
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.25);
+}
+
+.clcargo-goods-card--cta.wp-block-column:hover {
+  box-shadow: 0 14px 32px rgba(217, 119, 6, 0.35);
+  border-color: transparent !important;
+}
+
+.clcargo-goods-card__icon-large {
+  font-size: 2.4rem !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+.clcargo-goods-card--cta .clcargo-goods-card__title {
+  color: var(--cl-blue-dark) !important;
+  font-size: 1.2rem !important;
+}
+
+.clcargo-goods-card--cta .clcargo-goods-card__desc {
+  color: var(--cl-blue-dark) !important;
+  opacity: 0.85;
+}
+
+.clcargo-goods-card--cta .clcargo-goods-card__note {
+  margin: 0.25rem 0 0 !important;
+  font-weight: 700 !important;
+  color: var(--cl-blue-dark) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.4;
+}
+
+.clcargo-goods-card--cta .clcargo-goods-card__cta-link {
+  display: block;
+  margin-top: auto;
+  background: var(--cl-blue-dark);
+  color: var(--cl-white) !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  text-decoration: none !important;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(10, 25, 47, 0.25);
+  transition: background var(--cl-transition),
+              transform var(--cl-transition),
+              box-shadow var(--cl-transition);
+}
+
+.clcargo-goods-card--cta .clcargo-goods-card__cta-link:hover {
+  background: #000814;
+  color: var(--cl-white) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(10, 25, 47, 0.35);
+}
+
+/* Narrow-phone tweaks */
+@media (max-width: 400px) {
+  .clcargo-goods-card__body { padding: 1.1rem 1.15rem 1.25rem; }
+  .clcargo-goods-card--cta.wp-block-column { padding: 1.3rem 1.15rem !important; }
+}
+
+/* =========================================================
+   Why section — 6 benefit cards with icon medallion
+   ========================================================= */
+
+.clcargo-section--why .wp-block-columns {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1.5rem !important;
+  align-items: stretch !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* Stats strip in Why section keeps a tighter gap so 4 badges fit on one row
+   with badge-item's calc(25% - 1rem) flex-basis. */
+.clcargo-section--why .wp-block-columns:has(> .clcargo-badge-item) {
+  gap: 1rem !important;
+}
+
+.clcargo-section--why .wp-block-columns > .clcargo-why-card.wp-block-column {
+  flex-basis: calc(33.333% - 1rem) !important;
+  flex-grow: 1 !important;
+  min-width: 0 !important;
+}
+
+@media (max-width: 1029.98px) and (min-width: 600px) {
+  .clcargo-section--why .wp-block-columns > .clcargo-why-card.wp-block-column {
+    flex-basis: calc(50% - 0.75rem) !important;
+  }
+}
+@media (max-width: 599.98px) {
+  .clcargo-section--why .wp-block-columns { gap: 1rem !important; }
+  .clcargo-section--why .wp-block-columns > .clcargo-why-card.wp-block-column {
+    flex-basis: 100% !important;
+  }
+}
+
+.clcargo-why-card.wp-block-column {
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem !important;
+  box-shadow: 0 2px 10px rgba(10, 25, 47, 0.04);
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  box-sizing: border-box;
+  transition: transform var(--cl-transition),
+              box-shadow var(--cl-transition),
+              border-color var(--cl-transition);
+}
+
+.clcargo-why-card.wp-block-column:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(10, 25, 47, 0.1);
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+/* Icon medallion — dark gradient with gold ring */
+.clcargo-why-card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #112240 0%, #0A192F 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cl-white);
+  box-shadow: 0 6px 18px rgba(10, 25, 47, 0.18),
+              inset 0 0 0 1px rgba(251, 191, 36, 0.35);
+  flex-shrink: 0;
+}
+
+.clcargo-why-card__icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.clcargo-why-card__title {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  color: var(--cl-blue-dark) !important;
+  margin: 0 !important;
+  line-height: 1.3;
+}
+
+.clcargo-why-card__desc {
+  font-size: 0.9rem !important;
+  color: var(--cl-text-muted) !important;
+  line-height: 1.55;
+  margin: 0 !important;
+  flex: 1 1 auto;
+}
+
+/* ---- Stats / badge items ---- */
+.clcargo-badge-item.wp-block-column {
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-radius: 16px;
+  padding: 1.75rem 1rem !important;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(10, 25, 47, 0.04);
+  box-sizing: border-box;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--cl-transition),
+              box-shadow var(--cl-transition),
+              border-color var(--cl-transition);
+}
+
+/* Thin gold bar on top edge — ties stats to the gold brand accent */
+.clcargo-badge-item.wp-block-column::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 3px;
+  background: var(--cl-cta-gradient);
+  border-radius: 0 0 3px 3px;
+}
+
+.clcargo-badge-item.wp-block-column:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(10, 25, 47, 0.08);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.clcargo-badge-item p:first-child {
+  font-weight: 800 !important;
+  font-size: 2rem !important;
+  color: var(--cl-yellow-dark) !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  letter-spacing: -0.02em;
+}
+
+.clcargo-badge-item p:last-child {
+  font-size: 0.82rem !important;
+  color: var(--cl-text-muted) !important;
+  margin: 0.4rem 0 0 !important;
+  line-height: 1.3;
+}
+
+/* === steps.css === */
+/* =============================================
+   CL CARGO — How We Work (Steps)
+   ============================================= */
+
+/* Columns grid: own full width, ignore WP 720px contentSize */
+.clcargo-section--how .clcargo-steps.wp-block-columns {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+  align-items: stretch !important;
+  justify-content: center !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* 5 columns ≥1030px; 2 columns 600–1029 (orphan card stays half-width);
+   1 column <600. flex-grow:0 keeps cards from stretching into the space
+   left by orphans. */
+.clcargo-section--how .clcargo-steps > .clcargo-step.wp-block-column {
+  flex-basis: calc(20% - 0.8rem) !important;
+  flex-grow: 0 !important;
+  min-width: 0 !important;
+}
+
+@media (max-width: 1029.98px) and (min-width: 600px) {
+  .clcargo-section--how .clcargo-steps > .clcargo-step.wp-block-column {
+    flex-basis: calc(50% - 0.5rem) !important;
+  }
+}
+@media (max-width: 599.98px) {
+  .clcargo-section--how .clcargo-steps > .clcargo-step.wp-block-column {
+    flex-basis: 100% !important;
+  }
+}
+
+/* Card */
+.clcargo-step.wp-block-column {
+  position: relative;
+  background: var(--cl-white);
+  border: 1px solid var(--cl-border);
+  border-radius: 16px;
+  padding: 1.5rem 1.25rem !important;
+  box-shadow: 0 2px 10px rgba(10, 25, 47, 0.04);
+  box-sizing: border-box;
+  min-width: 0;
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.6rem;
+  overflow: hidden;
+  transition: transform var(--cl-transition),
+              box-shadow var(--cl-transition),
+              border-color var(--cl-transition);
+}
+
+.clcargo-step.wp-block-column:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(10, 25, 47, 0.1);
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+/* Header row: big number ↔ icon badge */
+.clcargo-step__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.clcargo-step__number {
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: var(--cl-cta-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.clcargo-step__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #112240 0%, #0A192F 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cl-white);
+  box-shadow: 0 4px 12px rgba(10, 25, 47, 0.15),
+              inset 0 0 0 1px rgba(251, 191, 36, 0.3);
+  flex-shrink: 0;
+}
+
+.clcargo-step__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Title & description */
+.clcargo-step__title {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--cl-blue-dark) !important;
+  margin: 0 !important;
+  line-height: 1.3;
+}
+
+.clcargo-step__desc {
+  font-size: 0.88rem !important;
+  color: var(--cl-text-muted) !important;
+  line-height: 1.5;
+  margin: 0 !important;
+  flex: 1 1 auto;
+}
+
+/* ---- Final step — gold accent ---- */
+.clcargo-step--final.wp-block-column {
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.22);
+}
+
+.clcargo-step--final.wp-block-column:hover {
+  box-shadow: 0 14px 30px rgba(217, 119, 6, 0.3);
+  border-color: transparent !important;
+}
+
+.clcargo-step--final .clcargo-step__number {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  color: var(--cl-white) !important;
+}
+
+.clcargo-step--final .clcargo-step__icon {
+  background: var(--cl-blue-dark);
+  box-shadow: 0 4px 12px rgba(10, 25, 47, 0.3),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.clcargo-step--final .clcargo-step__title {
+  color: var(--cl-blue-dark) !important;
+}
+
+.clcargo-step--final .clcargo-step__desc {
+  color: var(--cl-blue-dark) !important;
+  opacity: 0.85;
+}
+
+/* Final caption */
+.clcargo-steps + p {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--cl-blue-dark);
+  text-align: center;
+  margin-top: var(--cl-space-l) !important;
+}
+
+/* Narrow-phone tweaks */
+@media (max-width: 400px) {
+  .clcargo-step.wp-block-column { padding: 1.25rem 1.1rem !important; }
+  .clcargo-step__number { font-size: 2.3rem; }
+  .clcargo-step__icon  { width: 40px; height: 40px; }
+  .clcargo-step__icon svg { width: 22px; height: 22px; }
+}
+
+/* === form.css === */
+/* =============================================
+   CL CARGO — Calculator form section
+   All selectors are scoped to .clcargo-form-section so the dark-palette
+   restyle never bleeds into other Forminator forms on the site.
+   Palette is driven directly by brief tokens, not the theme variables.
+   ============================================= */
+
+/* `.clcargo-form-section.alignfull` is used (not just .clcargo-form-section)
+   so the padding rule beats `.clcargo-section.alignfull` from wp-overrides.css
+   which also targets with two classes.
+   `margin-top: 0` kills the 1.2rem default spacing WordPress applies to
+   every child of `.is-layout-flow`, which otherwise shows the white body
+   background between the hero and the form (gap bug the user spotted).
+   `border-top` gives the small gold separator requested next to it. */
+.clcargo-form-section,
+.clcargo-form-section.alignfull {
+  background: #0B1B34 !important;
+  padding-top: 56px !important;
+  padding-bottom: 56px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  border-top: 2px solid #FFD700;
+  color: #CBD5E1;
+  /* Font stack from brief — scoped to the section, keeps Inter elsewhere */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Keep horizontal breathing room on narrow viewports */
+@media (max-width: 600px) {
+  .clcargo-form-section.alignfull {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* ---------- Heading + subtitle ---------- */
+
+.clcargo-form-section .clcargo-calc-title {
+  margin: 0 !important;
+  text-align: center;
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  line-height: 1.6 !important;
+  color: #FFFFFF !important;
+  letter-spacing: -0.01em;
+}
+
+.clcargo-form-section .clcargo-calc-title__main { color: #FFFFFF; }
+.clcargo-form-section .clcargo-calc-title__accent { color: #FFD700; }
+
+/* Paragraph following the title is the subtitle */
+.clcargo-form-section .clcargo-calc-title + p {
+  margin: 8px 0 36px !important;
+  text-align: center;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 24px;
+  color: #CBD5E1 !important;
+}
+
+/* ---------- Form card ---------- */
+
+.clcargo-form-section > .wp-block-group {
+  max-width: 640px !important;
+  width: 100%;
+  margin: 0 auto;
+  background: #0F2342 !important;
+  border: 2px solid #FFD700;
+  border-radius: 16px;
+  padding: 24px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .clcargo-form-section > .wp-block-group {
+    padding: 16px !important;
+    border-radius: 14px;
+  }
+}
+
+/* Two-column field grid on desktop, single column on mobile. Targets the
+   forminator wrappers directly so we don't rely on markup shuffles. */
+.clcargo-form-section .forminator-row {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0 0 12px 0 !important;
+}
+
+/* Full-width fields span both columns */
+.clcargo-form-section .forminator-row > .forminator-col-12 {
+  grid-column: 1 / -1;
+}
+.clcargo-form-section .forminator-row > .forminator-col-6 { grid-column: span 1; }
+.clcargo-form-section .forminator-row > .forminator-col-4 { grid-column: span 1; }
+.clcargo-form-section .forminator-row > .forminator-col-3 { grid-column: span 1; }
+
+/* The submit button wrapper is `.forminator-col` with no size suffix —
+   Forminator renders it inside `.forminator-row-last`. Make that column
+   span the entire row so the button matches the ETA block width. */
+.clcargo-form-section .forminator-row-last > .forminator-col,
+.clcargo-form-section .forminator-row > .forminator-col:only-child {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .clcargo-form-section .forminator-row {
+    grid-template-columns: 1fr;
+  }
+  .clcargo-form-section .forminator-row > * { grid-column: 1 / -1 !important; }
+}
+
+/* Forminator sometimes wraps a single field in a row of its own */
+.clcargo-form-section .forminator-field {
+  margin: 0;
+  width: 100%;
+}
+
+/* ---------- Labels ---------- */
+
+.clcargo-form-section .forminator-label,
+.clcargo-form-section .forminator-field-label {
+  display: block;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #FFD700 !important;
+  margin: 0 0 6px 0 !important;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+
+.clcargo-form-section .forminator-required,
+.clcargo-form-section .forminator-label .forminator-required {
+  color: #FFD700 !important;
+  margin-left: 0.15rem;
+}
+
+/* ---------- Inputs ---------- */
+
+.clcargo-form-section input[type="text"],
+.clcargo-form-section input[type="email"],
+.clcargo-form-section input[type="tel"],
+.clcargo-form-section input[type="number"],
+.clcargo-form-section select,
+.clcargo-form-section textarea,
+.clcargo-form-section .forminator-input,
+.clcargo-form-section .forminator-textarea,
+.clcargo-form-section .select2-selection--single,
+.clcargo-form-section .select2-selection--multiple {
+  width: 100% !important;
+  background: #071324 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 10px !important;
+  padding: 12px 14px !important;
+  font-size: 15px !important;
+  font-family: inherit !important;
+  line-height: 1.4 !important;
+  outline: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box !important;
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 46px;
+}
+
+@media (max-width: 600px) {
+  .clcargo-form-section input[type="text"],
+  .clcargo-form-section input[type="email"],
+  .clcargo-form-section input[type="tel"],
+  .clcargo-form-section input[type="number"],
+  .clcargo-form-section select,
+  .clcargo-form-section textarea,
+  .clcargo-form-section .forminator-input,
+  .clcargo-form-section .forminator-textarea,
+  .clcargo-form-section .select2-selection--single,
+  .clcargo-form-section .select2-selection--multiple {
+    font-size: 16px !important;  /* prevents iOS auto-zoom on focus */
+  }
+}
+
+.clcargo-form-section textarea,
+.clcargo-form-section .forminator-textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.clcargo-form-section input::placeholder,
+.clcargo-form-section textarea::placeholder {
+  color: rgba(203, 213, 225, 0.55) !important;
+  opacity: 1;
+}
+
+.clcargo-form-section input:focus,
+.clcargo-form-section select:focus,
+.clcargo-form-section textarea:focus,
+.clcargo-form-section .forminator-input:focus,
+.clcargo-form-section .forminator-textarea:focus {
+  border-color: #FFD700 !important;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3) !important;
+}
+
+/* ---------- Select2 overrides (both vanilla Select2 and Forminator's
+     `.forminator-select` wrapper variant) ---------- */
+
+.clcargo-form-section .forminator-select .select2-selection,
+.clcargo-form-section .select2-container--default .select2-selection {
+  background: #071324 !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 10px !important;
+  min-height: 46px !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+}
+
+.clcargo-form-section .forminator-select .select2-selection__rendered,
+.clcargo-form-section .select2-container--default .select2-selection__rendered,
+.clcargo-form-section .forminator-select .selection span[role="combobox"] .select2-selection__rendered {
+  color: #FFFFFF !important;
+  padding: 12px 42px 12px 14px !important;
+  line-height: 1.4 !important;
+  font-size: 15px !important;
+}
+
+@media (max-width: 600px) {
+  .clcargo-form-section .forminator-select .select2-selection__rendered,
+  .clcargo-form-section .select2-container--default .select2-selection__rendered,
+  .clcargo-form-section .forminator-select .selection span[role="combobox"] .select2-selection__rendered {
+    font-size: 16px !important;
+  }
+}
+
+.clcargo-form-section .forminator-select .select2-selection__placeholder,
+.clcargo-form-section .select2-container--default .select2-selection__placeholder {
+  color: rgba(203, 213, 225, 0.6) !important;
+}
+
+/* Arrow — covers both vanilla select2 and Forminator's icon font variant */
+.clcargo-form-section .forminator-select .select2-selection__arrow,
+.clcargo-form-section .select2-container--default .select2-selection__arrow {
+  top: 50% !important;
+  right: 10px !important;
+  transform: translateY(-50%);
+  height: auto !important;
+  color: #FFD700 !important;
+}
+.clcargo-form-section .forminator-select .select2-selection__arrow [class*="forminator-icon-"],
+.clcargo-form-section .forminator-select .select2-selection__arrow [class*="forminator-icon-"]:before {
+  color: #FFD700 !important;
+}
+.clcargo-form-section .select2-container--default .select2-selection__arrow b {
+  border-color: #FFD700 transparent transparent transparent !important;
+}
+.clcargo-form-section .select2-container--default.select2-container--open .select2-selection__arrow b {
+  border-color: transparent transparent #FFD700 transparent !important;
+}
+
+/* Focus / open states for both wrappers */
+.clcargo-form-section .forminator-select .select2-selection:focus,
+.clcargo-form-section .forminator-select.select2-container--focus .select2-selection,
+.clcargo-form-section .forminator-select.select2-container--open .select2-selection,
+.clcargo-form-section .select2-container--default.select2-container--focus .select2-selection,
+.clcargo-form-section .select2-container--default.select2-container--open .select2-selection {
+  border-color: #FFD700 !important;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3) !important;
+}
+
+/* Native select fallback (when select2 not yet rendered) */
+.clcargo-form-section select:not([multiple]) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FFD700' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  padding-right: 36px !important;
+}
+
+/* Dropdown panels — both vanilla Select2 (`.select2-dropdown`) and the
+   Forminator variant (`.forminator-select-dropdown`). Both get the dark
+   calculator palette, gold border and gold highlight on hover/active. */
+.select2-dropdown.select2-dropdown--below,
+.select2-dropdown.select2-dropdown--above,
+.forminator-select-dropdown,
+.forminator-select .forminator-select-dropdown,
+.forminator-select-dropdown.forminator-dropdown--default,
+.forminator-select-dropdown.forminator-dropdown--basic,
+.forminator-select-dropdown.forminator-dropdown--bold,
+.forminator-select-dropdown.forminator-dropdown--flat,
+.forminator-select-dropdown.forminator-dropdown--material {
+  background: #0F2342 !important;
+  border: 1px solid #FFD700 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+.forminator-select-dropdown .select2-search input,
+.forminator-select-dropdown .select2-search__field {
+  background: #071324 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 8px !important;
+}
+
+.forminator-select-dropdown .select2-results__option,
+.select2-results__option {
+  color: #FFFFFF !important;
+  background: transparent !important;
+  padding: 10px 14px !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+}
+
+.forminator-select-dropdown .select2-results__option--highlighted,
+.forminator-select-dropdown .select2-results__option--highlighted[aria-selected],
+.select2-results__option--highlighted[aria-selected],
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background: rgba(255, 215, 0, 0.18) !important;
+  color: #FFD700 !important;
+}
+
+.forminator-select-dropdown .select2-results__option[aria-selected="true"],
+.forminator-select-dropdown .select2-results__option--selected {
+  background: rgba(255, 215, 0, 0.1) !important;
+  color: #FFD700 !important;
+}
+
+/* Hide the "no results found" message decoration so it blends in */
+.forminator-select-dropdown .select2-results__message {
+  color: rgba(203, 213, 225, 0.75) !important;
+  background: transparent !important;
+}
+
+/* ---------- Checkbox ---------- */
+
+.clcargo-form-section .forminator-field-checkbox {
+  /* The checkbox row spans full width visually */
+  grid-column: 1 / -1;
+}
+
+.clcargo-form-section input[type="checkbox"] {
+  width: 18px !important;
+  height: 18px !important;
+  accent-color: #FFD700;
+  margin: 0;
+  flex-shrink: 0;
+  min-height: 0;
+  padding: 0 !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  background: #071324 !important;
+}
+
+.clcargo-form-section .forminator-checkbox {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  color: #CBD5E1;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.clcargo-form-section .forminator-checkbox:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+}
+.clcargo-form-section .forminator-checkbox-label {
+  color: #FFFFFF !important;
+  font-weight: 500;
+}
+.clcargo-form-section .forminator-checkbox-box {
+  display: none; /* use native checkbox styling */
+}
+
+/* ---------- ETA block (injected by form-logic.js) ---------- */
+
+.clcargo-form-section .clcargo-eta {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 4px 0 16px;
+  padding: 12px 16px;
+  background: rgba(0, 87, 183, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 12px;
+}
+
+.clcargo-form-section .clcargo-eta__label {
+  font-size: 13px;
+  color: #CBD5E1;
+  line-height: 1.3;
+}
+
+.clcargo-form-section .clcargo-eta__value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFD700;
+  line-height: 1.2;
+  text-align: right;
+}
+
+@media (max-width: 480px) {
+  .clcargo-form-section .clcargo-eta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .clcargo-form-section .clcargo-eta__value {
+    text-align: left;
+    font-size: 18px;
+  }
+}
+
+/* Method selector (авиа/море) — shown only for China/India */
+.clcargo-form-section .clcargo-eta-method {
+  grid-column: 1 / -1;
+  display: none;
+  gap: 8px;
+  margin: -4px 0 12px;
+}
+.clcargo-form-section .clcargo-eta-method[data-visible="true"] {
+  display: flex;
+}
+.clcargo-form-section .clcargo-eta-method__label {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFD700;
+  align-self: center;
+  margin-right: 4px;
+}
+.clcargo-form-section .clcargo-eta-method__option {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  background: #071324;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.clcargo-form-section .clcargo-eta-method__option:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+}
+.clcargo-form-section .clcargo-eta-method__option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.clcargo-form-section .clcargo-eta-method__option:has(input:checked) {
+  background: rgba(255, 215, 0, 0.18);
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+/* ---------- Submit button ---------- */
+
+.clcargo-form-section .forminator-button-submit,
+.clcargo-form-section .forminator-button.forminator-button-submit,
+.clcargo-form-section .forminator-btn-submit,
+.clcargo-form-section button[type="submit"] {
+  grid-column: 1 / -1;
+  width: 100% !important;
+  background: #FFD700 !important;
+  background-image: none !important;
+  color: #071324 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 14px 26px !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3) !important;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+  margin-top: 4px !important;
+  line-height: 1.2;
+}
+
+.clcargo-form-section .forminator-button-submit:hover,
+.clcargo-form-section .forminator-button.forminator-button-submit:hover,
+.clcargo-form-section .forminator-btn-submit:hover,
+.clcargo-form-section button[type="submit"]:hover {
+  background: #FFEA54 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 215, 0, 0.35) !important;
+}
+
+.clcargo-form-section .forminator-button-submit:active {
+  transform: translateY(0);
+}
+
+/* ---------- Form rows that must span full width but aren't col-12 ---------- */
+
+/* Phone + name are placed side-by-side on desktop, stacked on mobile */
+.clcargo-form-section .forminator-field-name,
+.clcargo-form-section .forminator-field-phone {
+  /* keep whatever col-* Forminator assigned */
+}
+
+/* ---------- Error messages ---------- */
+
+.clcargo-form-section .forminator-error,
+.clcargo-form-section .forminator-field-error,
+.clcargo-field-error {
+  color: #FCA5A5 !important;
+  font-size: 12px !important;
+  margin-top: 4px !important;
+  display: block;
+}
+
+.clcargo-form-section .forminator-response-message.forminator-error {
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  color: #FCA5A5 !important;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+/* ---------- Success state (shown only after server confirmation) ---------- */
+
+.clcargo-form-section .forminator-response-message.forminator-success,
+.clcargo-form-section .forminator-response-output {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border: 1px solid rgba(16, 185, 129, 0.45) !important;
+  color: #A7F3D0 !important;
+  padding: 14px 16px !important;
+  border-radius: 10px !important;
+  font-size: 15px !important;
+}
+
+/* ---------- Microtext (phone fallback line) ---------- */
+
+.clcargo-form-section > .wp-block-group > p:last-child {
+  font-size: 13px !important;
+  color: #94A3B8 !important;
+  text-align: center;
+  margin-top: 18px !important;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.clcargo-form-section > .wp-block-group > p:last-child a {
+  color: #FFD700 !important;
+  font-weight: 700;
+  text-decoration: none;
+}
+.clcargo-form-section > .wp-block-group > p:last-child a:hover {
+  text-decoration: underline;
+}
+
+/* === faq.css === */
+/* =============================================
+   CL CARGO — FAQ Accordion
+   ============================================= */
+
+.clcargo-faq-item.wp-block-details {
+  background: var(--cl-white) !important;
+  border: 1px solid var(--cl-border) !important;
+  border-radius: var(--cl-radius) !important;
+  padding: 0 1.25rem !important;
+  margin-top: 0.75rem !important;
+  overflow: hidden;
+  transition: border-color var(--cl-transition), box-shadow var(--cl-transition);
+  box-sizing: border-box;
+  interpolate-size: allow-keywords;
+}
+
+.clcargo-faq-item.wp-block-details:hover {
+  border-color: var(--cl-yellow);
+}
+
+.clcargo-faq-item[open] {
+  border-color: var(--cl-yellow) !important;
+  box-shadow: 0 2px 10px rgba(251, 191, 36, 0.15) !important;
+}
+
+.clcargo-faq-item summary {
+  padding: 1.1rem 0 !important;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--cl-blue-dark);
+  list-style: none !important;
+  -webkit-appearance: none;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.clcargo-faq-item summary:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Remove default marker */
+.clcargo-faq-item summary::-webkit-details-marker { display: none; }
+.clcargo-faq-item summary::marker { display: none; }
+
+/* Smooth open/close animation */
+.clcargo-faq-item::details-content {
+  opacity: 0;
+  block-size: 0;
+  overflow-y: clip;
+  transition:
+    content-visibility 0.4s allow-discrete,
+    opacity 0.3s ease,
+    block-size 0.4s ease;
+}
+
+.clcargo-faq-item[open]::details-content {
+  opacity: 1;
+  block-size: auto;
+}
+
+/* Plus/minus icon */
+.clcargo-faq-item summary::after {
+  content: '+';
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--cl-yellow-dark);
+  flex-shrink: 0;
+  line-height: 1;
+  transition: transform var(--cl-transition), color var(--cl-transition);
+}
+
+.clcargo-faq-item[open] summary::after {
+  color: var(--cl-yellow-deep);
+  transform: rotate(45deg);
+}
+
+/* Answer text */
+.clcargo-faq-item p {
+  padding: 0 0 1.1rem !important;
+  color: var(--cl-text-muted) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.65 !important;
+  margin: 0 !important;
+}
+
+/* === footer.css === */
+/* =============================================
+   CL CARGO — Footer
+   ============================================= */
+
+.clcargo-footer.wp-block-group {
+  background: var(--cl-blue-darkest) !important;
+  padding: var(--cl-space-m) var(--cl-space-m) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.clcargo-footer > .wp-block-group {
+  max-width: var(--cl-container);
+  margin: 0 auto !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 !important;
+}
+
+/* Copyright text */
+.clcargo-footer p {
+  color: var(--cl-text-muted-on-dark) !important;
+  font-size: 0.85rem !important;
+  margin: 0 !important;
+  line-height: 1.4;
+}
+
+/* Footer links group */
+.clcargo-footer .wp-block-group {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.clcargo-footer a {
+  color: var(--cl-text-muted-on-dark) !important;
+  font-size: 0.82rem;
+  transition: color var(--cl-transition);
+  text-decoration: none;
+}
+
+.clcargo-footer a:hover {
+  color: var(--cl-yellow) !important;
+}
+
+/* === responsive.css === */
+/* =============================================
+   CL CARGO — Responsive (mobile-first)
+   ============================================= */
+
+/* =============================================
+   Direction cards — three breakpoints
+   mobile       (≤ 599)        → 1 per row
+   tablet / md  (600 – 1099)   → 2 per row
+   desktop lg   (≥ 1100)       → 4 per row
+   ============================================= */
+@media (min-width: 1100px) {
+  .clcargo-section--directions .wp-block-column.clcargo-direction-card {
+    flex: 0 0 calc(25% - 0.9375rem) !important;
+    max-width: calc(25% - 0.9375rem) !important;
+  }
+}
+@media (min-width: 600px) and (max-width: 1099.98px) {
+  .clcargo-section--directions .wp-block-column.clcargo-direction-card {
+    flex: 0 0 calc(50% - 0.625rem) !important;
+    max-width: calc(50% - 0.625rem) !important;
+  }
+}
+@media (max-width: 599.98px) {
+  .clcargo-section--directions .wp-block-column.clcargo-direction-card {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ---- Tablet: 768px ---- */
+@media (max-width: 768px) {
+  /* Services: 2 columns */
+  .clcargo-services .wp-block-columns {
+    flex-wrap: wrap !important;
+  }
+  .clcargo-services .wp-block-column {
+    flex-basis: calc(50% - 0.75rem) !important;
+    min-width: 0;
+  }
+
+  /* (Steps breakpoints handled dedicatedly in steps.css) */
+
+  /* (Goods breakpoints handled in dedicated media queries below) */
+
+  /* Badges: 2 columns on tablet */
+  .clcargo-section--why .wp-block-columns > .clcargo-badge-item.wp-block-column,
+  .clcargo-badge-item.wp-block-column {
+    flex-basis: calc(50% - 0.5rem) !important;
+    min-width: 0;
+  }
+
+  /* Section inner padding */
+  .clcargo-section > .wp-block-group {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+}
+
+/* ---- Mobile: 600px ---- */
+@media (max-width: 600px) {
+  /* Hero inner */
+  .clcargo-hero .wp-block-cover__inner-container > .wp-block-group {
+    padding: calc(var(--cl-space-xxl) * 0.75) var(--cl-space-s)
+      var(--cl-space-xl) !important;
+  }
+
+  /* Buttons stack */
+  .clcargo-hero .wp-block-buttons,
+  .clcargo-cta .wp-block-buttons {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .clcargo-hero .wp-block-buttons .wp-block-button,
+  .clcargo-cta .wp-block-buttons .wp-block-button {
+    width: 100% !important;
+  }
+
+  .clcargo-hero .wp-block-buttons .wp-block-button__link,
+  .clcargo-cta .wp-block-buttons .wp-block-button__link {
+    width: 100% !important;
+    text-align: center !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Trust badges: column */
+  .clcargo-trust-badges {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+  }
+
+  /* Services: 1 column */
+  .clcargo-services .wp-block-columns {
+    flex-direction: column !important;
+  }
+  .clcargo-services .wp-block-column {
+    flex-basis: 100% !important;
+  }
+
+  /* (Steps breakpoint handled in steps.css) */
+
+  /* (Goods breakpoint handled dedicatedly below) */
+
+  /* Why: 1 column */
+  .clcargo-section .wp-block-columns:has(.clcargo-why-list) {
+    flex-direction: column !important;
+  }
+
+  /* Badges: 2 col on mobile */
+  .clcargo-section--why .wp-block-columns > .clcargo-badge-item.wp-block-column,
+  .clcargo-badge-item.wp-block-column {
+    flex-basis: calc(50% - 0.5rem) !important;
+  }
+
+  /* Section padding */
+  .clcargo-section.alignfull {
+    padding-top: var(--cl-space-xl) !important;
+    padding-bottom: var(--cl-space-xl) !important;
+  }
+
+  /* Section inner */
+  .clcargo-section > .wp-block-group {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Section h2 */
+  .clcargo-section h2.wp-block-heading {
+    font-size: 1.5rem !important;
+  }
+
+  /* CTA contacts */
+  .clcargo-cta .contact-row,
+  .clcargo-cta .wp-block-group[style*="gap:2rem"],
+  .clcargo-cta > .wp-block-group > .wp-block-group {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: center !important;
+  }
+}
+
+/* =============================================
+   Goods section — dedicated 3 / 2 / 1 grid
+   ≥1030 → 3 cards, 600–1029 → 2 cards, <600 → 1 card
+   Gap: 24px down to 600px, then 16px.
+   ============================================= */
+@media (max-width: 1029.98px) and (min-width: 600px) {
+  .clcargo-section--goods .wp-block-columns > .clcargo-goods-card.wp-block-column {
+    flex-basis: calc(50% - 0.75rem) !important;
+  }
+}
+@media (max-width: 599.98px) {
+  .clcargo-section--goods .wp-block-columns {
+    gap: 1rem !important; /* 16px mobile */
+  }
+  .clcargo-section--goods .wp-block-columns > .clcargo-goods-card.wp-block-column {
+    flex-basis: 100% !important;
+  }
+}
+
+/* ---- Very small: 360px ---- */
+@media (max-width: 360px) {
+  .clcargo-badge-item.wp-block-column {
+    flex-basis: 100% !important;
+  }
+
+  .clcargo-hero h1.wp-block-heading {
+    font-size: 1.6rem !important;
+  }
+}
+
+/* === contact-modal.css === */
+/* =============================================
+   CL CARGO — Contact modal (native <dialog>)
+   Triggered by [data-clcargo-contact-open] in the header.
+   ============================================= */
+
+/* ---- Dialog container ---- */
+.clcargo-contact-modal {
+  width: min(92vw, 520px);
+  max-width: 520px;
+  max-height: min(90vh, 720px);
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: var(--cl-white);
+  color: var(--cl-blue-dark);
+  box-shadow: 0 24px 64px rgba(10, 25, 47, 0.35);
+  overflow: hidden;           /* let .__body handle inner scroll */
+
+  /*
+   * Open/close animation. @starting-style + allow-discrete lets the
+   * native <dialog> fade/scale in on showModal() and back out on close().
+   * Gracefully degrades to instant show in older browsers.
+   */
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    overlay 0.2s ease allow-discrete,
+    display 0.2s ease allow-discrete;
+}
+
+.clcargo-contact-modal[open] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@starting-style {
+  .clcargo-contact-modal[open] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.clcargo-contact-modal:not([open]) { display: none; }
+
+.clcargo-contact-modal::backdrop {
+  background: rgba(10, 25, 47, 0);
+  -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0);
+  transition:
+    background 0.2s ease,
+    backdrop-filter 0.2s ease,
+    -webkit-backdrop-filter 0.2s ease,
+    overlay 0.2s ease allow-discrete,
+    display 0.2s ease allow-discrete;
+}
+
+.clcargo-contact-modal[open]::backdrop {
+  background: rgba(10, 25, 47, 0.6);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+@starting-style {
+  .clcargo-contact-modal[open]::backdrop {
+    background: rgba(10, 25, 47, 0);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clcargo-contact-modal,
+  .clcargo-contact-modal::backdrop {
+    transition: none;
+  }
+}
+
+/* ---- Inner column: header (fixed) + body (scrolls) ---- */
+.clcargo-contact-modal__inner {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+  max-height: min(90vh, 720px);
+}
+
+.clcargo-contact-modal__header {
+  position: relative;
+  padding: 1.5rem 3.25rem 1rem 1.5rem;
+  border-bottom: 1px solid var(--cl-border);
+  flex-shrink: 0;
+}
+
+.clcargo-contact-modal__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--cl-font);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--cl-blue-dark);
+  letter-spacing: -0.01em;
+}
+
+.clcargo-contact-modal__subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--cl-text-muted);
+}
+
+/* ---- Close button (top-right) ---- */
+.clcargo-contact-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--cl-blue-dark);
+  transition: background var(--cl-transition), border-color var(--cl-transition);
+}
+
+.clcargo-contact-modal__close:hover {
+  background: rgba(10, 25, 47, 0.07);
+}
+
+.clcargo-contact-modal__close:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 2px;
+}
+
+.clcargo-contact-modal__close svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+/* ---- Scrollable body ---- */
+.clcargo-contact-modal__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.25rem 1.5rem 1.5rem;
+  overscroll-behavior: contain;
+}
+
+/* ---- Cards list ---- */
+.clcargo-contact-modal__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.clcargo-contact-card {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--cl-border);
+}
+
+.clcargo-contact-card:first-child { border-top: 0; padding-top: 1rem; }
+.clcargo-contact-card:last-child  { padding-bottom: 0.25rem; }
+
+.clcargo-contact-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.4rem;
+}
+
+.clcargo-contact-card__icon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;      /* fixed size, never shrinks */
+  display: block;
+  border-radius: 50%;  /* all three operator marks are circular */
+  overflow: hidden;    /* safety clip around the SVG bounds */
+}
+
+.clcargo-contact-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cl-blue-dark);
+  letter-spacing: -0.01em;
+}
+
+/* ---- Phone (click-to-call) ---- */
+.clcargo-contact-card__phone {
+  display: inline-block;
+  margin: 0.15rem 0 0.7rem;
+  padding: 0.15rem 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--cl-blue-dark);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: color var(--cl-transition);
+}
+
+.clcargo-contact-card__phone:hover,
+.clcargo-contact-card__phone:focus-visible {
+  color: var(--cl-yellow-deep);
+}
+
+.clcargo-contact-card__phone:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- Messenger buttons ---- */
+.clcargo-contact-card__messengers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.clcargo-contact-card__msg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 40px;
+  padding: 0.5rem 0.85rem;
+  font-family: var(--cl-font);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--cl-white);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: transform var(--cl-transition), filter var(--cl-transition);
+  white-space: nowrap;
+}
+
+.clcargo-contact-card__msg-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;   /* fixed size, never shrinks */
+  display: block;
+}
+
+.clcargo-contact-card__msg-label { display: inline-block; }
+
+.clcargo-contact-card__msg--whatsapp { background: var(--cl-whatsapp); }
+.clcargo-contact-card__msg--telegram { background: var(--cl-telegram); }
+.clcargo-contact-card__msg--viber    { background: var(--cl-viber); }
+
+.clcargo-contact-card__msg:hover { filter: brightness(1.08); }
+.clcargo-contact-card__msg:active { transform: translateY(1px); }
+
+.clcargo-contact-card__msg:focus-visible {
+  outline: 2px solid var(--cl-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ---- Scroll lock on body while dialog is open ---- */
+body.clcargo-scroll-lock {
+  overflow: hidden;
+}
+
+/* ---- Small screens: tighter padding, full-width-ish ---- */
+@media (max-width: 480px) {
+  .clcargo-contact-modal {
+    width: calc(100vw - 1.5rem);
+    border-radius: 12px;
+  }
+  .clcargo-contact-modal__header { padding: 1.1rem 3rem 0.9rem 1.1rem; }
+  .clcargo-contact-modal__body   { padding: 0.25rem 1.1rem 1.1rem; }
+  .clcargo-contact-modal__title  { font-size: 1.2rem; }
+  .clcargo-contact-card__phone   { font-size: 1.1rem; }
+}

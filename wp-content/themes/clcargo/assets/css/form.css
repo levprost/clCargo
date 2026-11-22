@@ -1,9 +1,31 @@
 /* =============================================
-   CL CARGO — Form Section
+   CL CARGO — Calculator form section
+   All selectors are scoped to .clcargo-form-section so the dark-palette
+   restyle never bleeds into other Forminator forms on the site.
+   Palette is driven directly by brief tokens, not the theme variables.
    ============================================= */
 
-/* Ensure the alignfull section keeps horizontal breathing room on narrow
-   viewports so the form card never hits the screen edge. */
+/* `.clcargo-form-section.alignfull` is used (not just .clcargo-form-section)
+   so the padding rule beats `.clcargo-section.alignfull` from wp-overrides.css
+   which also targets with two classes.
+   `margin-top: 0` kills the 1.2rem default spacing WordPress applies to
+   every child of `.is-layout-flow`, which otherwise shows the white body
+   background between the hero and the form (gap bug the user spotted).
+   `border-top` gives the small gold separator requested next to it. */
+.clcargo-form-section,
+.clcargo-form-section.alignfull {
+  background: #0B1B34 !important;
+  padding-top: 56px !important;
+  padding-bottom: 56px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  border-top: 2px solid #FFD700;
+  color: #CBD5E1;
+  /* Font stack from brief — scoped to the section, keeps Inter elsewhere */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Keep horizontal breathing room on narrow viewports */
 @media (max-width: 600px) {
   .clcargo-form-section.alignfull {
     padding-left: 1rem !important;
@@ -11,76 +33,112 @@
   }
 }
 
-/* Form card: lifts the inner constrained group off the grey section
-   with a white panel, soft shadow, and a gold accent bar on top. */
-.clcargo-form-section > .wp-block-group {
-  max-width: var(--cl-narrow) !important;
-  background: var(--cl-white);
-  border: 1px solid var(--cl-border);
-  border-radius: 18px;
-  padding: 2.5rem !important;
-  box-shadow: 0 10px 40px rgba(10, 25, 47, 0.08),
-              0 2px 6px rgba(10, 25, 47, 0.04);
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
+/* ---------- Heading + subtitle ---------- */
+
+.clcargo-form-section .clcargo-calc-title {
+  margin: 0 !important;
+  text-align: center;
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  line-height: 1.6 !important;
+  color: #FFFFFF !important;
+  letter-spacing: -0.01em;
 }
 
-.clcargo-form-section > .wp-block-group::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--cl-cta-gradient);
+.clcargo-form-section .clcargo-calc-title__main { color: #FFFFFF; }
+.clcargo-form-section .clcargo-calc-title__accent { color: #FFD700; }
+
+/* Paragraph following the title is the subtitle */
+.clcargo-form-section .clcargo-calc-title + p {
+  margin: 8px 0 36px !important;
+  text-align: center;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 24px;
+  color: #CBD5E1 !important;
+}
+
+/* ---------- Form card ---------- */
+
+.clcargo-form-section > .wp-block-group {
+  max-width: 640px !important;
+  width: 100%;
+  margin: 0 auto;
+  background: #0F2342 !important;
+  border: 2px solid #FFD700;
+  border-radius: 16px;
+  padding: 24px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
 }
 
 @media (max-width: 600px) {
   .clcargo-form-section > .wp-block-group {
-    padding: 1.75rem 1.25rem !important;
+    padding: 16px !important;
     border-radius: 14px;
   }
 }
 
-/* Section heading inside the form card */
-.clcargo-form-section h2.wp-block-heading {
-  margin-top: 0.25rem !important;
-  margin-bottom: 0.5rem !important;
-}
-
-.clcargo-form-section h2.wp-block-heading + p {
-  margin-bottom: 1.75rem !important;
-}
-
-/* Forminator base overrides */
-.clcargo-form-section .forminator-ui {
-  font-family: var(--cl-font) !important;
-}
-
+/* Two-column field grid on desktop, single column on mobile. Targets the
+   forminator wrappers directly so we don't rely on markup shuffles. */
 .clcargo-form-section .forminator-row {
-  margin-bottom: 1.1rem !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0 0 12px 0 !important;
 }
 
-/* Labels */
+/* Full-width fields span both columns */
+.clcargo-form-section .forminator-row > .forminator-col-12 {
+  grid-column: 1 / -1;
+}
+.clcargo-form-section .forminator-row > .forminator-col-6 { grid-column: span 1; }
+.clcargo-form-section .forminator-row > .forminator-col-4 { grid-column: span 1; }
+.clcargo-form-section .forminator-row > .forminator-col-3 { grid-column: span 1; }
+
+/* The submit button wrapper is `.forminator-col` with no size suffix —
+   Forminator renders it inside `.forminator-row-last`. Make that column
+   span the entire row so the button matches the ETA block width. */
+.clcargo-form-section .forminator-row-last > .forminator-col,
+.clcargo-form-section .forminator-row > .forminator-col:only-child {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .clcargo-form-section .forminator-row {
+    grid-template-columns: 1fr;
+  }
+  .clcargo-form-section .forminator-row > * { grid-column: 1 / -1 !important; }
+}
+
+/* Forminator sometimes wraps a single field in a row of its own */
+.clcargo-form-section .forminator-field {
+  margin: 0;
+  width: 100%;
+}
+
+/* ---------- Labels ---------- */
+
 .clcargo-form-section .forminator-label,
 .clcargo-form-section .forminator-field-label {
-  font-size: 0.82rem !important;
-  font-weight: 600 !important;
-  color: var(--cl-text) !important;
-  letter-spacing: 0.01em;
-  margin-bottom: 0.45rem !important;
   display: block;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #FFD700 !important;
+  margin: 0 0 6px 0 !important;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
 }
 
-/* Required asterisk — gold */
 .clcargo-form-section .forminator-required,
 .clcargo-form-section .forminator-label .forminator-required {
-  color: var(--cl-yellow-dark) !important;
+  color: #FFD700 !important;
   margin-left: 0.15rem;
 }
 
-/* Input fields */
+/* ---------- Inputs ---------- */
+
 .clcargo-form-section input[type="text"],
 .clcargo-form-section input[type="email"],
 .clcargo-form-section input[type="tel"],
@@ -88,33 +146,51 @@
 .clcargo-form-section select,
 .clcargo-form-section textarea,
 .clcargo-form-section .forminator-input,
-.clcargo-form-section .forminator-textarea {
+.clcargo-form-section .forminator-textarea,
+.clcargo-form-section .select2-selection--single,
+.clcargo-form-section .select2-selection--multiple {
   width: 100% !important;
-  border: 1.5px solid var(--cl-border) !important;
+  background: #071324 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
   border-radius: 10px !important;
-  padding: 0.85rem 1rem !important;
-  font-size: 0.95rem !important;
-  font-family: var(--cl-font) !important;
-  color: var(--cl-text) !important;
-  background: #FAFBFD !important;
+  padding: 12px 14px !important;
+  font-size: 15px !important;
+  font-family: inherit !important;
+  line-height: 1.4 !important;
   outline: none !important;
-  transition: border-color var(--cl-transition), box-shadow var(--cl-transition), background var(--cl-transition) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   box-sizing: border-box !important;
   -webkit-appearance: none;
   appearance: none;
+  min-height: 46px;
+}
+
+@media (max-width: 600px) {
+  .clcargo-form-section input[type="text"],
+  .clcargo-form-section input[type="email"],
+  .clcargo-form-section input[type="tel"],
+  .clcargo-form-section input[type="number"],
+  .clcargo-form-section select,
+  .clcargo-form-section textarea,
+  .clcargo-form-section .forminator-input,
+  .clcargo-form-section .forminator-textarea,
+  .clcargo-form-section .select2-selection--single,
+  .clcargo-form-section .select2-selection--multiple {
+    font-size: 16px !important;  /* prevents iOS auto-zoom on focus */
+  }
+}
+
+.clcargo-form-section textarea,
+.clcargo-form-section .forminator-textarea {
+  min-height: 92px;
+  resize: vertical;
 }
 
 .clcargo-form-section input::placeholder,
 .clcargo-form-section textarea::placeholder {
-  color: #94A3B8 !important;
+  color: rgba(203, 213, 225, 0.55) !important;
   opacity: 1;
-}
-
-.clcargo-form-section input:hover:not(:focus),
-.clcargo-form-section select:hover:not(:focus),
-.clcargo-form-section textarea:hover:not(:focus) {
-  border-color: #CBD5E1 !important;
-  background: var(--cl-white) !important;
 }
 
 .clcargo-form-section input:focus,
@@ -122,121 +198,368 @@
 .clcargo-form-section textarea:focus,
 .clcargo-form-section .forminator-input:focus,
 .clcargo-form-section .forminator-textarea:focus {
-  border-color: var(--cl-yellow-dark) !important;
-  background: var(--cl-white) !important;
-  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.18) !important;
+  border-color: #FFD700 !important;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3) !important;
 }
 
-/* Select arrow */
-.clcargo-form-section select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23475569' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
-  background-repeat: no-repeat !important;
-  background-position: right 0.9rem center !important;
-  padding-right: 2.5rem !important;
-}
+/* ---------- Select2 overrides (both vanilla Select2 and Forminator's
+     `.forminator-select` wrapper variant) ---------- */
 
-/* Checkbox */
-.clcargo-form-section input[type="checkbox"] {
-  width: 1rem !important;
-  height: 1rem !important;
-  border: 1.5px solid var(--cl-border) !important;
-  border-radius: 3px !important;
+.clcargo-form-section .forminator-select .select2-selection,
+.clcargo-form-section .select2-container--default .select2-selection {
+  background: #071324 !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 10px !important;
+  min-height: 46px !important;
   padding: 0 !important;
-  accent-color: var(--cl-yellow-dark);
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.clcargo-form-section .forminator-select .select2-selection__rendered,
+.clcargo-form-section .select2-container--default .select2-selection__rendered,
+.clcargo-form-section .forminator-select .selection span[role="combobox"] .select2-selection__rendered {
+  color: #FFFFFF !important;
+  padding: 12px 42px 12px 14px !important;
+  line-height: 1.4 !important;
+  font-size: 15px !important;
+}
+
+@media (max-width: 600px) {
+  .clcargo-form-section .forminator-select .select2-selection__rendered,
+  .clcargo-form-section .select2-container--default .select2-selection__rendered,
+  .clcargo-form-section .forminator-select .selection span[role="combobox"] .select2-selection__rendered {
+    font-size: 16px !important;
+  }
+}
+
+.clcargo-form-section .forminator-select .select2-selection__placeholder,
+.clcargo-form-section .select2-container--default .select2-selection__placeholder {
+  color: rgba(203, 213, 225, 0.6) !important;
+}
+
+/* Arrow — covers both vanilla select2 and Forminator's icon font variant */
+.clcargo-form-section .forminator-select .select2-selection__arrow,
+.clcargo-form-section .select2-container--default .select2-selection__arrow {
+  top: 50% !important;
+  right: 10px !important;
+  transform: translateY(-50%);
+  height: auto !important;
+  color: #FFD700 !important;
+}
+.clcargo-form-section .forminator-select .select2-selection__arrow [class*="forminator-icon-"],
+.clcargo-form-section .forminator-select .select2-selection__arrow [class*="forminator-icon-"]:before {
+  color: #FFD700 !important;
+}
+.clcargo-form-section .select2-container--default .select2-selection__arrow b {
+  border-color: #FFD700 transparent transparent transparent !important;
+}
+.clcargo-form-section .select2-container--default.select2-container--open .select2-selection__arrow b {
+  border-color: transparent transparent #FFD700 transparent !important;
+}
+
+/* Focus / open states for both wrappers */
+.clcargo-form-section .forminator-select .select2-selection:focus,
+.clcargo-form-section .forminator-select.select2-container--focus .select2-selection,
+.clcargo-form-section .forminator-select.select2-container--open .select2-selection,
+.clcargo-form-section .select2-container--default.select2-container--focus .select2-selection,
+.clcargo-form-section .select2-container--default.select2-container--open .select2-selection {
+  border-color: #FFD700 !important;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3) !important;
+}
+
+/* Native select fallback (when select2 not yet rendered) */
+.clcargo-form-section select:not([multiple]) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FFD700' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  padding-right: 36px !important;
+}
+
+/* Dropdown panels — both vanilla Select2 (`.select2-dropdown`) and the
+   Forminator variant (`.forminator-select-dropdown`). Both get the dark
+   calculator palette, gold border and gold highlight on hover/active. */
+.select2-dropdown.select2-dropdown--below,
+.select2-dropdown.select2-dropdown--above,
+.forminator-select-dropdown,
+.forminator-select .forminator-select-dropdown,
+.forminator-select-dropdown.forminator-dropdown--default,
+.forminator-select-dropdown.forminator-dropdown--basic,
+.forminator-select-dropdown.forminator-dropdown--bold,
+.forminator-select-dropdown.forminator-dropdown--flat,
+.forminator-select-dropdown.forminator-dropdown--material {
+  background: #0F2342 !important;
+  border: 1px solid #FFD700 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+.forminator-select-dropdown .select2-search input,
+.forminator-select-dropdown .select2-search__field {
+  background: #071324 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 8px !important;
+}
+
+.forminator-select-dropdown .select2-results__option,
+.select2-results__option {
+  color: #FFFFFF !important;
+  background: transparent !important;
+  padding: 10px 14px !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+}
+
+.forminator-select-dropdown .select2-results__option--highlighted,
+.forminator-select-dropdown .select2-results__option--highlighted[aria-selected],
+.select2-results__option--highlighted[aria-selected],
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background: rgba(255, 215, 0, 0.18) !important;
+  color: #FFD700 !important;
+}
+
+.forminator-select-dropdown .select2-results__option[aria-selected="true"],
+.forminator-select-dropdown .select2-results__option--selected {
+  background: rgba(255, 215, 0, 0.1) !important;
+  color: #FFD700 !important;
+}
+
+/* Hide the "no results found" message decoration so it blends in */
+.forminator-select-dropdown .select2-results__message {
+  color: rgba(203, 213, 225, 0.75) !important;
+  background: transparent !important;
+}
+
+/* ---------- Checkbox ---------- */
+
+.clcargo-form-section .forminator-field-checkbox {
+  /* The checkbox row spans full width visually */
+  grid-column: 1 / -1;
+}
+
+.clcargo-form-section input[type="checkbox"] {
+  width: 18px !important;
+  height: 18px !important;
+  accent-color: #FFD700;
+  margin: 0;
   flex-shrink: 0;
+  min-height: 0;
+  padding: 0 !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  background: #071324 !important;
 }
 
-.clcargo-form-section .forminator-checkbox-label,
-.clcargo-form-section .forminator-checkbox .forminator-label {
+.clcargo-form-section .forminator-checkbox {
   display: flex !important;
-  align-items: flex-start;
-  gap: 0.6rem;
-  font-size: 0.9rem !important;
-  font-weight: 500 !important;
-  color: var(--cl-text) !important;
-  cursor: pointer;
-  line-height: 1.4;
-  padding: 0.65rem 0.85rem;
-  background: var(--cl-bg-alt);
-  border: 1px solid var(--cl-border);
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  transition: border-color var(--cl-transition), background var(--cl-transition);
+  cursor: pointer;
+  color: #CBD5E1;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.clcargo-form-section .forminator-checkbox:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+}
+.clcargo-form-section .forminator-checkbox-label {
+  color: #FFFFFF !important;
+  font-weight: 500;
+}
+.clcargo-form-section .forminator-checkbox-box {
+  display: none; /* use native checkbox styling */
 }
 
-.clcargo-form-section .forminator-checkbox-label:hover,
-.clcargo-form-section .forminator-checkbox .forminator-label:hover {
-  border-color: rgba(251, 191, 36, 0.5);
-  background: #FFF7E0;
+/* ---------- ETA block (injected by form-logic.js) ---------- */
+
+.clcargo-form-section .clcargo-eta {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 4px 0 16px;
+  padding: 12px 16px;
+  background: rgba(0, 87, 183, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 12px;
 }
 
-/* Submit button — gold gradient. Forminator uses .forminator-button and
-   .forminator-button-submit, not [type=submit] / .forminator-btn-submit. */
+.clcargo-form-section .clcargo-eta__label {
+  font-size: 13px;
+  color: #CBD5E1;
+  line-height: 1.3;
+}
+
+.clcargo-form-section .clcargo-eta__value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFD700;
+  line-height: 1.2;
+  text-align: right;
+}
+
+@media (max-width: 480px) {
+  .clcargo-form-section .clcargo-eta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .clcargo-form-section .clcargo-eta__value {
+    text-align: left;
+    font-size: 18px;
+  }
+}
+
+/* Method selector (авиа/море) — shown only for China/India */
+.clcargo-form-section .clcargo-eta-method {
+  grid-column: 1 / -1;
+  display: none;
+  gap: 8px;
+  margin: -4px 0 12px;
+}
+.clcargo-form-section .clcargo-eta-method[data-visible="true"] {
+  display: flex;
+}
+.clcargo-form-section .clcargo-eta-method__label {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFD700;
+  align-self: center;
+  margin-right: 4px;
+}
+.clcargo-form-section .clcargo-eta-method__option {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  background: #071324;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.clcargo-form-section .clcargo-eta-method__option:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+}
+.clcargo-form-section .clcargo-eta-method__option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.clcargo-form-section .clcargo-eta-method__option:has(input:checked) {
+  background: rgba(255, 215, 0, 0.18);
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+/* ---------- Submit button ---------- */
+
 .clcargo-form-section .forminator-button-submit,
 .clcargo-form-section .forminator-button.forminator-button-submit,
 .clcargo-form-section .forminator-btn-submit,
 .clcargo-form-section button[type="submit"] {
+  grid-column: 1 / -1;
   width: 100% !important;
-  background: var(--cl-cta-gradient) !important;
-  background-image: var(--cl-cta-gradient) !important;
-  color: var(--cl-cta-text) !important;
+  background: #FFD700 !important;
+  background-image: none !important;
+  color: #071324 !important;
   border: none !important;
-  border-radius: var(--cl-radius-sm) !important;
-  padding: 0.9rem 2rem !important;
-  font-size: 1rem !important;
-  font-weight: 700 !important;
-  font-family: var(--cl-font) !important;
+  border-radius: 10px !important;
+  padding: 14px 26px !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  font-family: inherit !important;
   cursor: pointer !important;
-  box-shadow: 0 4px 14px rgba(251, 191, 36, 0.3) !important;
-  transition: background var(--cl-transition), transform var(--cl-transition), box-shadow var(--cl-transition) !important;
-  margin-top: 0.5rem !important;
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3) !important;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+  margin-top: 4px !important;
+  line-height: 1.2;
 }
 
 .clcargo-form-section .forminator-button-submit:hover,
 .clcargo-form-section .forminator-button.forminator-button-submit:hover,
 .clcargo-form-section .forminator-btn-submit:hover,
 .clcargo-form-section button[type="submit"]:hover {
-  background: var(--cl-cta-gradient-hover) !important;
-  background-image: var(--cl-cta-gradient-hover) !important;
-  color: var(--cl-cta-text) !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.4) !important;
+  background: #FFEA54 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 215, 0, 0.35) !important;
 }
 
-/* Error messages */
+.clcargo-form-section .forminator-button-submit:active {
+  transform: translateY(0);
+}
+
+/* ---------- Form rows that must span full width but aren't col-12 ---------- */
+
+/* Phone + name are placed side-by-side on desktop, stacked on mobile */
+.clcargo-form-section .forminator-field-name,
+.clcargo-form-section .forminator-field-phone {
+  /* keep whatever col-* Forminator assigned */
+}
+
+/* ---------- Error messages ---------- */
+
 .clcargo-form-section .forminator-error,
 .clcargo-form-section .forminator-field-error,
 .clcargo-field-error {
-  color: #DC2626 !important;
-  font-size: 0.8rem !important;
-  margin-top: 0.3rem !important;
+  color: #FCA5A5 !important;
+  font-size: 12px !important;
+  margin-top: 4px !important;
   display: block;
 }
 
-/* Success message */
-.clcargo-form-section .forminator-response-output {
-  background: #F0FDF4 !important;
-  border: 1px solid #86EFAC !important;
-  border-radius: var(--cl-radius-sm) !important;
-  padding: 1rem !important;
-  color: #166534 !important;
-  font-size: 0.95rem !important;
+.clcargo-form-section .forminator-response-message.forminator-error {
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  color: #FCA5A5 !important;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
 }
 
-/* Microtext under button */
+/* ---------- Success state (shown only after server confirmation) ---------- */
+
+.clcargo-form-section .forminator-response-message.forminator-success,
+.clcargo-form-section .forminator-response-output {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border: 1px solid rgba(16, 185, 129, 0.45) !important;
+  color: #A7F3D0 !important;
+  padding: 14px 16px !important;
+  border-radius: 10px !important;
+  font-size: 15px !important;
+}
+
+/* ---------- Microtext (phone fallback line) ---------- */
+
 .clcargo-form-section > .wp-block-group > p:last-child {
-  font-size: 0.9rem;
-  color: var(--cl-text-muted);
+  font-size: 13px !important;
+  color: #94A3B8 !important;
   text-align: center;
-  margin-top: 1.5rem !important;
-  padding-top: 1.25rem;
-  border-top: 1px dashed var(--cl-border);
+  margin-top: 18px !important;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
 .clcargo-form-section > .wp-block-group > p:last-child a {
-  color: var(--cl-blue-dark);
+  color: #FFD700 !important;
   font-weight: 700;
+  text-decoration: none;
 }
 .clcargo-form-section > .wp-block-group > p:last-child a:hover {
-  color: var(--cl-yellow-dark);
+  text-decoration: underline;
 }

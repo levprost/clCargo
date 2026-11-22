@@ -1,21 +1,13 @@
 <?php
 
-add_action( 'wp_enqueue_scripts', function () {
-	$uri = get_stylesheet_directory_uri();
-	$ver = wp_get_theme()->get( 'Version' );
-
-	// Google Fonts: Inter
-	wp_enqueue_style(
-		'clcargo-inter',
-		'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap',
-		[],
-		null
-	);
-
-	// Theme identity (required for child theme)
-	wp_enqueue_style( 'clcargo-style', get_stylesheet_uri(), [], $ver );
-
-	$css_files = [
+/**
+ * Theme CSS source files. Their contents are concatenated into one
+ * `_combined.css` artefact (see clcargo_build_combined_css) so the
+ * browser fetches a single stylesheet instead of fourteen.
+ * Order matters — variables → base → layout → components → responsive.
+ */
+function clcargo_theme_css_sources() {
+	return [
 		'variables',
 		'base',
 		'wp-overrides',
@@ -30,18 +22,65 @@ add_action( 'wp_enqueue_scripts', function () {
 		'responsive',
 		'contact-modal',
 	];
+}
 
-	$prev = 'clcargo-style';
-	foreach ( $css_files as $file ) {
-		$handle = 'clcargo-' . $file;
-		wp_enqueue_style(
-			$handle,
-			"{$uri}/assets/css/{$file}.css",
-			[ $prev ],
-			$ver
-		);
-		$prev = $handle;
+/**
+ * Concatenate all theme CSS into one file, rebuild only when any source
+ * is newer than the combined artefact. Returns the artefact's mtime for
+ * use as a cache-busting query string.
+ */
+function clcargo_build_combined_css() {
+	$dir    = get_stylesheet_directory();
+	$out    = $dir . '/assets/css/_combined.css';
+	$files  = clcargo_theme_css_sources();
+	$latest = 0;
+	$paths  = [];
+
+	foreach ( $files as $f ) {
+		$path = "{$dir}/assets/css/{$f}.css";
+		if ( file_exists( $path ) ) {
+			$latest  = max( $latest, filemtime( $path ) );
+			$paths[] = $path;
+		}
 	}
+
+	if ( ! file_exists( $out ) || filemtime( $out ) < $latest ) {
+		$contents = '';
+		foreach ( $paths as $path ) {
+			$name     = basename( $path );
+			$contents .= "\n/* === {$name} === */\n" . file_get_contents( $path );
+		}
+		file_put_contents( $out, $contents );
+	}
+
+	return file_exists( $out ) ? filemtime( $out ) : 0;
+}
+
+add_action( 'wp_enqueue_scripts', function () {
+	$uri = get_stylesheet_directory_uri();
+	$ver = wp_get_theme()->get( 'Version' );
+
+	// Google Fonts: Inter — five weights (400/500/600/700/800), no italic.
+	// Served with display=swap; a preconnect tag is injected in wp_head
+	// so the stylesheet DNS/TLS cost overlaps with HTML parsing.
+	wp_enqueue_style(
+		'clcargo-inter',
+		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
+		[],
+		null
+	);
+
+	// Theme identity (required for child theme)
+	wp_enqueue_style( 'clcargo-style', get_stylesheet_uri(), [], $ver );
+
+	// Single combined stylesheet instead of 13 separate requests.
+	$combined_ver = clcargo_build_combined_css();
+	wp_enqueue_style(
+		'clcargo-combined',
+		"{$uri}/assets/css/_combined.css",
+		[ 'clcargo-style' ],
+		$combined_ver ?: $ver
+	);
 
 	// Header burger menu
 	wp_enqueue_script(
@@ -70,6 +109,121 @@ add_action( 'wp_enqueue_scripts', function () {
 		true
 	);
 } );
+
+/**
+ * Warm up DNS/TLS for Google Fonts before the stylesheet is encountered.
+ * Saves roughly one RTT on the first render.
+ */
+add_action( 'wp_head', function () {
+	echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
+	echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
+}, 1 );
+
+/**
+ * Move jQuery, jQuery Migrate and every Forminator front-end script
+ * from <head> to the footer so they no longer block the parser on the
+ * critical path. Forminator's inline bootstrap (printed via
+ * `wp_add_inline_script` attached to `forminator-front-scripts`) also
+ * runs in the footer, so jQuery still loads synchronously before any
+ * jQuery-using inline code executes.
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	if ( is_admin() ) {
+		return;
+	}
+	$footer_handles = [
+		'jquery',
+		'jquery-core',
+		'jquery-migrate',
+		'forminator-select2',
+		'forminator-jquery-validate',
+		'forminator-form',
+		'forminator-front-scripts',
+		'forminator-intlTelInput',
+		'forminator-inputmask',
+		'forminator-jquery-inputmask',
+		'forminator-inputmask-binding',
+	];
+	foreach ( $footer_handles as $handle ) {
+		wp_scripts()->add_data( $handle, 'group', 1 ); // 1 = print in footer
+	}
+}, 999 );
+
+/**
+ * Add `defer` to third-party and theme scripts that don't need to block
+ * the parser. jQuery / jQuery-migrate stay synchronous because
+ * Forminator emits inline `jQuery(function(){...})` initialisers in the
+ * body — those are parsed synchronously and need jQuery available
+ * immediately. The deferred scripts finish before DOMContentLoaded, so
+ * the inline ready-callback still fires with everything loaded.
+ */
+add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+	if ( is_admin() ) {
+		return $tag;
+	}
+	$defer = [
+		// Forminator plugin scripts
+		'forminator-select2',
+		'forminator-jquery-validate',
+		'forminator-form',
+		'forminator-front-scripts',
+		'forminator-intlTelInput',
+		'forminator-inputmask',
+		'forminator-jquery-inputmask',
+		'forminator-inputmask-binding',
+		// Polylang
+		'pll-language-switcher',
+		// Theme
+		'clcargo-header',
+		'clcargo-form-logic',
+		'clcargo-contact-modal',
+	];
+	if ( in_array( $handle, $defer, true ) && strpos( $tag, ' defer' ) === false ) {
+		$tag = preg_replace( '/<script /', '<script defer ', $tag, 1 );
+	}
+	return $tag;
+}, 10, 2 );
+
+/**
+ * Load below-the-fold CSS without blocking the critical path by
+ * switching media to `print` initially, then back to `all` on load.
+ * Covers the heavy Forminator stylesheets (form is below the hero) and
+ * a handful of WP-core/Polylang styles that aren't needed for first
+ * paint. A <noscript> fallback restores the stylesheets for users with
+ * JavaScript disabled.
+ */
+add_filter( 'style_loader_tag', function ( $tag, $handle, $href, $media ) {
+	if ( is_admin() ) {
+		return $tag;
+	}
+	$deferred = [
+		// Forminator form CSS (form is below the fold)
+		'forminator-icons',
+		'forminator-utilities',
+		'forminator-forms-default-base',
+		'forminator-forms-default-select2',
+		'forminator-forms-default-full',
+		'intlTelInput-forminator',
+		// WP core / plugin styles not needed for first paint
+		'buttons',
+		'pll-language-switcher',
+	];
+	// Per-form instance CSS has a dynamic handle like forminator-module-css-12
+	$is_module_css = strpos( $handle, 'forminator-module-css-' ) === 0;
+
+	if ( ! $is_module_css && ! in_array( $handle, $deferred, true ) ) {
+		return $tag;
+	}
+
+	$noscript = '<noscript>' . str_replace( [ " media='print'", ' media="print"' ], '', $tag ) . '</noscript>';
+	$tag = str_replace(
+		[ "media='all'", 'media="all"' ],
+		[ "media='print' onload=\"this.media='all'\"", 'media="print" onload="this.media=\'all\'"' ],
+		$tag
+	);
+
+	return $tag . $noscript;
+}, 10, 4 );
 
 add_action( 'after_setup_theme', function () {
 	add_theme_support( 'block-templates' );
@@ -331,7 +485,7 @@ add_shortcode( 'clcargo_hero', function () {
 						<picture>
 							<source media="(min-width: 1031px)" type="image/webp" srcset="<?php echo esc_attr( implode( ', ', $photo_webp ) ); ?>" sizes="<?php echo esc_attr( $photo_sizes ); ?>">
 							<source media="(min-width: 1031px)" type="image/jpeg" srcset="<?php echo esc_attr( implode( ', ', $photo_jpeg ) ); ?>" sizes="<?php echo esc_attr( $photo_sizes ); ?>">
-							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1254" height="1254" alt="<?php echo esc_attr( $s['desktopPhotoAlt'] ); ?>" decoding="async">
+							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1254" height="1254" alt="<?php echo esc_attr( $s['desktopPhotoAlt'] ); ?>" decoding="async" fetchpriority="high">
 						</picture>
 					</div>
 

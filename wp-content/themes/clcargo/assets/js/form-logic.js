@@ -1,53 +1,91 @@
 (function () {
 	'use strict';
 
-	function initSelectPlaceholders() {
-		var form = document.querySelector('.forminator-custom-form');
-		if (!form) return;
+	// ---- Language detection --------------------------------------------------
 
-		var isRu = (document.documentElement.lang || '').toLowerCase().indexOf('ru') === 0;
-		var dict = {
-			'select-1': isRu ? 'Выберите страну'    : 'Оберіть країну',
-			'select-2': isRu ? 'Выберите товар'     : 'Оберіть товар',
-		};
+	var LANG = (document.documentElement.lang || 'uk').toLowerCase().indexOf('ru') === 0
+		? 'ru' : 'uk';
 
+	var STRINGS = {
+		ru: {
+			selectPlaceholder: {
+				'select-1': 'Выберите направление',
+				'select-2': 'Выберите товар',
+			},
+			etaLabel:         'Ориентировочный срок доставки:',
+			etaFallback:      'Выберите направление',
+			submitText:       'Запросить расчёт',
+			approxError:      'Пожалуйста, укажите приблизительную оценку груза',
+			// Labels used to match weight/volume/places rows — RU AND UK forms
+			weightLabels:  [ 'Вес груза', 'Вага вантажу' ],
+			volumeLabels:  [ 'Объём груза', "Об'єм вантажу", 'Объем груза' ],
+			placesLabels:  [ 'Количество мест', 'Кількість місць' ],
+			approxLabels:  [ 'Приблизительная оценка', 'Приблизна оцінка' ],
+		},
+		uk: {
+			selectPlaceholder: {
+				'select-1': 'Оберіть напрямок',
+				'select-2': 'Оберіть товар',
+			},
+			etaLabel:         'Орієнтовний термін доставки:',
+			etaFallback:      'Оберіть напрямок',
+			submitText:       'Запросити розрахунок',
+			approxError:      'Будь ласка, вкажіть приблизну оцінку вантажу',
+			weightLabels:  [ 'Вес груза', 'Вага вантажу' ],
+			volumeLabels:  [ 'Объём груза', "Об'єм вантажу", 'Объем груза' ],
+			placesLabels:  [ 'Количество мест', 'Кількість місць' ],
+			approxLabels:  [ 'Приблизительная оценка', 'Приблизна оцінка' ],
+		},
+	}[LANG];
+
+	// ---- ETA direction table -------------------------------------------------
+	// Keys match the 6 select-1 option values (see Forminator form meta).
+	var ETA_BY_DIRECTION = {
+		turkey:    { ru: '7–10 дней',    uk: '7–10 днів' },
+		china_air: { ru: '12–15 дней',   uk: '12–15 днів' },
+		china_sea: { ru: '52–60 дней',   uk: '52–60 днів' },
+		europe:    { ru: '7 дней',       uk: '7 днів' },
+		india_air: { ru: '14–16 дней',   uk: '14–16 днів' },
+		india_sea: { ru: '52–60 дней',   uk: '52–60 днів' },
+	};
+
+	// ---- Select2 placeholder localisation ----------------------------------
+
+	function initSelectPlaceholders(form) {
+		var dict = STRINGS.selectPlaceholder;
 		Object.keys(dict).forEach(function (name) {
 			var sel = form.querySelector('select[name="' + name + '"]');
 			if (!sel) return;
 
-			// Update the native hidden <option value=""> that Select2 reads.
+			// Native hidden <option value="">
 			var opt = sel.querySelector('option[value=""]');
 			if (opt) opt.textContent = dict[name];
 
-			// Update the visible Select2 placeholder span.
+			// Visible Select2 placeholder span
 			var container = sel.closest('.forminator-field, .forminator-col, div');
 			var ph = container && container.querySelector('.select2-selection__placeholder');
 			if (ph) ph.textContent = dict[name];
 		});
 	}
 
-	function initPhoneInput() {
-		var form = document.querySelector('.forminator-custom-form');
-		if (!form) return;
+	// ---- Phone input: + and digits only ------------------------------------
 
+	function initPhoneInput(form) {
 		var inputs = form.querySelectorAll('input[type="tel"], input[name^="phone-"]');
 		inputs.forEach(function (input) {
 			if (input.dataset.clPhoneBound) return;
 			input.dataset.clPhoneBound = 'true';
 
-			// Only digits after the leading "+"
 			function normalize(val) {
 				if (!val) return '';
 				var digits = val.replace(/\D+/g, '');
 				return digits ? '+' + digits : '';
 			}
 
-			// Normalise any prefilled value
 			if (input.value) input.value = normalize(input.value);
 
 			input.addEventListener('focus', function () {
 				if (!input.value) input.value = '+';
-				// put caret at the end
 				try {
 					var len = input.value.length;
 					input.setSelectionRange(len, len);
@@ -60,7 +98,6 @@
 				var newVal = normalize(oldVal);
 				if (oldVal === newVal) return;
 				input.value = newVal;
-				// Keep caret from drifting into the "+" sign
 				try {
 					var pos = Math.min(newVal.length, Math.max(1, oldStart));
 					input.setSelectionRange(pos, pos);
@@ -68,7 +105,6 @@
 			});
 
 			input.addEventListener('keydown', function (e) {
-				// Protect the leading "+"
 				if ((e.key === 'Backspace' || e.key === 'Delete') &&
 					input.selectionStart <= 1 && input.selectionEnd <= 1 && input.value.charAt(0) === '+') {
 					if (input.value.length <= 1) {
@@ -94,43 +130,102 @@
 			});
 
 			input.addEventListener('blur', function () {
-				// Clear lone "+" so required-validation fires correctly
 				if (input.value === '+') input.value = '';
 			});
 		});
 	}
 
-	function initFormLogic() {
-		// Forminator renders asynchronously; find our form after it loads
-		var form = document.querySelector('.forminator-custom-form');
-		if (!form) return;
+	// ---- Find a row by one of several possible labels ----------------------
 
-		// Localise select2 placeholders for country + goods selects.
-		initSelectPlaceholders();
+	function findRowByLabels(form, labels) {
+		var nodes = form.querySelectorAll('label, .forminator-label');
+		for (var i = 0; i < nodes.length; i++) {
+			var txt = nodes[i].textContent || '';
+			for (var j = 0; j < labels.length; j++) {
+				if (txt.indexOf(labels[j]) !== -1) {
+					return nodes[i].closest('.forminator-row, .forminator-field-container, .forminator-field, .wp-block-group');
+				}
+			}
+		}
+		return null;
+	}
 
-		// Enforce phone format: leading "+" and digits only.
-		initPhoneInput();
+	// ---- ETA block + method selector ---------------------------------------
 
-		var checkbox   = form.querySelector('input[value="yes"][type="checkbox"]');
+	function injectEtaBlock(form, state) {
+		if (form.querySelector('.clcargo-eta')) return;
+
+		var submitBtn = form.querySelector('.forminator-button-submit');
+		if (!submitBtn) return;
+
+		// The row that contains the submit button (Forminator wraps it)
+		var submitRow = submitBtn.closest('.forminator-row') || submitBtn.parentNode;
+
+		var etaRow = document.createElement('div');
+		etaRow.className = 'forminator-row clcargo-eta-row';
+		var etaBlock = document.createElement('div');
+		etaBlock.className = 'clcargo-eta';
+		etaBlock.setAttribute('aria-live', 'polite');
+		etaBlock.innerHTML = ''
+			+ '<span class="clcargo-eta__label">' + STRINGS.etaLabel + '</span>'
+			+ '<span class="clcargo-eta__value" data-eta-value>' + STRINGS.etaFallback + '</span>';
+		etaRow.appendChild(etaBlock);
+
+		submitRow.parentNode.insertBefore(etaRow, submitRow);
+
+		state.eta = etaBlock.querySelector('[data-eta-value]');
+	}
+
+	function updateEta(state) {
+		if (!state.eta) return;
+		var direction = state.countrySelect ? (state.countrySelect.value || '') : '';
+		var mapping = ETA_BY_DIRECTION[direction];
+
+		if (!mapping) {
+			state.eta.textContent = STRINGS.etaFallback;
+		} else {
+			state.eta.textContent = mapping[LANG];
+		}
+	}
+
+	// ---- Submit button text ------------------------------------------------
+
+	function overrideSubmitText(form) {
+		var btn = form.querySelector('.forminator-button-submit');
+		if (btn && btn.textContent.trim() !== STRINGS.submitText) {
+			// Preserve any inner loader markup Forminator may inject; only
+			// replace the first text node.
+			var replaced = false;
+			for (var i = 0; i < btn.childNodes.length; i++) {
+				var n = btn.childNodes[i];
+				if (n.nodeType === 3 && n.textContent.trim()) {
+					n.textContent = STRINGS.submitText;
+					replaced = true;
+					break;
+				}
+			}
+			if (!replaced) btn.textContent = STRINGS.submitText;
+		}
+	}
+
+	// ---- Weight/volume/places visibility toggle ----------------------------
+
+	function wireCheckboxToggle(form, state) {
+		var checkbox = form.querySelector('input[value="yes"][type="checkbox"]');
 		if (!checkbox) return;
 
-		// Rows containing the three numeric fields
-		var weightRow  = findRowByLabel(form, 'Вес груза');
-		var volumeRow  = findRowByLabel(form, 'Объём груза');
-		var placesRow  = findRowByLabel(form, 'Количество мест');
-
-		// Row containing the approximate estimate textarea
-		var approxRow  = findRowByLabel(form, 'Приблизительная оценка');
-		var approxTA   = approxRow ? approxRow.querySelector('textarea') : null;
+		var weightRow = findRowByLabels(form, STRINGS.weightLabels);
+		var volumeRow = findRowByLabels(form, STRINGS.volumeLabels);
+		var placesRow = findRowByLabels(form, STRINGS.placesLabels);
+		var approxRow = findRowByLabels(form, STRINGS.approxLabels);
+		var approxTA  = approxRow ? approxRow.querySelector('textarea') : null;
 
 		function applyState() {
 			var checked = checkbox.checked;
 
-			// Toggle numeric rows
 			[weightRow, volumeRow, placesRow].forEach(function (row) {
 				if (!row) return;
 				row.style.display = checked ? 'none' : '';
-				// Toggle required attr so Forminator won't block submission
 				row.querySelectorAll('input').forEach(function (inp) {
 					if (checked) {
 						inp.removeAttribute('required');
@@ -141,7 +236,6 @@
 				});
 			});
 
-			// Toggle approx field
 			if (approxRow) {
 				approxRow.style.display = checked ? '' : 'none';
 				if (approxTA) {
@@ -155,30 +249,17 @@
 			}
 		}
 
-		// Set initial state (approx hidden by default)
 		applyState();
-
 		checkbox.addEventListener('change', applyState);
 
-		// Extra guard on submit: if checkbox checked but approx empty → block
 		form.addEventListener('submit', function (e) {
 			if (checkbox.checked && approxTA && approxTA.value.trim() === '') {
 				e.preventDefault();
 				e.stopImmediatePropagation();
 				approxTA.focus();
-				showError(approxTA, 'Пожалуйста, укажите приблизительную оценку груза');
+				showError(approxTA, STRINGS.approxError);
 			}
 		}, true);
-	}
-
-	function findRowByLabel(form, labelText) {
-		var labels = form.querySelectorAll('label, .forminator-label');
-		for (var i = 0; i < labels.length; i++) {
-			if (labels[i].textContent.indexOf(labelText) !== -1) {
-				return labels[i].closest('.forminator-row, .forminator-field-container, .wp-block-group');
-			}
-		}
-		return null;
 	}
 
 	function showError(field, msg) {
@@ -186,31 +267,108 @@
 		if (existing) existing.remove();
 		var err = document.createElement('span');
 		err.className = 'clcargo-field-error';
-		err.style.cssText = 'color:#E53E3E;font-size:0.85rem;display:block;margin-top:4px';
 		err.textContent = msg;
 		field.parentNode.appendChild(err);
-		field.style.borderColor = '#E53E3E';
+		field.style.borderColor = '#FCA5A5';
 		field.addEventListener('input', function () {
 			err.remove();
 			field.style.borderColor = '';
 		}, { once: true });
 	}
 
-	// Forminator fires a custom event when the form is ready
-	document.addEventListener('DOMContentLoaded', function () {
-		// Try immediately
+	// ---- Country select change listener ------------------------------------
+
+	function wireCountrySelect(form, state) {
+		state.countrySelect = form.querySelector('select[name="select-1"]');
+		if (!state.countrySelect) return;
+
+		// 1) Native listener — catches programmatic `.value = x; dispatchEvent`.
+		state.countrySelect.addEventListener('change', function () { updateEta(state); });
+
+		// 2) jQuery listener — Forminator's Select2 updates the native select
+		//    via jQuery and calls `$(sel).trigger('change')`. In jQuery 3.x
+		//    .trigger('change') fires jQuery-bound handlers but does NOT
+		//    dispatch a native DOM change event, so listener #1 misses it.
+		if (window.jQuery) {
+			window.jQuery(state.countrySelect).on('change.clcargoEta', function () {
+				updateEta(state);
+			});
+		}
+
+		// 3) MutationObserver on the visible Select2 render span — ultimate
+		//    belt-and-suspenders fallback in case neither of the above fires
+		//    (older jQuery, patched Select2, etc.).
+		try {
+			if (window.MutationObserver) {
+				var col = state.countrySelect.closest('.forminator-col, .forminator-field');
+				var rendered = col && col.querySelector('.select2-selection__rendered');
+				if (rendered) {
+					new MutationObserver(function () { updateEta(state); })
+						.observe(rendered, { childList: true, subtree: true, characterData: true });
+				}
+			}
+		} catch (_) {}
+
+		updateEta(state);
+	}
+
+	// ---- Reset handling ----------------------------------------------------
+	//
+	// Forminator resets the form via a .forminator-button-reset or by
+	// clearing values in success handler. Hook form.reset() and any
+	// Forminator-fired forminator:form:reset event.
+	function wireResetSync(form, state) {
+		form.addEventListener('reset', function () {
+			// values haven't been cleared yet; defer
+			setTimeout(function () { updateEta(state); }, 0);
+		});
+		document.addEventListener('forminator:form:reset', function () { updateEta(state); });
+		document.addEventListener('forminator:form:submit:success', function () {
+			setTimeout(function () { updateEta(state); }, 0);
+		});
+	}
+
+	// ---- Initialisation ----------------------------------------------------
+
+	function initFormLogic() {
+		var form = document.querySelector('.clcargo-form-section .forminator-custom-form')
+			|| document.querySelector('.forminator-custom-form');
+		if (!form) return;
+		if (form.dataset.clcargoInit === 'true') return;
+		form.dataset.clcargoInit = 'true';
+
+		var state = {};
+
+		initSelectPlaceholders(form);
+		initPhoneInput(form);
+		overrideSubmitText(form);
+		injectEtaBlock(form, state);
+		wireCheckboxToggle(form, state);
+		wireCountrySelect(form, state);
+		wireResetSync(form, state);
+	}
+
+	function boot() {
 		initFormLogic();
-		// Also try after Forminator finishes rendering (it uses AJAX)
+
+		// Forminator renders asynchronously; retry a few times.
 		document.addEventListener('forminator:form:render', initFormLogic);
-		// Fallback: retry a few times
 		var tries = 0;
 		var timer = setInterval(function () {
-			if (++tries > 10) { clearInterval(timer); return; }
+			if (++tries > 20) { clearInterval(timer); return; }
 			var form = document.querySelector('.forminator-custom-form');
-			if (form && form.querySelector('input[value="yes"][type="checkbox"]')) {
-				clearInterval(timer);
+			if (form && !form.dataset.clcargoInit) {
 				initFormLogic();
+			} else if (form && form.dataset.clcargoInit === 'true') {
+				// Re-sync ETA in case Forminator re-rendered values
+				clearInterval(timer);
 			}
-		}, 300);
-	});
+		}, 250);
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', boot);
+	} else {
+		boot();
+	}
 })();
