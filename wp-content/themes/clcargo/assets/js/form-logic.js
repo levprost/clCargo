@@ -276,6 +276,45 @@
 		}, { once: true });
 	}
 
+	// ---- Direction prefill from direction cards ----------------------------
+	//
+	// Direction cards (section #directions) each carry a CTA with class
+	// `is-dir-<key>` where <key> matches a select-1 option value
+	// (turkey / china_air / china_sea / europe / india_air). Clicking a
+	// CTA scrolls to #form AND prefills the direction select so the user
+	// arrives at the form with their chosen route already selected.
+	var DIRECTION_CLASS_RX = /\bis-dir-([a-z_]+)\b/;
+
+	function wireDirectionPrefill(form, state) {
+		function applyDirection(value) {
+			var select = form.querySelector('select[name="select-1"]');
+			if (!select) return;
+			var opt = select.querySelector('option[value="' + value + '"]');
+			if (!opt) return;
+			select.value = value;
+			if (window.jQuery) {
+				window.jQuery(select).val(value).trigger('change');
+			} else {
+				select.dispatchEvent(new Event('change', { bubbles: true }));
+			}
+		}
+
+		document.addEventListener('click', function (e) {
+			var link = e.target.closest('a[href="#form"]');
+			if (!link) return;
+			// Look for is-dir-<key> on the link or its wp-block-button wrapper
+			var host = link.classList.contains('wp-block-button__link')
+				? (link.closest('.wp-block-button') || link)
+				: link;
+			var m = DIRECTION_CLASS_RX.exec(host.className || '');
+			if (!m) return;
+			// Defer until after the hash scroll so the form is mounted
+			var value = m[1];
+			setTimeout(function () { applyDirection(value); }, 0);
+			setTimeout(function () { applyDirection(value); }, 300);
+		});
+	}
+
 	// ---- Country select change listener ------------------------------------
 
 	function wireCountrySelect(form, state) {
@@ -345,6 +384,7 @@
 		injectEtaBlock(form, state);
 		wireCheckboxToggle(form, state);
 		wireCountrySelect(form, state);
+		wireDirectionPrefill(form, state);
 		wireResetSync(form, state);
 	}
 

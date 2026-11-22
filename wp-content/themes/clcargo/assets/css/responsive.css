@@ -2,30 +2,7 @@
    CL CARGO — Responsive (mobile-first)
    ============================================= */
 
-/* =============================================
-   Direction cards — three breakpoints
-   mobile       (≤ 599)        → 1 per row
-   tablet / md  (600 – 1099)   → 2 per row
-   desktop lg   (≥ 1100)       → 4 per row
-   ============================================= */
-@media (min-width: 1100px) {
-  .clcargo-section--directions .wp-block-column.clcargo-direction-card {
-    flex: 0 0 calc(25% - 0.9375rem) !important;
-    max-width: calc(25% - 0.9375rem) !important;
-  }
-}
-@media (min-width: 600px) and (max-width: 1099.98px) {
-  .clcargo-section--directions .wp-block-column.clcargo-direction-card {
-    flex: 0 0 calc(50% - 0.625rem) !important;
-    max-width: calc(50% - 0.625rem) !important;
-  }
-}
-@media (max-width: 599.98px) {
-  .clcargo-section--directions .wp-block-column.clcargo-direction-card {
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-}
+/* Direction cards: grid + last-row centring live in cards.css */
 
 /* ---- Tablet: 768px ---- */
 @media (max-width: 768px) {

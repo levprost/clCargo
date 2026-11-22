@@ -97,12 +97,7 @@ body.wp-has-global-padding > .wp-site-blocks {
   gap: 1rem !important;
 }
 
-/* Direction cards: 2 per row on desktop */
-.clcargo-direction-card.wp-block-column {
-  flex-basis: calc(50% - 0.75rem) !important;
-  flex-grow: 1 !important;
-  min-width: 0 !important;
-}
+/* Direction cards use a CSS grid — see cards.css for the full grid rules. */
 
 /* Goods: 3 per row on wide desktop, 2 on tablet, 1 on phone.
    Gap 24px desktop/tablet, 16px phone (handled in media queries).
