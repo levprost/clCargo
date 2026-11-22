@@ -21,6 +21,11 @@ function clcargo_theme_css_sources() {
 		'footer',
 		'responsive',
 		'contact-modal',
+		// Section colour schemes (blue / yellow alternation) — load after
+		// component CSS so the scheme-scoped overrides win against
+		// component defaults, but before `hidden-sections` so visibility
+		// toggles stay the last word.
+		'sections-schemes',
 		// Visibility override — listed last so it beats earlier rules.
 		// Remove this entry (and the file) to restore all hidden sections.
 		'hidden-sections',
@@ -615,8 +620,6 @@ add_filter( 'render_block', function ( $html, $block ) {
 			'Відкрити меню'                                  => 'Открыть меню',
 			// Footer
 			'Ваш вантаж у надійних руках'                    => 'Ваш груз в надёжных руках',
-			'Політика конфіденційності'                      => 'Политика конфиденциальности',
-			'Договір оферти'                                 => 'Договор оферты',
 		];
 		$html = strtr( $html, $dict );
 	}

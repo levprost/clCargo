@@ -205,6 +205,32 @@
 /* ---------- Select2 overrides (both vanilla Select2 and Forminator's
      `.forminator-select` wrapper variant) ---------- */
 
+/* Select2 snapshots the parent's px width at JS init time and writes it
+   as an inline `style="width: 596px"` on `.select2-container`. On smaller
+   viewports (or after resize) that hardcoded value leaks past the form
+   card and causes horizontal overflow. Force the container to stay
+   fluid — beats the inline style via !important. */
+.clcargo-form-section .forminator-select.select2-container,
+.clcargo-form-section .select2-container.select2 {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* The `.selection > span[role="combobox"]` wrapper Select2 injects also
+   gets a fixed width in some builds. Keep it fluid too — but do NOT
+   touch its `display`, otherwise the inner flex layout that pins the
+   arrow to the right side (set on `.select2-selection` below) collapses
+   and the arrow drops under the text. */
+.clcargo-form-section .forminator-select .selection,
+.clcargo-form-section .select2-container .selection {
+  width: 100% !important;
+  display: block !important;
+}
+.clcargo-form-section .forminator-select .selection > span[role="combobox"],
+.clcargo-form-section .select2-container .selection > span[role="combobox"] {
+  width: 100% !important;
+}
+
 .clcargo-form-section .forminator-select .select2-selection,
 .clcargo-form-section .select2-container--default .select2-selection {
   background: #071324 !important;
@@ -238,24 +264,40 @@
   color: rgba(203, 213, 225, 0.6) !important;
 }
 
-/* Arrow — covers both vanilla select2 and Forminator's icon font variant */
+/* Arrow — custom inline-SVG chevron with precise dimensions.
+   The Forminator icon font requires a `.forminator-ui` ancestor, which
+   Select2's generated DOM doesn't have — so the "⌄" glyph was falling
+   back to the system font and sitting at an inconsistent vertical
+   position. We draw the chevron ourselves via background-image on a
+   fixed-size wrapper, then centre that wrapper absolutely. */
 .clcargo-form-section .forminator-select .select2-selection__arrow,
 .clcargo-form-section .select2-container--default .select2-selection__arrow {
+  position: absolute !important;
   top: 50% !important;
-  right: 10px !important;
-  transform: translateY(-50%);
-  height: auto !important;
-  color: #FFD700 !important;
+  right: 14px !important;
+  transform: translateY(-50%) !important;
+  width: 12px !important;
+  height: 8px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FFD700' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 12px 8px !important;
+  pointer-events: none !important;
+  transition: transform 0.2s ease;
 }
+
+/* Rotate the chevron up when the dropdown opens */
+.clcargo-form-section .forminator-select.select2-container--open .select2-selection__arrow,
+.clcargo-form-section .select2-container--default.select2-container--open .select2-selection__arrow {
+  transform: translateY(-50%) rotate(180deg) !important;
+}
+
+/* Hide the original Forminator font-icon glyph and the vanilla <b>
+   triangle — we're rendering the chevron via background-image above. */
 .clcargo-form-section .forminator-select .select2-selection__arrow [class*="forminator-icon-"],
-.clcargo-form-section .forminator-select .select2-selection__arrow [class*="forminator-icon-"]:before {
-  color: #FFD700 !important;
-}
+.clcargo-form-section .forminator-select .select2-selection__arrow [class*="forminator-icon-"]:before,
 .clcargo-form-section .select2-container--default .select2-selection__arrow b {
-  border-color: #FFD700 transparent transparent transparent !important;
-}
-.clcargo-form-section .select2-container--default.select2-container--open .select2-selection__arrow b {
-  border-color: transparent transparent #FFD700 transparent !important;
+  display: none !important;
 }
 
 /* Focus / open states for both wrappers */
